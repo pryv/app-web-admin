@@ -3,15 +3,15 @@
     <h1>Configuration Panel</h1>
     <form v-on:submit.prevent="getConfig">
       <label for="address">Config leader address</label><br />
-      <input
-        required
-        pattern="https?://\S+"
-        type="text"
-        name="address"
-        id="address"
-        v-model="address"
-        @input="resetFailureIndicators"
-      />
+        <input
+          required
+          pattern="https?://\S+"
+          type="text"
+          name="address"
+          id="address"
+          v-model="address"
+          @input="resetFailureIndicators"
+        />
       <br /><br />
       <label for="adminKey">Admin key</label><br />
       <input
@@ -87,8 +87,7 @@ export default {
           .then(response => {
             this.pryvConfig = response.data;
           })
-          .catch(e => {
-            console.error(e.message);
+          .catch(()=> {
             this.loadFailed = true;
           });
       }
@@ -108,8 +107,7 @@ export default {
           this.updateConfigReport = response.data;
           this.showModal = true;
         })
-        .catch(e => {
-          console.error(e.message);
+        .catch(() => {
           this.updateFailed = true;
         })
         .finally(() => {
