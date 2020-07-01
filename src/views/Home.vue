@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <Config msg="PryV Configuration Panel" />
+    <img alt="Logo" src="../assets/logo.png" />
+    <Config/>
   </div>
 </template>
 
@@ -16,3 +16,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10%;
+}
+</style>
