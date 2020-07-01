@@ -12,13 +12,13 @@
       <input required type="text" name="adminKey" id="adminKey" 
         v-model="adminKey" @input="resetFailureIndicators">
       <br><br>
-      <button type="submit">Load</button>
+      <b-button variant="success" type="submit">Load</b-button>
     </form>
     <div class="failure-msg" v-if="loadFailed">
       <p>Unable to retrieve configuration from server.</p>
       <p>Verify provided information or try again later.</p>
     </div>
-    <button v-if="Object.keys(pryvConfig).length !== 0" v-on:click="updateConfig">Update</button>
+    <b-button variant="success" v-if="Object.keys(pryvConfig).length !== 0" v-on:click="updateConfig">Update</b-button>
     <loader v-if="updateInProgress" :loading="updateInProgress"></loader>
     <div class="failure-msg" v-if="updateFailed">
       <p>Unable to update configuration.</p>
@@ -100,29 +100,16 @@ export default {
 </script>
 
 <style scoped>
-button {
-  background-color: white;
-  color: black;
-  border: 2px solid #1A1A1A;
-  padding: 16px 24px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+ button {
   border-radius: 4px;
   margin: 8px;
 }
 button:hover {
   box-shadow: 0 4px 4px 0 rgba(0,0,0,0.24), 0 6px 8px 0 rgba(0,0,0,0.19);
+  outline: none !important;
 }
 button:active {
-    border: 2px solid #1A1A1A;
-    color: black;
-}
-button:disabled {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
+  border: 0;
 }
 input[type=text] {
   padding: 12px 20px;

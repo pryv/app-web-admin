@@ -9,7 +9,7 @@
           <slot name="body">{{ body }}</slot>
         </div>
         <div class="modal-footer">
-          <button @click="$emit('close')">OK</button>
+          <b-button @click="$emit('close')">OK</b-button>
           <br />
         </div>
       </div>
@@ -65,17 +65,6 @@ export default {
 .modal-footer {
   padding: 0;
   border: 0;
-}
-button {
-  background-color: white;
-  color: black;
-  border: 2px solid #838282;
-  padding: 8px 12px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  border-radius: 4px;
 }
 button:hover {
   box-shadow: 0 4px 4px 0 rgba(0,0,0,0.24), 0 6px 8px 0 rgba(0,0,0,0.19);
