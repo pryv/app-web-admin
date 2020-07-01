@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Logo" src="../assets/logo.png" />
-    <Config/>
+    <Config />
   </div>
 </template>
 

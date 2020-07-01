@@ -10,21 +10,23 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #1A1A1A;
+  color: #1a1a1a;
 }
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-weight: 500;
 }
 h1 {
-    font-size: 32px;
-    line-height: 38px;
+  font-size: 32px;
+  line-height: 38px;
 }
 h2 {
-    font-size: 24px;
-    line-height: 30px;
+  font-size: 24px;
+  line-height: 30px;
 }
 h3 {
-    font-size: 20px;
-    line-height: 26px;
+  font-size: 20px;
+  line-height: 26px;
 }
 </style>

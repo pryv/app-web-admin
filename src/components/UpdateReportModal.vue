@@ -16,10 +16,11 @@
           <td>{{ url_role.role }}</td>
         </tr>
       </div>
+
       <br />
       <div v-if="updateReport.failures">
         <tr>
-          <th class="main-header"  colspan="2">Failures</th>
+          <th class="main-header" colspan="2">Failures</th>
         </tr>
         <tr>
           <th>url</th>
@@ -60,7 +61,7 @@ td {
   padding: 5px;
 }
 .main-header {
-    text-align: center;
+  text-align: center;
 }
 hr {
   border: 0;

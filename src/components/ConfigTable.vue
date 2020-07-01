@@ -4,11 +4,13 @@
       <tr>
         <th>Property</th>
         <th>Value</th>
-      </tr> 
+      </tr>
       <tr v-for="(val, prop) in config" :key="prop">
         <td>{{ prop }}</td>
         <td>
-          <div @input="onValueInput($event, prop)" contenteditable>{{ val }}</div>
+          <div @input="onValueInput($event, prop)" contenteditable>
+            {{ val }}
+          </div>
         </td>
       </tr>
     </table>
@@ -19,12 +21,16 @@
 export default {
   name: "ConfigTable",
   props: {
-      config: {}
+    config: {}
   },
   methods: {
     onValueInput: function(e, prop) {
-      this.config[prop] = JSON.stringify(JSON.parse(e.target.innerText), null, 2);
-      this.$emit('tableAltered', this.config);
+      this.config[prop] = JSON.stringify(
+        JSON.parse(e.target.innerText),
+        null,
+        2
+      );
+      this.$emit("tableAltered", this.config);
     }
   }
 };
@@ -40,11 +46,14 @@ table {
 th {
   text-align: center;
 }
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
   border-collapse: collapse;
 }
-th, td {
+th,
+td {
   padding: 15px;
 }
 td {
