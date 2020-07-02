@@ -1,6 +1,6 @@
 # app-web-admin
 
-Wep Application that contains admin panel used for PryV platform configuration.
+Wep Application that contains admin panel used for Pryv.io platform configuration.
 
 ## Project setup
 ```

@@ -25,12 +25,12 @@ export default {
   },
   methods: {
     onValueInput: function(e, prop) {
-      this.config[prop] = JSON.stringify(
+      const changedText = JSON.stringify(
         JSON.parse(e.target.innerText),
         null,
         2
       );
-      this.$emit("tableAltered", this.config);
+      this.$emit("tableAltered", { prop: prop, value: changedText });
     }
   }
 };

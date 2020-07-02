@@ -9,6 +9,7 @@
         type="text"
         name="address"
         id="address"
+        placeholder="https://lead.platform.com"
         v-model="address"
         @input="resetFailureIndicators"
       />
@@ -19,6 +20,7 @@
         type="text"
         name="adminKey"
         id="adminKey"
+        placeholder="admin key"
         v-model="adminKey"
         @input="resetFailureIndicators"
       />
@@ -41,7 +43,7 @@
       <p>Verify provided information or try again later.</p>
     </div>
     <br />
-    <ConfigTable :config="pryvConfig" @tableAltered="pryvConfig = $event" />
+    <ConfigTable :config="pryvConfig" @tableAltered="pryvConfig[$event.prop] = $event.value" />
     <transition name="modal">
       <UpdateReportModal
         :updateReport="updateConfigReport"
@@ -85,6 +87,9 @@ export default {
         axios
           .get(`${this.address}/admin/settings?auth=${this.adminKey}`)
           .then(response => {
+            if(!response.data || Object.keys(response.data).length === 0) {
+              throw new Error();
+            }
             this.pryvConfig = response.data;
           })
           .catch(() => {
@@ -104,6 +109,11 @@ export default {
           axios.post(`${this.address}/admin/notify?auth=${this.adminKey}`)
         )
         .then(response => {
+            if(!response.data ||
+              !(Object.hasOwnProperty.call(response.data, 'successes') &&
+              Object.hasOwnProperty.call(response.data, 'failures'))) {
+              throw new Error();
+            }
           this.updateConfigReport = response.data;
           this.showModal = true;
         })
