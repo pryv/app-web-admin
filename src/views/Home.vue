@@ -20,6 +20,7 @@ export default {
 <style scoped>
 img {
   display: block;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   width: 10%;
