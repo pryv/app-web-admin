@@ -33,8 +33,8 @@
       variant="success"
       v-if="Object.keys(pryvConfig).length !== 0"
       v-on:click="updateConfig"
-      >Update</b-button
-    >
+      >Update
+    </b-button>
     <loader v-if="updateInProgress" :loading="updateInProgress"></loader>
     <div class="failure-msg" v-if="updateFailed">
       <p>Unable to update configuration.</p>
