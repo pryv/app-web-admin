@@ -37,7 +37,7 @@
       v-on:click="updateConfig"
       >Update
     </b-button>
-    <loader v-if="updateInProgress" :loading="updateInProgress"></loader>
+    <loader v-if="updateInProgress || loadInProgress" :loading="updateInProgress"></loader>
     <div class="failure-msg" v-if="updateFailed">
       <p>Unable to update configuration.</p>
       <p>Verify provided information or try again later.</p>
@@ -75,7 +75,8 @@ export default {
     updateFailed: false,
     showModal: false,
     updateConfigReport: {},
-    updateInProgress: false
+    updateInProgress: false,
+    loadInProgress: false
   }),
   methods: {
     isFormNotEmpty: function() {
@@ -84,6 +85,7 @@ export default {
     getConfig: function() {
       if (this.isFormNotEmpty()) {
         this.pryvConfig = {};
+        this.loadInProgress = true;
         axios
           .get(`${this.address}/admin/settings?auth=${this.adminKey}`)
           .then(response => {
@@ -94,6 +96,9 @@ export default {
           })
           .catch(() => {
             this.loadFailed = true;
+          })
+          .finally(() => {
+            this.loadInProgress = false;
           });
       }
     },
