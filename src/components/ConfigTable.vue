@@ -25,12 +25,23 @@ export default {
   },
   methods: {
     onValueInput: function(e, prop) {
-      const changedText = JSON.stringify(
-        JSON.parse(e.target.innerText),
-        null,
-        2
-      );
+      let changedText = e.target.innerText;
+      if(this.isJSON(changedText)) {
+        changedText = JSON.stringify(
+          JSON.parse(changedText),
+          null,
+          2
+        );
+      }
       this.$emit("tableAltered", { prop: prop, value: changedText });
+    },
+    isJSON: function(text) {
+      try {
+        JSON.parse(text);
+      } catch (e) {
+        return false;
+      }
+      return true;
     }
   }
 };
