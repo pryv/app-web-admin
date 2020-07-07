@@ -34,7 +34,7 @@ export default {
         };
       }.bind(this))
     },
-    function() {
+    failures: function() {
       return Object.keys(this.updateReport.failures).map(function(key) {
         return {
           url: this.updateReport.failures[key].url,
