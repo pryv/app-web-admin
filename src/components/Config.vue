@@ -1,49 +1,63 @@
 <template>
   <div class="config">
     <h1>Configuration Panel</h1>
-    <form v-on:submit.prevent="getConfig">
-      <label for="address">Config leader address</label><br />
-      <input
-        required
-        pattern="https?://\S+"
-        type="text"
-        name="address"
-        id="address"
-        placeholder="https://lead.platform.com"
-        v-model="address"
-        @input="resetFailureIndicators"
-      />
-      <br /><br />
-      <label for="adminKey">Admin key</label><br />
-      <input
-        required
-        type="text"
-        name="adminKey"
-        id="adminKey"
-        placeholder="admin key"
-        v-model="adminKey"
-        @input="resetFailureIndicators"
-      />
-      <br /><br />
-      <b-button variant="success" type="submit">Load</b-button>
-    </form>
-    <div class="failure-msg" v-if="loadFailed">
-      <p>Unable to retrieve configuration from server.</p>
-      <p>Verify provided information or try again later.</p>
-    </div>
-    <b-button
-      variant="success"
-      v-if="Object.keys(pryvConfig).length !== 0"
-      v-on:click="updateConfig"
-      >Update
-    </b-button>
+    <b-card>
+      <b-form v-on:submit.prevent="getConfig">
+        <b-form-group label-for="address" label="Config leader address">
+          <b-form-input
+            required
+            pattern="https?://\S+"
+            type="text"
+            name="address"
+            id="address"
+            placeholder="https://lead.platform.com"
+            v-model="address"
+            @input="resetFailureIndicators"
+          />
+        </b-form-group>
+        <b-form-group label-for="adminKey" label="Admin key">
+          <b-form-input
+            required
+            type="text"
+            name="adminKey"
+            id="adminKey"
+            placeholder="admin key"
+            v-model="adminKey"
+            @input="resetFailureIndicators"
+          />
+        </b-form-group>
+        <b-button variant="success" type="submit">Load</b-button>
+      </b-form>
+    </b-card>
+    <b-card v-if="loadFailed">
+      <div class="failure-msg">
+        <p>Unable to retrieve configuration from server.</p>
+        <p>Verify provided information or try again later.</p>
+      </div>
+    </b-card>
     <loader v-if="updateInProgress || loadInProgress" :loading="updateInProgress"></loader>
-    <div class="failure-msg" v-if="updateFailed">
-      <p>Unable to update configuration.</p>
-      <p>Verify provided information or try again later.</p>
-    </div>
+    <b-card v-if="updateFailed">
+      <div class="failure-msg">
+        <p>Unable to update configuration.</p>
+        <p>Verify provided information or try again later.</p>
+      </div>
+    </b-card>
     <br />
-    <ConfigTable :config="pryvConfig" @tableAltered="pryvConfig[$event.prop] = $event.value" />
+    <b-card no-body>
+      <b-tabs pills justified card v-if="Object.keys(config).length !== 0">
+        <b-tab title-link-class="tab-title" v-for="(val, prop) in config" :key="prop" :title="val.name">
+          <ConfigTable :initialConfigSection="prop" />
+        </b-tab>
+      </b-tabs>
+    </b-card>
+    <b-card v-if="Object.keys(config).length !== 0">
+      <b-button
+        variant="success"
+        v-on:click="updateConfig"
+        >Update
+      </b-button>
+    </b-card>
+
     <transition name="modal">
       <UpdateReportModal
         :updateReport="updateConfigReport"
@@ -59,6 +73,7 @@ const axios = require("axios");
 import ConfigTable from "@/components/ConfigTable.vue";
 import UpdateReportModal from "@/components/UpdateReportModal.vue";
 import Loader from "@/widgets/Loader.vue";
+import store from '@/store/store.js'
 
 export default {
   name: "Config",
@@ -68,7 +83,6 @@ export default {
     Loader
   },
   data: () => ({
-    pryvConfig: {},
     address: "",
     adminKey: "",
     loadFailed: false,
@@ -76,15 +90,18 @@ export default {
     showModal: false,
     updateConfigReport: {},
     updateInProgress: false,
-    loadInProgress: false
+    loadInProgress: false,
   }),
+  computed: {
+    config: () => store.state.config
+  },
   methods: {
     isFormNotEmpty: function() {
       return !!this.address && !!this.adminKey;
     },
     getConfig: function() {
       if (this.isFormNotEmpty()) {
-        this.pryvConfig = {};
+        store.state.config = {};
         this.loadInProgress = true;
         axios
           .get(`${this.address}/admin/settings?auth=${this.adminKey}`)
@@ -92,7 +109,7 @@ export default {
             if(!response.data || Object.keys(response.data).length === 0) {
               throw new Error();
             }
-            this.pryvConfig = response.data;
+            store.state.config = response.data;
           })
           .catch(() => {
             this.loadFailed = true;
@@ -108,7 +125,7 @@ export default {
       axios
         .put(
           `${this.address}/admin/settings?auth=${this.adminKey}`,
-          this.pryvConfig
+          store.state.config
         )
         .then(() =>
           axios.post(`${this.address}/admin/notify?auth=${this.adminKey}`)
@@ -141,6 +158,8 @@ export default {
 button {
   border-radius: 4px;
   margin: 8px;
+  position: relative; 
+  left: 40%;
 }
 button:hover {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
@@ -148,18 +167,6 @@ button:hover {
 }
 button:active {
   border: 0;
-}
-input[type="text"] {
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #999999;
-  border-radius: 4px;
-}
-input:focus {
-  outline: none !important;
-  width: 40%;
-  background-color: rgb(242, 252, 255);
-  border-color: rgb(120, 190, 202);
 }
 form {
   background-color: #ecf5f3;
