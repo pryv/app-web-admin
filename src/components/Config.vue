@@ -31,7 +31,7 @@
     </b-card>
     <b-card v-if="loadFailed">
       <div class="failure-msg">
-        <p>Unable to retrieve configuration from server.</p>
+        <p>Unable to retrieve configuration from the server.</p>
         <p>Verify provided information or try again later.</p>
       </div>
     </b-card>
