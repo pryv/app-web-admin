@@ -1,8 +1,16 @@
 <template>
   <div class="config-table">
-    <b-table striped hover sticky-header="19em" responsive fixed head-variant="light" :items="displayConfig">
+    <b-table
+      striped
+      hover
+      sticky-header="19em"
+      responsive
+      fixed
+      head-variant="light"
+      :items="displayConfig"
+    >
       <template primary-key v-slot:cell(property)="row">
-        <div class="tab-cell">{{row.item.property}}</div>
+        <div class="tab-cell">{{ row.item.property }}</div>
       </template>
       <template v-slot:cell(value)="row">
         <b-form-input
@@ -11,7 +19,7 @@
         />
       </template>
       <template v-slot:cell(description)="row">
-        <div class="tab-cell">{{row.item.description}}</div>
+        <div class="tab-cell">{{ row.item.description }}</div>
       </template>
     </b-table>
   </div>
@@ -37,10 +45,12 @@ export default {
     displayConfig: function() {
       return Object.keys(this.config).map(
         function(key) {
-          const configDesc = this.config[key].description ? this.config[key].description : null;
-          
+          const configDesc = this.config[key].description
+            ? this.config[key].description
+            : null;
+
           let configValue = this.config[key];
-          if(Object.prototype.hasOwnProperty.call(configValue, 'value')) {
+          if (Object.prototype.hasOwnProperty.call(configValue, "value")) {
             configValue = configValue.value;
           }
 
@@ -52,9 +62,7 @@ export default {
             configValue = String(configValue);
           }
 
-          return { property: key, 
-            value: configValue, 
-            description: configDesc };
+          return { property: key, value: configValue, description: configDesc };
         }.bind(this)
       );
     }

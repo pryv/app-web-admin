@@ -35,7 +35,10 @@
         <p>Verify provided information or try again later.</p>
       </div>
     </b-card>
-    <loader v-if="updateInProgress || loadInProgress" :loading="updateInProgress"></loader>
+    <loader
+      v-if="updateInProgress || loadInProgress"
+      :loading="updateInProgress"
+    ></loader>
     <b-card v-if="updateFailed">
       <div class="failure-msg">
         <p>Unable to update configuration.</p>
@@ -45,17 +48,18 @@
     <br />
     <b-card no-body>
       <b-tabs pills justified card v-if="Object.keys(config).length !== 0">
-        <b-tab title-link-class="tab-title" v-for="(val, prop) in config" :key="prop" :title="val.name">
+        <b-tab
+          title-link-class="tab-title"
+          v-for="(val, prop) in config"
+          :key="prop"
+          :title="val.name"
+        >
           <ConfigTable :initialConfigSection="prop" />
         </b-tab>
       </b-tabs>
     </b-card>
     <b-card v-if="Object.keys(config).length !== 0">
-      <b-button
-        variant="success"
-        v-on:click="updateConfig"
-        >Update
-      </b-button>
+      <b-button variant="success" v-on:click="updateConfig">Update </b-button>
     </b-card>
 
     <transition name="modal">
@@ -73,7 +77,7 @@ const axios = require("axios");
 import ConfigTable from "@/components/ConfigTable.vue";
 import UpdateReportModal from "@/components/UpdateReportModal.vue";
 import Loader from "@/widgets/Loader.vue";
-import store from '@/store/store.js'
+import store from "@/store/store.js";
 
 export default {
   name: "Config",
@@ -90,7 +94,7 @@ export default {
     showModal: false,
     updateConfigReport: {},
     updateInProgress: false,
-    loadInProgress: false,
+    loadInProgress: false
   }),
   computed: {
     config: () => store.state.config
@@ -106,7 +110,7 @@ export default {
         axios
           .get(`${this.address}/admin/settings?auth=${this.adminKey}`)
           .then(response => {
-            if(!response.data || Object.keys(response.data).length === 0) {
+            if (!response.data || Object.keys(response.data).length === 0) {
               throw new Error();
             }
             store.state.config = response.data;
@@ -131,11 +135,15 @@ export default {
           axios.post(`${this.address}/admin/notify?auth=${this.adminKey}`)
         )
         .then(response => {
-            if(!response.data ||
-              !(Object.hasOwnProperty.call(response.data, 'successes') &&
-              Object.hasOwnProperty.call(response.data, 'failures'))) {
-              throw new Error();
-            }
+          if (
+            !response.data ||
+            !(
+              Object.hasOwnProperty.call(response.data, "successes") &&
+              Object.hasOwnProperty.call(response.data, "failures")
+            )
+          ) {
+            throw new Error();
+          }
           this.updateConfigReport = response.data;
           this.showModal = true;
         })
@@ -158,7 +166,7 @@ export default {
 button {
   border-radius: 4px;
   margin: 8px;
-  position: relative; 
+  position: relative;
   left: 40%;
 }
 button:hover {
