@@ -1,5 +1,7 @@
 # app-web-admin
 
+Wep Application that contains admin panel used for Pryv.io platform configuration.
+
 ## Project setup
 ```
 yarn install
@@ -24,6 +26,3 @@ yarn test:unit
 ```
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
