@@ -3,7 +3,7 @@
     <b-table
       striped
       hover
-      sticky-header="19em"
+      sticky-header="45em"
       responsive
       fixed
       head-variant="light"
@@ -16,6 +16,7 @@
         <b-form-input
           v-model="row.item.value"
           v-on:blur="onValueChanged($event, row.item.property)"
+          :disabled="!valuesEditable"
         />
       </template>
       <template v-slot:cell(description)="row">
@@ -27,11 +28,13 @@
 
 <script>
 import store from "@/store/store.js";
+import { PermissionsService } from "@/services/permissions.service.js";
 
 export default {
   name: "ConfigTable",
   props: {
-    initialConfigSection: String
+    initialConfigSection: String,
+    valuesEditable: Boolean
   },
   data: function() {
     return {
@@ -39,6 +42,7 @@ export default {
     };
   },
   computed: {
+    canUpdateSettings: () => PermissionsService.canUpdateSettings(),
     config: function() {
       return store.state.config[this.configSection].settings;
     },
@@ -89,7 +93,7 @@ export default {
 
 <style scoped>
 .config-table {
-  height: 30rem;
+  height: 68rem;
 }
 .tab-cell {
   white-space: normal;

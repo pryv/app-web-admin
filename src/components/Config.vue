@@ -1,38 +1,10 @@
 <template>
-  <div class="config">
-    <h1>Configuration Panel</h1>
-    <b-card>
-      <b-form v-on:submit.prevent="getConfig">
-        <b-form-group label-for="address" label="Config leader address">
-          <b-form-input
-            required
-            pattern="https?://\S+"
-            type="text"
-            name="address"
-            id="address"
-            placeholder="https://lead.platform.com"
-            v-model="address"
-            @input="resetFailureIndicators"
-          />
-        </b-form-group>
-        <b-form-group label-for="adminKey" label="Admin key">
-          <b-form-input
-            required
-            type="text"
-            name="adminKey"
-            id="adminKey"
-            placeholder="admin key"
-            v-model="adminKey"
-            @input="resetFailureIndicators"
-          />
-        </b-form-group>
-        <b-button variant="success" type="submit">Load</b-button>
-      </b-form>
-    </b-card>
+  <div class="platform-config">
+    <h2>Platform Configuration</h2>
     <b-card v-if="loadFailed">
       <div class="failure-msg">
         <p>Unable to retrieve configuration from the server.</p>
-        <p>Verify provided information or try again later.</p>
+        <p>Please try again later.</p>
       </div>
     </b-card>
     <loader
@@ -54,11 +26,14 @@
           :key="prop"
           :title="val.name"
         >
-          <ConfigTable :initialConfigSection="prop" />
+          <ConfigTable
+            :initialConfigSection="prop"
+            :valuesEditable="canUpdateSettings"
+          />
         </b-tab>
       </b-tabs>
     </b-card>
-    <b-card v-if="Object.keys(config).length !== 0">
+    <b-card v-if="Object.keys(config).length !== 0 && canUpdateSettings">
       <b-button variant="success" v-on:click="updateConfig">Update </b-button>
     </b-card>
 
@@ -74,10 +49,12 @@
 
 <script>
 const axios = require("axios");
+const { handleHttpErrors } = require("@/utils/errorHandling.js");
 import ConfigTable from "@/components/ConfigTable.vue";
 import UpdateReportModal from "@/components/UpdateReportModal.vue";
 import Loader from "@/widgets/Loader.vue";
 import store from "@/store/store.js";
+import { PermissionsService } from "@/services/permissions.service.js";
 
 export default {
   name: "Config",
@@ -87,8 +64,6 @@ export default {
     Loader
   },
   data: () => ({
-    address: "",
-    adminKey: "",
     loadFailed: false,
     updateFailed: false,
     showModal: false,
@@ -97,42 +72,57 @@ export default {
     loadInProgress: false
   }),
   computed: {
-    config: () => store.state.config
+    config: () => store.state.config,
+    canUpdateSettings: () => PermissionsService.canUpdateSettings()
   },
   methods: {
-    isFormNotEmpty: function() {
-      return !!this.address && !!this.adminKey;
-    },
     getConfig: function() {
-      if (this.isFormNotEmpty()) {
-        store.state.config = {};
-        this.loadInProgress = true;
-        axios
-          .get(`${this.address}/admin/settings?auth=${this.adminKey}`)
-          .then(response => {
-            if (!response.data || Object.keys(response.data).length === 0) {
-              throw new Error();
-            }
-            store.state.config = response.data;
-          })
-          .catch(() => {
+      store.state.config = {};
+      this.loadInProgress = true;
+      axios
+        .get(`${localStorage.getItem("serverUrl")}/admin/settings`, {
+          headers: {
+            authorization: localStorage.getItem("token")
+          }
+        })
+        .then(response => {
+          if (!response.data || Object.keys(response.data).length === 0) {
+            throw new Error();
+          }
+          store.state.config = response.data;
+        })
+        .catch(error => {
+          if (!handleHttpErrors(error, this)) {
             this.loadFailed = true;
-          })
-          .finally(() => {
-            this.loadInProgress = false;
-          });
-      }
+          }
+        })
+        .finally(() => {
+          this.loadInProgress = false;
+        });
     },
     updateConfig: function() {
       this.updateInProgress = true;
       this.updateFailed = false;
       axios
         .put(
-          `${this.address}/admin/settings?auth=${this.adminKey}`,
-          store.state.config
+          `${localStorage.getItem("serverUrl")}/admin/settings`,
+          store.state.config,
+          {
+            headers: {
+              authorization: localStorage.getItem("token")
+            }
+          }
         )
         .then(() =>
-          axios.post(`${this.address}/admin/notify?auth=${this.adminKey}`)
+          axios.post(
+            `${localStorage.getItem("serverUrl")}/admin/notify`,
+            {},
+            {
+              headers: {
+                authorization: localStorage.getItem("token")
+              }
+            }
+          )
         )
         .then(response => {
           if (
@@ -158,6 +148,9 @@ export default {
       this.loadFailed = false;
       this.updateFailed = false;
     }
+  },
+  beforeMount() {
+    this.getConfig();
   }
 };
 </script>

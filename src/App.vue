@@ -1,8 +1,26 @@
 <template>
   <div id="app">
-    <router-view />
+    <NavBar :loggedIn="loggedIn" @loggedOut="loggedIn = false" />
+    <router-view @loggedIn="loggedIn = true" @loggedOut="loggedIn = false" />
   </div>
 </template>
+
+<script>
+import NavBar from "@/components/NavBar.vue";
+
+export default {
+  name: "App",
+  components: {
+    NavBar
+  },
+  data: () => ({
+    loggedIn: false
+  }),
+  beforeMount() {
+    this.loggedIn = !!localStorage.getItem("token");
+  }
+};
+</script>
 
 <style>
 @import "https://api.pryv.com/style/pryv.min.css";
@@ -18,5 +36,9 @@
 }
 .tab-title:hover {
   color: rgb(76, 136, 136);
+}
+.users-management-user-row {
+  width: 20%;
+  border-right: 2px solid #c8c8c8;
 }
 </style>
