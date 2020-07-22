@@ -38,15 +38,19 @@
       </div>
       <div slot="footer"></div>
     </Modal>
-    <OperationFailedModal
-      v-if="showFailureModal"
-      @close="showFailureModal = false"
-    />
-    <OperationSuccessfulModal
-      v-if="showPasswordChangedModal"
-      :text="passwordChangedText"
-      @close="$emit('close')"
-    />
+    <transition name="modal">
+      <OperationFailedModal
+        v-if="showFailureModal"
+        @close="showFailureModal = false"
+      />
+    </transition>
+    <transition name="modal">
+      <OperationSuccessfulModal
+        v-if="showPasswordChangedModal"
+        :text="passwordChangedText"
+        @close="$emit('close')"
+      />
+    </transition>
     <loader v-if="showLoader" :loading="showLoader"></loader>
   </div>
 </template>
@@ -105,3 +109,20 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.modal-enter-active {
+  transition: all 0.3s ease;
+}
+.modal-enter {
+  opacity: 0;
+}
+.modal-leave-active {
+  opacity: 0;
+}
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+</style>

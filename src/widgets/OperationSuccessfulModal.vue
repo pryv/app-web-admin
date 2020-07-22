@@ -1,6 +1,6 @@
 <template>
   <div class="operation-successful-modal-mask">
-    <div class="operation-successful-modal-wrapper" @click="$emit('close')">
+    <div class="operation-successful-modal-wrapper">
       <div class="operation-successful-modal-container">
         <div class="operation-successful-modal-body">
           <b-iconstack font-scale="10">
@@ -8,6 +8,9 @@
             <b-icon stacked icon="check" variant="success"></b-icon>
           </b-iconstack>
           <div class="operation-successful-modal-message">{{ text }}</div>
+          <b-button variant="secondary" @click="$emit('close')">
+            Close
+          </b-button>
         </div>
       </div>
     </div>
@@ -56,5 +59,15 @@ export default {
 }
 .operation-successful-modal-message {
   margin-top: 10px;
+}
+button {
+  border-radius: 4px;
+  position: relative;
+  margin-top: 15px;
+  left: 30%;
+}
+button:hover {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
+  outline: none !important;
 }
 </style>

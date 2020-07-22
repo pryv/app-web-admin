@@ -64,26 +64,33 @@
       <div slot="footer"></div>
     </Modal>
     <loader v-if="showLoader" :loading="showLoader"></loader>
-    <ConfirmationModal
-      v-if="showResetPasswordConfirmationModal"
-      :text="resetPasswordConfirmationMsg"
-      @close="showResetPasswordConfirmationModal = false"
-      @confirm="resetPassword()"
-    />
-    <ConfirmationModal
-      v-if="showDeleteConfirmationModal"
-      :text="deleteConfirmationMsg"
-      @close="showDeleteConfirmationModal = false"
-      @confirm="deleteUser()"
-    />
-    <OperationFailedModal
-      v-if="showFailureModal"
-      @close="showFailureModal = false"
-    />
+    <transition name="modal">
+      <ConfirmationModal
+        v-if="showResetPasswordConfirmationModal"
+        :text="resetPasswordConfirmationMsg"
+        @close="showResetPasswordConfirmationModal = false"
+        @confirm="resetPassword()"
+      />
+    </transition>
+    <transition name="modal">
+      <ConfirmationModal
+        v-if="showDeleteConfirmationModal"
+        :text="deleteConfirmationMsg"
+        @close="showDeleteConfirmationModal = false"
+        @confirm="deleteUser()"
+      />
+    </transition>
+    <transition name="modal">
+      <OperationFailedModal
+        v-if="showFailureModal"
+        @close="showFailureModal = false"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
+// const secureRandom = require("secure-random");
 const axios = require("axios");
 import Modal from "@/widgets/Modal.vue";
 import OperationFailedModal from "@/widgets/OperationFailedModal.vue";
@@ -153,7 +160,10 @@ export default {
           }
         )
         .then(() => {
-          this.$emit("userCreated");
+          this.$emit("userCreated", {
+            username: this.username,
+            password: this.password,
+          });
         })
         .catch(error => {
           if (!handleHttpErrors(error, this)) {
@@ -203,8 +213,8 @@ export default {
             },
           }
         )
-        .then(() => {
-          this.$emit("passwordResetDone");
+        .then(response => {
+          this.$emit("passwordResetDone", response.data);
         })
         .catch(error => {
           if (!handleHttpErrors(error, this)) {
@@ -234,7 +244,11 @@ export default {
         .finally(() => (this.showLoader = false));
     },
   },
-  beforeMount() {},
+  beforeMount() {
+    this.password = Math.random()
+      .toString(36)
+      .substr(2);
+  },
 };
 </script>
 
@@ -244,5 +258,19 @@ hr {
 }
 .black-button:hover {
   color: #c8c8c8;
+}
+.modal-enter-active {
+  transition: all 0.3s ease;
+}
+.modal-enter {
+  opacity: 0;
+}
+.modal-leave-active {
+  opacity: 0;
+}
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

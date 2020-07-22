@@ -43,45 +43,58 @@
         Create
       </b-button>
     </b-card>
-    <CreateEditUserModal
-      v-if="showEditUserModal"
-      :edit="true"
-      :username="selectedUser.username"
-      :permissions="Object.assign({}, selectedUser.permissions)"
-      @close="showEditUserModal = false"
-      @permissionsChanged="onPermissionsChanged($event, selectedUser.username)"
-      @passwordResetDone="showUsersPasswordResetedModal = true"
-      @userDeleted="onUserDeleted()"
-    />
+    <transition name="modal">
+      <CreateEditUserModal
+        v-if="showEditUserModal"
+        :edit="true"
+        :username="selectedUser.username"
+        :permissions="Object.assign({}, selectedUser.permissions)"
+        @close="showEditUserModal = false"
+        @permissionsChanged="
+          onPermissionsChanged($event, selectedUser.username)
+        "
+        @passwordResetDone="onPasswordResetDone($event)"
+        @userDeleted="onUserDeleted()"
+      />
+    </transition>
     <loader v-if="loadInProgress" :loading="loadInProgress"></loader>
-    <CreateEditUserModal
-      v-if="showCreateUserModal"
-      :create="true"
-      username=""
-      @close="showCreateUserModal = false"
-      :permissions="{ users: [], settings: [] }"
-      @userCreated="onUserCreated()"
-    />
-    <OperationSuccessfulModal
-      v-if="showUsersPermissionsChangedModal"
-      :text="usersPermissionsChangedText"
-      @close="onUsersPermissionsChangedModalClose()"
-    />
-    <OperationSuccessfulModal
-      v-if="showUsersPasswordResetedModal"
-      :text="usersPasswordResetedText"
-      @close="onUsersPasswordResetedModalClose()"
-    />
-    <OperationSuccessfulModal
-      v-if="showUserDeletedModal"
-      :text="userDeletedText"
-      @close="onUserDeletedModalClose()"
-    />
-    <OperationSuccessfulModal
-      v-if="showUserCreatedModal"
-      :text="userCreatedText"
-      @close="onUserCreatedModalClose()"
-    />
+    <transition name="modal">
+      <CreateEditUserModal
+        v-if="showCreateUserModal"
+        :create="true"
+        @close="showCreateUserModal = false"
+        :permissions="{ users: [], settings: [] }"
+        @userCreated="onUserCreated($event)"
+      />
+    </transition>
+    <transition name="modal">
+      <OperationSuccessfulModal
+        v-if="showUsersPermissionsChangedModal"
+        :text="usersPermissionsChangedText"
+        @close="onUsersPermissionsChangedModalClose()"
+      />
+    </transition>
+    <transition name="modal">
+      <OperationSuccessfulModal
+        v-if="showUsersPasswordResetedModal"
+        :text="usersPasswordResetedText"
+        @close="onUsersPasswordResetedModalClose()"
+      />
+    </transition>
+    <transition name="modal">
+      <OperationSuccessfulModal
+        v-if="showUserDeletedModal"
+        :text="userDeletedText"
+        @close="onUserDeletedModalClose()"
+      />
+    </transition>
+    <transition name="modal">
+      <OperationSuccessfulModal
+        v-if="showUserCreatedModal"
+        :text="userCreatedText"
+        @close="onUserCreatedModalClose()"
+      />
+    </transition>
   </div>
 </template>
 
@@ -109,7 +122,7 @@ export default {
     tableHeaders: [
       {
         key: "users",
-        label: "Users",
+        label: "Username",
         thStyle: { "padding-left": "60px" },
         class: "users-management-user-row",
       },
@@ -132,9 +145,11 @@ export default {
     showUserDeletedModal: false,
     userDeletedText: "User deleted successfully",
     showUserCreatedModal: false,
-    userCreatedText: "User created successfully",
+    userCreatedInitialText: "User created successfully.",
+    userCreatedText: "",
     showUsersPasswordResetedModal: false,
-    usersPasswordResetedText: "User's password reset successful",
+    usersPasswordResetedInitialText: "User's password reset successful.",
+    usersPasswordResetedText: "",
     showUsersPermissionsChangedModal: false,
     usersPermissionsChangedText: "User's permissions updated successfully",
   }),
@@ -155,6 +170,10 @@ export default {
       this.showUserCreatedModal = false;
       this.showCreateUserModal = false;
     },
+    onPasswordResetDone: function($event) {
+      this.usersPasswordResetedText = `${this.usersPasswordResetedInitialText} New password: ${$event.password}`;
+      this.showUsersPasswordResetedModal = true;
+    },
     onRowSelected: function(items) {
       if (items && items.length > 0) {
         this.selectedUser = items[0];
@@ -162,7 +181,8 @@ export default {
         this.selectedUser = "";
       }
     },
-    onUserCreated: function() {
+    onUserCreated: function($event) {
+      this.userCreatedText = `${this.userCreatedInitialText} username: ${$event.username} \n password: ${$event.password}`;
       this.showUserCreatedModal = true;
       this.getUsersList();
     },

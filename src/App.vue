@@ -40,5 +40,6 @@ export default {
 .users-management-user-row {
   width: 20%;
   border-right: 2px solid #c8c8c8;
+  vertical-align: middle !important;
 }
 </style>

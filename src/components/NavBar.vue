@@ -9,10 +9,16 @@
 
       <b-collapse v-if="loggedIn" id="nav-collapse" is-nav>
         <b-navbar-nav align="left" tag="div">
-          <b-nav-item v-if="canViewPlatformConfig" to="/platform-config"
+          <b-nav-item
+            class="nav-view"
+            v-if="canViewPlatformConfig"
+            to="/platform-config"
             >Platform Configuration</b-nav-item
           >
-          <b-nav-item v-if="canViewUsersManagement" to="/users-management"
+          <b-nav-item
+            class="nav-view"
+            v-if="canViewUsersManagement"
+            to="/users-management"
             >Users Management</b-nav-item
           >
         </b-navbar-nav>
@@ -30,10 +36,12 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <PasswordChangeModal
-      v-if="displayChangePasswordModal"
-      @close="displayChangePasswordModal = false"
-    />
+    <transition name="modal">
+      <PasswordChangeModal
+        v-if="displayChangePasswordModal"
+        @close="displayChangePasswordModal = false"
+      />
+    </transition>
   </div>
 </template>
 
@@ -89,5 +97,22 @@ img {
 }
 .navbar-brand {
   width: 30%;
+}
+.nav-view {
+  border-right: 2px solid #45778f;
+}
+.modal-enter-active {
+  transition: all 0.3s ease;
+}
+.modal-enter {
+  opacity: 0;
+}
+.modal-leave-active {
+  opacity: 0;
+}
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>
