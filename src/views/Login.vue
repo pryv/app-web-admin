@@ -30,7 +30,7 @@
         <b-form-group label-for="password" label="Password">
           <b-form-input
             required
-            type="text"
+            type="password"
             name="password"
             id="password"
             placeholder="Password"
@@ -94,6 +94,9 @@ export default {
         })
         .catch(() => {
           this.loginFailed = true;
+        })
+        .finally(() => {
+          this.loginInProgress = false;
         });
     }
   }
