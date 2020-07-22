@@ -20,10 +20,10 @@ import Modal from "@/widgets/Modal.vue";
 export default {
   name: "UpdateReportModal",
   components: {
-    Modal
+    Modal,
   },
   props: {
-    updateReport: {}
+    updateReport: {},
   },
   computed: {
     successes: function() {
@@ -31,7 +31,7 @@ export default {
         function(key) {
           return {
             url: this.updateReport.successes[key].url,
-            role: this.updateReport.successes[key].role
+            role: this.updateReport.successes[key].role,
           };
         }.bind(this)
       );
@@ -41,12 +41,12 @@ export default {
         function(key) {
           return {
             url: this.updateReport.failures[key].url,
-            role: this.updateReport.failures[key].role
+            role: this.updateReport.failures[key].role,
           };
         }.bind(this)
       );
-    }
-  }
+    },
+  },
 };
 </script>
 

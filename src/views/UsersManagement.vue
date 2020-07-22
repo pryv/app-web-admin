@@ -99,7 +99,7 @@ export default {
     Loader,
     CreateEditUserModal,
     PermissionsTable,
-    OperationSuccessfulModal
+    OperationSuccessfulModal,
   },
   data: () => ({
     usersList: [],
@@ -111,13 +111,13 @@ export default {
         key: "users",
         label: "Users",
         thStyle: { "padding-left": "60px" },
-        class: "users-management-user-row"
+        class: "users-management-user-row",
       },
       {
         key: "permissions",
         label: "Permissions",
-        thStyle: { "padding-left": "60px" }
-      }
+        thStyle: { "padding-left": "60px" },
+      },
     ],
     settingsPermissions: ["read", "update"],
     usersPermissions: [
@@ -125,7 +125,7 @@ export default {
       "create",
       "delete",
       "resetPassword",
-      "changePermissions"
+      "changePermissions",
     ],
     showCreateUserModal: false,
     showEditUserModal: false,
@@ -136,7 +136,7 @@ export default {
     showUsersPasswordResetedModal: false,
     usersPasswordResetedText: "User's password reset successful",
     showUsersPermissionsChangedModal: false,
-    usersPermissionsChangedText: "User's permissions updated successfully"
+    usersPermissionsChangedText: "User's permissions updated successfully",
   }),
   methods: {
     onUsersPermissionsChangedModalClose: function() {
@@ -181,8 +181,8 @@ export default {
       axios
         .get(`${localStorage.getItem("serverUrl")}/users`, {
           headers: {
-            authorization: localStorage.getItem("token")
-          }
+            authorization: localStorage.getItem("token"),
+          },
         })
         .then(response => {
           if (!response.data || Object.keys(response.data).length === 0) {
@@ -198,11 +198,11 @@ export default {
         .finally(() => {
           this.loadInProgress = false;
         });
-    }
+    },
   },
   beforeMount() {
     this.getUsersList();
-  }
+  },
 };
 </script>
 

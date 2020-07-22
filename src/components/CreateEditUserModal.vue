@@ -99,14 +99,14 @@ export default {
     edit: Boolean,
     create: Boolean,
     username: String,
-    permissions: {}
+    permissions: {},
   },
   components: {
     Modal,
     PermissionsTable,
     ConfirmationModal,
     Loader,
-    OperationFailedModal
+    OperationFailedModal,
   },
   data: function() {
     return {
@@ -117,7 +117,7 @@ export default {
         "Are you sure you want to reset the password of this user?",
       deleteConfirmationMsg: "Are you sure you want to delete this user?",
       showLoader: false,
-      showFailureModal: false
+      showFailureModal: false,
     };
   },
   computed: {
@@ -126,7 +126,7 @@ export default {
     },
     canChangePermissions: () => PermissionsService.canChangePermissions(),
     canResetPassword: () => PermissionsService.canResetPassword(),
-    canDelete: () => PermissionsService.canDeleteUsers()
+    canDelete: () => PermissionsService.canDeleteUsers(),
   },
   methods: {
     saveChanges: function() {
@@ -144,12 +144,12 @@ export default {
           {
             username: this.username,
             password: this.password,
-            permissions: this.permissions
+            permissions: this.permissions,
           },
           {
             headers: {
-              authorization: localStorage.getItem("token")
-            }
+              authorization: localStorage.getItem("token"),
+            },
           }
         )
         .then(() => {
@@ -170,12 +170,12 @@ export default {
             this.username
           }/permissions`,
           {
-            permissions: this.permissions
+            permissions: this.permissions,
           },
           {
             headers: {
-              authorization: localStorage.getItem("token")
-            }
+              authorization: localStorage.getItem("token"),
+            },
           }
         )
         .then(() => {
@@ -199,8 +199,8 @@ export default {
           {},
           {
             headers: {
-              authorization: localStorage.getItem("token")
-            }
+              authorization: localStorage.getItem("token"),
+            },
           }
         )
         .then(() => {
@@ -220,8 +220,8 @@ export default {
       axios
         .delete(`${localStorage.getItem("serverUrl")}/users/${this.username}`, {
           headers: {
-            authorization: localStorage.getItem("token")
-          }
+            authorization: localStorage.getItem("token"),
+          },
         })
         .catch(error => {
           if (!handleHttpErrors(error, this)) {
@@ -232,9 +232,9 @@ export default {
           this.$emit("userDeleted");
         })
         .finally(() => (this.showLoader = false));
-    }
+    },
   },
-  beforeMount() {}
+  beforeMount() {},
 };
 </script>
 

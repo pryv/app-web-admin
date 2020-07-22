@@ -15,6 +15,6 @@ export default {
     } else if (PermissionsService.canReadUsers()) {
       this.$router.push("/platform-config");
     }
-  }
+  },
 };
 </script>

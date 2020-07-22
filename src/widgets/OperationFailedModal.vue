@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: "OperationFailedModal"
+  name: "OperationFailedModal",
 };
 </script>
 

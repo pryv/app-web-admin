@@ -32,8 +32,8 @@ export default {
   props: {
     header: String,
     body: String,
-    showCancelButton: Boolean
-  }
+    showCancelButton: Boolean,
+  },
 };
 </script>
 

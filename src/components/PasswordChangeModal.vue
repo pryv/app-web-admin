@@ -65,7 +65,7 @@ export default {
     Modal,
     OperationSuccessfulModal,
     OperationFailedModal,
-    Loader
+    Loader,
   },
   data: () => ({
     password: "",
@@ -75,7 +75,7 @@ export default {
     passwordChangedText: "Password changed successfully",
     showPasswordChangedModal: false,
     showFailureModal: false,
-    showLoader: false
+    showLoader: false,
   }),
   methods: {
     requestPasswordChange: function() {
@@ -90,8 +90,8 @@ export default {
           { password: this.password },
           {
             headers: {
-              authorization: token
-            }
+              authorization: token,
+            },
           }
         )
         .then(() => {
@@ -101,7 +101,7 @@ export default {
           this.showFailureModal = true;
         })
         .finally(() => (this.showLoader = false));
-    }
-  }
+    },
+  },
 };
 </script>

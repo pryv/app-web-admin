@@ -11,14 +11,14 @@ import NavBar from "@/components/NavBar.vue";
 export default {
   name: "App",
   components: {
-    NavBar
+    NavBar,
   },
   data: () => ({
-    loggedIn: false
+    loggedIn: false,
   }),
   beforeMount() {
     this.loggedIn = !!localStorage.getItem("token");
-  }
+  },
 };
 </script>
 

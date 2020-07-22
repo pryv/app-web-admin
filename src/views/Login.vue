@@ -58,14 +58,14 @@ import Loader from "@/widgets/Loader.vue";
 export default {
   name: "Login",
   components: {
-    Loader
+    Loader,
   },
   data: () => ({
     serverUrl: "",
     username: "",
     password: "",
     loginFailed: false,
-    loginInProgress: false
+    loginInProgress: false,
   }),
   methods: {
     login: function() {
@@ -73,7 +73,7 @@ export default {
       axios
         .post(`${this.serverUrl}/auth/login`, {
           username: this.username,
-          password: this.password
+          password: this.password,
         })
         .then(response => {
           if (
@@ -98,8 +98,8 @@ export default {
         .finally(() => {
           this.loginInProgress = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

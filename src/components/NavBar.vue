@@ -45,17 +45,17 @@ import { PermissionsService } from "@/services/permissions.service.js";
 export default {
   name: "NavBar",
   components: {
-    PasswordChangeModal
+    PasswordChangeModal,
   },
   props: {
-    loggedIn: Boolean
+    loggedIn: Boolean,
   },
   data: () => ({
-    displayChangePasswordModal: false
+    displayChangePasswordModal: false,
   }),
   computed: {
     canViewPlatformConfig: () => PermissionsService.canReadSettings(),
-    canViewUsersManagement: () => PermissionsService.canReadUsers()
+    canViewUsersManagement: () => PermissionsService.canReadUsers(),
   },
   methods: {
     logout: function() {
@@ -65,8 +65,8 @@ export default {
           {},
           {
             headers: {
-              authorization: localStorage.getItem("token")
-            }
+              authorization: localStorage.getItem("token"),
+            },
           }
         )
         .finally(() => {
@@ -74,8 +74,8 @@ export default {
           this.$emit("loggedOut");
           this.$router.push("/login");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

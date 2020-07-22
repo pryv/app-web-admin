@@ -12,8 +12,8 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 export default {
   name: "Loader",
   components: {
-    PulseLoader
-  }
+    PulseLoader,
+  },
 };
 </script>
 

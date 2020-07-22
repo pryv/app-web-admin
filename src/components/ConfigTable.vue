@@ -34,11 +34,11 @@ export default {
   name: "ConfigTable",
   props: {
     initialConfigSection: String,
-    valuesEditable: Boolean
+    valuesEditable: Boolean,
   },
   data: function() {
     return {
-      configSection: this.initialConfigSection
+      configSection: this.initialConfigSection,
     };
   },
   computed: {
@@ -69,7 +69,7 @@ export default {
           return { property: key, value: configValue, description: configDesc };
         }.bind(this)
       );
-    }
+    },
   },
   methods: {
     onValueChanged: function(e, prop) {
@@ -86,8 +86,8 @@ export default {
         return false;
       }
       return true;
-    }
-  }
+    },
+  },
 };
 </script>
 

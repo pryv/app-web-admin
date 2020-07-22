@@ -61,7 +61,7 @@ export default {
   components: {
     ConfigTable,
     UpdateReportModal,
-    Loader
+    Loader,
   },
   data: () => ({
     loadFailed: false,
@@ -69,11 +69,11 @@ export default {
     showModal: false,
     updateConfigReport: {},
     updateInProgress: false,
-    loadInProgress: false
+    loadInProgress: false,
   }),
   computed: {
     config: () => store.state.config,
-    canUpdateSettings: () => PermissionsService.canUpdateSettings()
+    canUpdateSettings: () => PermissionsService.canUpdateSettings(),
   },
   methods: {
     getConfig: function() {
@@ -82,8 +82,8 @@ export default {
       axios
         .get(`${localStorage.getItem("serverUrl")}/admin/settings`, {
           headers: {
-            authorization: localStorage.getItem("token")
-          }
+            authorization: localStorage.getItem("token"),
+          },
         })
         .then(response => {
           if (!response.data || Object.keys(response.data).length === 0) {
@@ -109,8 +109,8 @@ export default {
           store.state.config,
           {
             headers: {
-              authorization: localStorage.getItem("token")
-            }
+              authorization: localStorage.getItem("token"),
+            },
           }
         )
         .then(() =>
@@ -119,8 +119,8 @@ export default {
             {},
             {
               headers: {
-                authorization: localStorage.getItem("token")
-              }
+                authorization: localStorage.getItem("token"),
+              },
             }
           )
         )
@@ -147,11 +147,11 @@ export default {
     resetFailureIndicators: function() {
       this.loadFailed = false;
       this.updateFailed = false;
-    }
+    },
   },
   beforeMount() {
     this.getConfig();
-  }
+  },
 };
 </script>
 
