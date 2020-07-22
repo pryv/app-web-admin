@@ -90,7 +90,7 @@
 </template>
 
 <script>
-// const secureRandom = require("secure-random");
+const cryptoRandomString = require("crypto-random-string");
 const axios = require("axios");
 import Modal from "@/widgets/Modal.vue";
 import OperationFailedModal from "@/widgets/OperationFailedModal.vue";
@@ -245,9 +245,7 @@ export default {
     },
   },
   beforeMount() {
-    this.password = Math.random()
-      .toString(36)
-      .substr(2);
+    this.password = cryptoRandomString({ length: 10, type: "url-safe" });
   },
 };
 </script>
