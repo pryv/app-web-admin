@@ -199,11 +199,7 @@ export default {
     getUsersList: function() {
       this.loadInProgress = true;
       axios
-        .get(`${localStorage.getItem("serverUrl")}/users`, {
-          headers: {
-            authorization: localStorage.getItem("token"),
-          },
-        })
+        .get(`/users`)
         .then(response => {
           if (!response.data || Object.keys(response.data).length === 0) {
             throw new Error();

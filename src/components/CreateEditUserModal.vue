@@ -146,19 +146,11 @@ export default {
     createUser() {
       this.showLoader = true;
       axios
-        .post(
-          `${localStorage.getItem("serverUrl")}/users`,
-          {
-            username: this.username,
-            password: this.password,
-            permissions: this.permissions,
-          },
-          {
-            headers: {
-              authorization: localStorage.getItem("token"),
-            },
-          }
-        )
+        .post(`/users`, {
+          username: this.username,
+          password: this.password,
+          permissions: this.permissions,
+        })
         .then(() => {
           this.$emit("userCreated", {
             username: this.username,
@@ -175,19 +167,9 @@ export default {
     changePermissions() {
       this.showLoader = true;
       axios
-        .put(
-          `${localStorage.getItem("serverUrl")}/users/${
-            this.username
-          }/permissions`,
-          {
-            permissions: this.permissions,
-          },
-          {
-            headers: {
-              authorization: localStorage.getItem("token"),
-            },
-          }
-        )
+        .put(`/users/${this.username}/permissions`, {
+          permissions: this.permissions,
+        })
         .then(() => {
           this.$emit("permissionsChanged", this.permissions);
         })
@@ -202,17 +184,7 @@ export default {
       this.showResetPasswordConfirmationModal = false;
       this.showLoader = true;
       axios
-        .post(
-          `${localStorage.getItem("serverUrl")}/users/${
-            this.username
-          }/reset-password`,
-          {},
-          {
-            headers: {
-              authorization: localStorage.getItem("token"),
-            },
-          }
-        )
+        .post(`/users/${this.username}/reset-password`, {})
         .then(response => {
           this.$emit("passwordResetDone", response.data);
         })
@@ -228,11 +200,7 @@ export default {
       this.showLoader = true;
 
       axios
-        .delete(`${localStorage.getItem("serverUrl")}/users/${this.username}`, {
-          headers: {
-            authorization: localStorage.getItem("token"),
-          },
-        })
+        .delete(`/users/${this.username}`)
         .catch(error => {
           if (!handleHttpErrors(error, this)) {
             this.showFailureModal = true;

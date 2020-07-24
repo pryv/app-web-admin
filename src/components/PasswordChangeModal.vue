@@ -87,17 +87,7 @@ export default {
       const token = localStorage.getItem("token");
       const username = jwtDecode(token).username;
       axios
-        .post(
-          `${localStorage.getItem(
-            "serverUrl"
-          )}/users/${username}/change-password`,
-          { password: this.password },
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        )
+        .post(`/users/${username}/change-password`, { password: this.password })
         .then(() => {
           this.showPasswordChangedModal = true;
         })

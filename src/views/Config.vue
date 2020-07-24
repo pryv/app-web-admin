@@ -80,11 +80,7 @@ export default {
       store.state.config = {};
       this.loadInProgress = true;
       axios
-        .get(`${localStorage.getItem("serverUrl")}/admin/settings`, {
-          headers: {
-            authorization: localStorage.getItem("token"),
-          },
-        })
+        .get(`/admin/settings`)
         .then(response => {
           if (!response.data || Object.keys(response.data).length === 0) {
             throw new Error();
@@ -104,26 +100,8 @@ export default {
       this.updateInProgress = true;
       this.updateFailed = false;
       axios
-        .put(
-          `${localStorage.getItem("serverUrl")}/admin/settings`,
-          store.state.config,
-          {
-            headers: {
-              authorization: localStorage.getItem("token"),
-            },
-          }
-        )
-        .then(() =>
-          axios.post(
-            `${localStorage.getItem("serverUrl")}/admin/notify`,
-            {},
-            {
-              headers: {
-                authorization: localStorage.getItem("token"),
-              },
-            }
-          )
-        )
+        .put(`/admin/settings`, store.state.config)
+        .then(() => axios.post(`/admin/notify`, {}))
         .then(response => {
           if (
             !response.data ||

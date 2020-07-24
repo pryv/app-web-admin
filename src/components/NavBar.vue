@@ -67,21 +67,11 @@ export default {
   },
   methods: {
     logout: function() {
-      axios
-        .post(
-          `${localStorage.getItem("serverUrl")}/auth/logout`,
-          {},
-          {
-            headers: {
-              authorization: localStorage.getItem("token"),
-            },
-          }
-        )
-        .finally(() => {
-          localStorage.removeItem("token");
-          this.$emit("loggedOut");
-          this.$router.push("/login");
-        });
+      axios.post(`/auth/logout`, {}).finally(() => {
+        localStorage.removeItem("token");
+        this.$emit("loggedOut");
+        this.$router.push("/login");
+      });
     },
   },
 };

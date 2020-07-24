@@ -7,6 +7,7 @@
 
 <script>
 import NavBar from "@/components/NavBar.vue";
+const axios = require("axios");
 
 export default {
   name: "App",
@@ -18,6 +19,13 @@ export default {
   }),
   beforeMount() {
     this.loggedIn = !!localStorage.getItem("token");
+
+    if (this.loggedIn) {
+      axios.defaults.baseURL = localStorage.getItem("serverUrl");
+      axios.defaults.headers.common["authorization"] = localStorage.getItem(
+        "token"
+      );
+    }
   },
 };
 </script>

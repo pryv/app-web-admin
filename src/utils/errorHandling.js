@@ -8,7 +8,7 @@ export const handleHttpErrors = function(error, vueComponent) {
       vueComponent.$emit("loggedOut");
       vueComponent.$router.push("/login");
       return true;
-    } else if (error.response.status === 500) {
+    } else {
       return false;
     }
   }
