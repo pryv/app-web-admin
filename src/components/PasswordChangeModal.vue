@@ -4,14 +4,36 @@
       <h3 slot="header">Enter new password</h3>
       <div slot="body">
         <b-form v-on:submit.prevent="requestPasswordChange">
-          <b-form-group label-for="password">
+          <b-form-group label-for="oldPassword">
             <b-form-input
               required
-              type="text"
-              name="password"
-              id="password"
+              type="password"
+              name="oldPassword"
+              id="oldPassword"
+              placeholder="Old Password"
+              v-model="oldPassword"
+              @input="passwordChangeFailed = false"
+            />
+          </b-form-group>
+          <b-form-group label-for="newPassword">
+            <b-form-input
+              required
+              type="password"
+              name="newPassword"
+              id="newPassword"
               placeholder="New Password"
-              v-model="password"
+              v-model="newPassword"
+              @input="passwordChangeFailed = false"
+            />
+          </b-form-group>
+          <b-form-group label-for="newPasswordCheck">
+            <b-form-input
+              required
+              type="password"
+              name="newPasswordCheck"
+              id="newPasswordCheck"
+              placeholder="Confirm Password"
+              v-model="newPasswordCheck"
               @input="passwordChangeFailed = false"
             />
           </b-form-group>
@@ -72,7 +94,9 @@ export default {
     Loader,
   },
   data: () => ({
-    password: "",
+    oldPassword: "",
+    newPassword: "",
+    newPasswordCheck: "",
     passwordChangeFailed: false,
     passwordChangeSuccessful: false,
     passwordProvided: true,
@@ -87,7 +111,11 @@ export default {
       const token = localStorage.getItem("token");
       const username = jwtDecode(token).username;
       axios
-        .post(`/users/${username}/change-password`, { password: this.password })
+        .post(`/users/${username}/change-password`, {
+          oldPassword: this.oldPassword,
+          newPassword: this.newPassword,
+          newPasswordCheck: this.newPasswordCheck,
+        })
         .then(() => {
           this.showPasswordChangedModal = true;
         })

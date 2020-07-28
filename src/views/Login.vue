@@ -43,7 +43,7 @@
     </b-card>
     <b-card v-if="loginFailed">
       <div class="failure-msg">
-        <p>Incorrect username or password</p>
+        <p>Incorrect credentials. Please verify your input</p>
       </div>
     </b-card>
     <loader v-if="loginInProgress" :loading="loginInProgress"></loader>
