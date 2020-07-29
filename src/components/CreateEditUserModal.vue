@@ -90,18 +90,18 @@
 </template>
 
 <script>
-const cryptoRandomString = require("crypto-random-string");
-const axios = require("axios");
-import Modal from "@/widgets/Modal.vue";
-import OperationFailedModal from "@/widgets/OperationFailedModal.vue";
-import PermissionsTable from "@/components/PermissionsTable.vue";
-import ConfirmationModal from "@/widgets/ConfirmationModal.vue";
-import Loader from "@/widgets/Loader.vue";
-const { handleHttpErrors } = require("@/utils/errorHandling.js");
-import { PermissionsService } from "@/services/permissions.service.js";
+const cryptoRandomString = require('crypto-random-string');
+const axios = require('axios');
+import Modal from '@/widgets/Modal.vue';
+import OperationFailedModal from '@/widgets/OperationFailedModal.vue';
+import PermissionsTable from '@/components/PermissionsTable.vue';
+import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
+import Loader from '@/widgets/Loader.vue';
+const { handleHttpErrors } = require('@/utils/errorHandling.js');
+import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
-  name: "CreateEditUserModal",
+  name: 'CreateEditUserModal',
   props: {
     edit: Boolean,
     create: Boolean,
@@ -117,19 +117,19 @@ export default {
   },
   data: function() {
     return {
-      password: "",
+      password: '',
       showResetPasswordConfirmationModal: false,
       showDeleteConfirmationModal: false,
       resetPasswordConfirmationMsg:
-        "Are you sure you want to reset the password of this user?",
-      deleteConfirmationMsg: "Are you sure you want to delete this user?",
+        'Are you sure you want to reset the password of this user?',
+      deleteConfirmationMsg: 'Are you sure you want to delete this user?',
       showLoader: false,
       showFailureModal: false,
     };
   },
   computed: {
     headerStart: function() {
-      return this.edit ? "Edit" : "Create";
+      return this.edit ? 'Edit' : 'Create';
     },
     canChangePermissions: () => PermissionsService.canChangePermissions(),
     canResetPassword: () => PermissionsService.canResetPassword(),
@@ -146,13 +146,13 @@ export default {
     createUser() {
       this.showLoader = true;
       axios
-        .post(`/users`, {
+        .post('/users', {
           username: this.username,
           password: this.password,
           permissions: this.permissions,
         })
         .then(() => {
-          this.$emit("userCreated", {
+          this.$emit('userCreated', {
             username: this.username,
             password: this.password,
           });
@@ -171,7 +171,7 @@ export default {
           permissions: this.permissions,
         })
         .then(() => {
-          this.$emit("permissionsChanged", this.permissions);
+          this.$emit('permissionsChanged', this.permissions);
         })
         .catch(error => {
           if (!handleHttpErrors(error, this)) {
@@ -186,7 +186,7 @@ export default {
       axios
         .post(`/users/${this.username}/reset-password`, {})
         .then(response => {
-          this.$emit("passwordResetDone", response.data);
+          this.$emit('passwordResetDone', response.data);
         })
         .catch(error => {
           if (!handleHttpErrors(error, this)) {
@@ -207,13 +207,13 @@ export default {
           }
         })
         .then(() => {
-          this.$emit("userDeleted");
+          this.$emit('userDeleted');
         })
         .finally(() => (this.showLoader = false));
     },
   },
   beforeMount() {
-    this.password = cryptoRandomString({ length: 10, type: "url-safe" });
+    this.password = cryptoRandomString({ length: 10, type: 'url-safe' });
   },
 };
 </script>

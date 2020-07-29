@@ -27,11 +27,11 @@
 </template>
 
 <script>
-import store from "@/store/store.js";
-import { PermissionsService } from "@/services/permissions.service.js";
+import store from '@/store/store.js';
+import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
-  name: "ConfigTable",
+  name: 'ConfigTable',
   props: {
     initialConfigSection: String,
     valuesEditable: Boolean,
@@ -54,15 +54,15 @@ export default {
             : null;
 
           let configValue = this.config[key];
-          if (Object.prototype.hasOwnProperty.call(configValue, "value")) {
+          if (Object.prototype.hasOwnProperty.call(configValue, 'value')) {
             configValue = configValue.value;
           }
 
-          if (!configValue && typeof configValue !== "boolean") {
-            configValue = "";
-          } else if (typeof configValue === "object") {
+          if (!configValue && typeof configValue !== 'boolean') {
+            configValue = '';
+          } else if (typeof configValue === 'object') {
             configValue = JSON.stringify(configValue);
-          } else if (typeof configValue !== "string") {
+          } else if (typeof configValue !== 'string') {
             configValue = String(configValue);
           }
 

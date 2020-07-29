@@ -1,5 +1,5 @@
 const getPermissions = function(permissionsGroup) {
-  const permissions = JSON.parse(localStorage.getItem("permissions"));
+  const permissions = JSON.parse(localStorage.getItem('permissions'));
   if (
     !permissions ||
     !permissions[permissionsGroup] ||
@@ -12,26 +12,26 @@ const getPermissions = function(permissionsGroup) {
 
 export class PermissionsService {
   static canReadSettings() {
-    return getPermissions("settings").includes("read");
+    return getPermissions('settings').includes('read');
   }
 
   static canUpdateSettings() {
-    return getPermissions("settings").includes("update");
+    return getPermissions('settings').includes('update');
   }
 
   static canReadUsers() {
-    return getPermissions("users").includes("read");
+    return getPermissions('users').includes('read');
   }
 
   static canDeleteUsers() {
-    return getPermissions("users").includes("delete");
+    return getPermissions('users').includes('delete');
   }
 
   static canResetPassword() {
-    return getPermissions("users").includes("resetPassword");
+    return getPermissions('users').includes('resetPassword');
   }
 
   static canChangePermissions() {
-    return getPermissions("users").includes("changePermissions");
+    return getPermissions('users').includes('changePermissions');
   }
 }

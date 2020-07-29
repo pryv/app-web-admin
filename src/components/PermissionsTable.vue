@@ -37,19 +37,19 @@
 
 <script>
 export default {
-  name: "PermissionsTable",
+  name: 'PermissionsTable',
   props: {
     permissions: {},
     disableCheckBoxes: Boolean,
   },
   data: () => ({
-    settingsPermissions: ["read", "update"],
+    settingsPermissions: ['read', 'update'],
     usersPermissions: [
-      "read",
-      "create",
-      "delete",
-      "resetPassword",
-      "changePermissions",
+      'read',
+      'create',
+      'delete',
+      'resetPassword',
+      'changePermissions',
     ],
   }),
 };

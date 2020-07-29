@@ -48,16 +48,16 @@
 </template>
 
 <script>
-const axios = require("axios");
-const { handleHttpErrors } = require("@/utils/errorHandling.js");
-import ConfigTable from "@/components/ConfigTable.vue";
-import UpdateReportModal from "@/components/UpdateReportModal.vue";
-import Loader from "@/widgets/Loader.vue";
-import store from "@/store/store.js";
-import { PermissionsService } from "@/services/permissions.service.js";
+const axios = require('axios');
+const { handleHttpErrors } = require('@/utils/errorHandling.js');
+import ConfigTable from '@/components/ConfigTable.vue';
+import UpdateReportModal from '@/components/UpdateReportModal.vue';
+import Loader from '@/widgets/Loader.vue';
+import store from '@/store/store.js';
+import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
-  name: "Config",
+  name: 'Config',
   components: {
     ConfigTable,
     UpdateReportModal,
@@ -80,7 +80,7 @@ export default {
       store.state.config = {};
       this.loadInProgress = true;
       axios
-        .get(`/admin/settings`)
+        .get('/admin/settings')
         .then(response => {
           if (!response.data || Object.keys(response.data).length === 0) {
             throw new Error();
@@ -100,14 +100,14 @@ export default {
       this.updateInProgress = true;
       this.updateFailed = false;
       axios
-        .put(`/admin/settings`, store.state.config)
-        .then(() => axios.post(`/admin/notify`, {}))
+        .put('/admin/settings', store.state.config)
+        .then(() => axios.post('/admin/notify', {}))
         .then(response => {
           if (
             !response.data ||
             !(
-              Object.hasOwnProperty.call(response.data, "successes") &&
-              Object.hasOwnProperty.call(response.data, "failures")
+              Object.hasOwnProperty.call(response.data, 'successes') &&
+              Object.hasOwnProperty.call(response.data, 'failures')
             )
           ) {
             throw new Error();

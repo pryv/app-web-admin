@@ -99,15 +99,15 @@
 </template>
 
 <script>
-const axios = require("axios");
-import Loader from "@/widgets/Loader.vue";
-import OperationSuccessfulModal from "@/widgets/OperationSuccessfulModal.vue";
-import CreateEditUserModal from "@/components/CreateEditUserModal.vue";
-import PermissionsTable from "@/components/PermissionsTable.vue";
-const { handleHttpErrors } = require("@/utils/errorHandling.js");
+const axios = require('axios');
+import Loader from '@/widgets/Loader.vue';
+import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
+import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
+import PermissionsTable from '@/components/PermissionsTable.vue';
+const { handleHttpErrors } = require('@/utils/errorHandling.js');
 
 export default {
-  name: "UsersManagement",
+  name: 'UsersManagement',
   components: {
     Loader,
     CreateEditUserModal,
@@ -121,36 +121,38 @@ export default {
     selectedUser: {},
     tableHeaders: [
       {
-        key: "users",
-        label: "Username",
-        thStyle: { "padding-left": "60px" },
-        class: "users-management-user-row",
+        key: 'users',
+        label: 'Username',
+        thStyle: { 'padding-left': '60px' },
+        class: 'users-management-user-row',
       },
       {
-        key: "permissions",
-        label: "Permissions",
-        thStyle: { "padding-left": "60px" },
+        key: 'permissions',
+        label: 'Permissions',
+        thStyle: { 'padding-left': '60px' },
       },
     ],
-    settingsPermissions: ["read", "update"],
+    settingsPermissions: ['read', 'update'],
     usersPermissions: [
-      "read",
-      "create",
-      "delete",
-      "resetPassword",
-      "changePermissions",
+      'read',
+      'create',
+      'delete',
+      'resetPassword',
+      'changePermissions',
     ],
     showCreateUserModal: false,
     showEditUserModal: false,
     showUserDeletedModal: false,
-    userDeletedText: "User deleted successfully",
+    userDeletedText: 'User deleted successfully',
     showUserCreatedModal: false,
-    userCreatedInitialText: "User created successfully.",
-    userCreatedText: "",
+    userCreatedInitialText: 'User created successfully.',
+    userCreatedText: '',
     showUsersPasswordResetedModal: false,
+    // eslint-disable-next-line quotes
     usersPasswordResetedInitialText: "User's password reset successful.",
-    usersPasswordResetedText: "",
+    usersPasswordResetedText: '',
     showUsersPermissionsChangedModal: false,
+    // eslint-disable-next-line quotes
     usersPermissionsChangedText: "User's permissions updated successfully",
   }),
   methods: {
@@ -178,7 +180,7 @@ export default {
       if (items && items.length > 0) {
         this.selectedUser = items[0];
       } else {
-        this.selectedUser = "";
+        this.selectedUser = '';
       }
     },
     onUserCreated: function($event) {
@@ -199,7 +201,7 @@ export default {
     getUsersList: function() {
       this.loadInProgress = true;
       axios
-        .get(`/users`)
+        .get('/users')
         .then(response => {
           if (!response.data || Object.keys(response.data).length === 0) {
             throw new Error();

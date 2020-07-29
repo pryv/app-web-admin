@@ -46,12 +46,12 @@
 </template>
 
 <script>
-const axios = require("axios");
-import PasswordChangeModal from "@/components/PasswordChangeModal.vue";
-import { PermissionsService } from "@/services/permissions.service.js";
+const axios = require('axios');
+import PasswordChangeModal from '@/components/PasswordChangeModal.vue';
+import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
-  name: "NavBar",
+  name: 'NavBar',
   components: {
     PasswordChangeModal,
   },
@@ -67,10 +67,10 @@ export default {
   },
   methods: {
     logout: function() {
-      axios.post(`/auth/logout`, {}).finally(() => {
-        localStorage.removeItem("token");
-        this.$emit("loggedOut");
-        this.$router.push("/login");
+      axios.post('/auth/logout', {}).finally(() => {
+        localStorage.removeItem('token');
+        this.$emit('loggedOut');
+        this.$router.push('/login');
       });
     },
   },

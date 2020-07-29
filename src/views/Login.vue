@@ -51,19 +51,19 @@
 </template>
 
 <script>
-const jwtDecode = require("jwt-decode");
-const axios = require("axios");
-import Loader from "@/widgets/Loader.vue";
+const jwtDecode = require('jwt-decode');
+const axios = require('axios');
+import Loader from '@/widgets/Loader.vue';
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: {
     Loader,
   },
   data: () => ({
-    serverUrl: "",
-    username: "",
-    password: "",
+    serverUrl: '',
+    username: '',
+    password: '',
     loginFailed: false,
     loginInProgress: false,
   }),
@@ -83,18 +83,18 @@ export default {
           ) {
             throw new Error();
           }
-          localStorage.setItem("serverUrl", this.serverUrl);
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem('serverUrl', this.serverUrl);
+          localStorage.setItem('token', response.data.token);
           const user = jwtDecode(response.data.token);
-          localStorage.setItem("permissions", JSON.stringify(user.permissions));
-          localStorage.setItem("username", user.username);
-          localStorage.setItem("serverUrl", this.serverUrl);
+          localStorage.setItem('permissions', JSON.stringify(user.permissions));
+          localStorage.setItem('username', user.username);
+          localStorage.setItem('serverUrl', this.serverUrl);
 
           axios.defaults.baseURL = this.serverUrl;
-          axios.defaults.headers.common["authorization"] = response.data.token;
+          axios.defaults.headers.common['authorization'] = response.data.token;
 
-          this.$emit("loggedIn");
-          this.$router.push("/");
+          this.$emit('loggedIn');
+          this.$router.push('/');
         })
         .catch(() => {
           this.loginFailed = true;

@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "Modal",
+  name: 'Modal',
   props: {
     header: String,
     body: String,
@@ -87,7 +87,7 @@ button:hover {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
 }
 .close-button {
-  content: "x";
+  content: 'x';
   color: rgb(110, 110, 110);
   font-weight: 500;
   font-size: 25px;

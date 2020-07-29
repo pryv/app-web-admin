@@ -78,15 +78,15 @@
 </template>
 
 <script>
-const axios = require("axios");
-const jwtDecode = require("jwt-decode");
-import Modal from "@/widgets/Modal.vue";
-import OperationSuccessfulModal from "@/widgets/OperationSuccessfulModal.vue";
-import OperationFailedModal from "@/widgets/OperationFailedModal.vue";
-import Loader from "@/widgets/Loader.vue";
+const axios = require('axios');
+const jwtDecode = require('jwt-decode');
+import Modal from '@/widgets/Modal.vue';
+import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
+import OperationFailedModal from '@/widgets/OperationFailedModal.vue';
+import Loader from '@/widgets/Loader.vue';
 
 export default {
-  name: "PasswordChangeModal",
+  name: 'PasswordChangeModal',
   components: {
     Modal,
     OperationSuccessfulModal,
@@ -94,13 +94,13 @@ export default {
     Loader,
   },
   data: () => ({
-    oldPassword: "",
-    newPassword: "",
-    newPasswordCheck: "",
+    oldPassword: '',
+    newPassword: '',
+    newPasswordCheck: '',
     passwordChangeFailed: false,
     passwordChangeSuccessful: false,
     passwordProvided: true,
-    passwordChangedText: "Password changed successfully",
+    passwordChangedText: 'Password changed successfully',
     showPasswordChangedModal: false,
     showFailureModal: false,
     showLoader: false,
@@ -108,7 +108,7 @@ export default {
   methods: {
     requestPasswordChange: function() {
       this.showLoader = true;
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const username = jwtDecode(token).username;
       axios
         .post(`/users/${username}/change-password`, {

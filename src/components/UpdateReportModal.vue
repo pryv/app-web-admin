@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import Modal from "@/widgets/Modal.vue";
+import Modal from '@/widgets/Modal.vue';
 
 export default {
-  name: "UpdateReportModal",
+  name: 'UpdateReportModal',
   components: {
     Modal,
   },

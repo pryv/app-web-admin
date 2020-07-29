@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import NavBar from "@/components/NavBar.vue";
-const axios = require("axios");
+import NavBar from '@/components/NavBar.vue';
+const axios = require('axios');
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     NavBar,
   },
@@ -18,12 +18,12 @@ export default {
     loggedIn: false,
   }),
   beforeMount() {
-    this.loggedIn = !!localStorage.getItem("token");
+    this.loggedIn = !!localStorage.getItem('token');
 
     if (this.loggedIn) {
-      axios.defaults.baseURL = localStorage.getItem("serverUrl");
-      axios.defaults.headers.common["authorization"] = localStorage.getItem(
-        "token"
+      axios.defaults.baseURL = localStorage.getItem('serverUrl');
+      axios.defaults.headers.common['authorization'] = localStorage.getItem(
+        'token'
       );
     }
   },
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style>
-@import "https://api.pryv.com/style/pryv.min.css";
+@import 'https://api.pryv.com/style/pryv.min.css';
 
 #app {
   -webkit-font-smoothing: antialiased;

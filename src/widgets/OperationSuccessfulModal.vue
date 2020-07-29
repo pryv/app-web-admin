@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "OperationSuccessfulModal",
+  name: 'OperationSuccessfulModal',
   props: {
     text: String,
   },
