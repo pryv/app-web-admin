@@ -50,4 +50,11 @@ export default {
   border-right: 2px solid #c8c8c8;
   vertical-align: middle !important;
 }
+.jsoneditor {
+  border: thin solid #c8c8c8 !important;
+}
+.jsoneditor-menu {
+  background-color: #c1d4f2 !important;
+  border-bottom: 1px solid #c1d4f2 !important;
+}
 </style>

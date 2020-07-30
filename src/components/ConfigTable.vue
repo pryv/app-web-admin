@@ -3,7 +3,7 @@
     <b-table
       striped
       hover
-      sticky-header="45em"
+      sticky-header="42em"
       responsive
       fixed
       head-variant="light"
@@ -13,11 +13,21 @@
         <div class="tab-cell">{{ row.item.property }}</div>
       </template>
       <template v-slot:cell(value)="row">
-        <b-form-input
+        <VJsoneditor
+          class="editor"
           v-model="row.item.value"
-          v-on:blur="onValueChanged($event, row.item.property)"
-          :disabled="!valuesEditable"
-        />
+          :plus="false"
+          :options="{
+            onChangeText: function(json) {
+              onValueChanged(json, row.item.property);
+            },
+            search: false,
+            navigationBar: false,
+            mode: 'tree',
+            onEditable: forbidCertainEditions,
+          }"
+        >
+        </VJsoneditor>
       </template>
       <template v-slot:cell(description)="row">
         <div class="tab-cell">{{ row.item.description }}</div>
@@ -29,12 +39,16 @@
 <script>
 import store from '@/store/store.js';
 import { PermissionsService } from '@/services/permissions.service.js';
+import VJsoneditor from 'v-jsoneditor/src/index';
 
 export default {
   name: 'ConfigTable',
   props: {
     initialConfigSection: String,
     valuesEditable: Boolean,
+  },
+  components: {
+    VJsoneditor,
   },
   data: function() {
     return {
@@ -66,17 +80,28 @@ export default {
             configValue = String(configValue);
           }
 
-          return { property: key, value: configValue, description: configDesc };
+          return {
+            property: key,
+            value: this.isJSON(configValue)
+              ? JSON.parse(configValue)
+              : configValue,
+            description: configDesc,
+          };
         }.bind(this)
       );
     },
   },
   methods: {
-    onValueChanged: function(e, prop) {
-      let changedText = this.displayConfig.find(e => e.property === prop).value;
-      if (this.isJSON(changedText)) {
-        changedText = JSON.parse(changedText);
+    forbidCertainEditions: function(node) {
+      if (node.field === 'description') {
+        return false;
       }
+      if (node.field) {
+        return { field: false, value: true };
+      }
+      return true;
+    },
+    onValueChanged: function(changedText, prop) {
       this.config[prop].value = changedText;
     },
     isJSON: function(text) {
@@ -93,7 +118,7 @@ export default {
 
 <style scoped>
 .config-table {
-  height: 68rem;
+  height: 66rem;
 }
 .tab-cell {
   white-space: normal;

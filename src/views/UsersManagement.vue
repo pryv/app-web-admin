@@ -33,13 +33,17 @@
     </b-table>
     <b-card>
       <b-button
-        v-if="Object.keys(selectedUser).length > 0"
+        v-if="canChangePermissions && Object.keys(selectedUser).length > 0"
         variant="info"
         @click="showEditUserModal = true"
       >
         Edit
       </b-button>
-      <b-button variant="success" @click="showCreateUserModal = true">
+      <b-button
+        v-if="canCreate"
+        variant="success"
+        @click="showCreateUserModal = true"
+      >
         Create
       </b-button>
     </b-card>
@@ -104,6 +108,7 @@ import Loader from '@/widgets/Loader.vue';
 import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
 import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
 import PermissionsTable from '@/components/PermissionsTable.vue';
+import { PermissionsService } from '@/services/permissions.service.js';
 const { handleHttpErrors } = require('@/utils/errorHandling.js');
 
 export default {
@@ -155,6 +160,10 @@ export default {
     // eslint-disable-next-line quotes
     usersPermissionsChangedText: "User's permissions updated successfully",
   }),
+  computed: {
+    canChangePermissions: () => PermissionsService.canChangePermissions(),
+    canCreate: () => PermissionsService.canCreateUsers(),
+  },
   methods: {
     onUsersPermissionsChangedModalClose: function() {
       this.showUsersPermissionsChangedModal = false;
