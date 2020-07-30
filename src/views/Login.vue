@@ -88,7 +88,6 @@ export default {
           const user = jwtDecode(response.data.token);
           localStorage.setItem('permissions', JSON.stringify(user.permissions));
           localStorage.setItem('username', user.username);
-          localStorage.setItem('serverUrl', this.serverUrl);
 
           axios.defaults.baseURL = this.serverUrl;
           axios.defaults.headers.common['authorization'] = response.data.token;
