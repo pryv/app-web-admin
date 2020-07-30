@@ -8,6 +8,7 @@
       fixed
       head-variant="light"
       :items="displayConfig"
+      :fields="tableHeaders"
     >
       <template primary-key v-slot:cell(property)="row">
         <div class="tab-cell">{{ row.item.property }}</div>
@@ -53,6 +54,23 @@ export default {
   data: function() {
     return {
       configSection: this.initialConfigSection,
+      tableHeaders: [
+        {
+          key: 'property',
+          label: 'Property',
+          thStyle: { 'text-align': 'center' },
+        },
+        {
+          key: 'value',
+          label: 'Value',
+          thStyle: { 'text-align': 'center' },
+        },
+        {
+          key: 'description',
+          label: 'Description',
+          thStyle: { 'text-align': 'center' },
+        },
+      ],
     };
   },
   computed: {
@@ -123,5 +141,6 @@ export default {
 .tab-cell {
   white-space: normal;
   overflow-wrap: break-word;
+  text-align: center;
 }
 </style>

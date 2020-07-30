@@ -26,19 +26,14 @@
       </template>
       <template v-slot:cell(permissions)="row">
         <PermissionsTable
+          :username="row.item.username"
           :permissions="row.item.permissions"
           :disableCheckBoxes="true"
+          @permissionsTableClicked="onRowSelected"
         />
       </template>
     </b-table>
     <b-card>
-      <b-button
-        v-if="canChangePermissions && Object.keys(selectedUser).length > 0"
-        variant="info"
-        @click="showEditUserModal = true"
-      >
-        Edit
-      </b-button>
       <b-button
         v-if="canCreate"
         variant="success"
@@ -128,13 +123,13 @@ export default {
       {
         key: 'users',
         label: 'Username',
-        thStyle: { 'padding-left': '60px' },
+        thStyle: { 'text-align': 'center' },
         class: 'users-management-user-row',
       },
       {
         key: 'permissions',
         label: 'Permissions',
-        thStyle: { 'padding-left': '60px' },
+        thStyle: { 'text-align': 'center' },
       },
     ],
     settingsPermissions: ['read', 'update'],
@@ -186,8 +181,14 @@ export default {
       this.showUsersPasswordResetedModal = true;
     },
     onRowSelected: function(items) {
+      if (!items) {
+        console.log('XOXO');
+      }
       if (items && items.length > 0) {
         this.selectedUser = items[0];
+        if (this.canChangePermissions) {
+          this.showEditUserModal = true;
+        }
       } else {
         this.selectedUser = '';
       }

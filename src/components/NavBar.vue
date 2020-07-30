@@ -69,6 +69,10 @@ export default {
     logout: function() {
       axios.post('/auth/logout', {}).finally(() => {
         localStorage.removeItem('token');
+        localStorage.removeItem('permissions');
+        localStorage.removeItem('username');
+        localStorage.removeItem('serverUrl');
+
         this.$emit('loggedOut');
         this.$router.push('/login');
       });
