@@ -18,6 +18,7 @@
     "jwt-decode": "^2.2.0",
     "v-jsoneditor": "^1.4.1",
     "vue": "^2.6.11",
+    "vue-linkify": "^1.0.1",
     "vue-router": "^3.2.0",
     "vue-spinner": "^1.0.3"
   },

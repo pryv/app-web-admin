@@ -30,7 +30,7 @@
         </VJsoneditor>
       </template>
       <template v-slot:cell(description)="row">
-        <div class="tab-cell">{{ row.item.description }}</div>
+        <div class="tab-cell" v-html="row.item.description" v-linkified></div>
       </template>
     </b-table>
   </div>
