@@ -3,7 +3,7 @@
     <div class="modal-wrapper">
       <div class="modal-container">
         <div class="modal-header">
-          <slot name="header"> {{ header }}</slot>
+          <slot name="header">{{ header }}</slot>
           <div class="close-button" @click="$emit('close')">x</div>
         </div>
         <div class="modal-body">

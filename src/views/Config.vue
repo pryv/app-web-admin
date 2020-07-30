@@ -26,10 +26,7 @@
           :key="prop"
           :title="val.name"
         >
-          <ConfigTable
-            :initialConfigSection="prop"
-            :valuesEditable="canUpdateSettings"
-          />
+          <ConfigTable :initialConfigSection="prop" />
         </b-tab>
       </b-tabs>
     </b-card>

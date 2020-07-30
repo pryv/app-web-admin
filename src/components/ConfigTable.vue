@@ -46,7 +46,6 @@ export default {
   name: 'ConfigTable',
   props: {
     initialConfigSection: String,
-    valuesEditable: Boolean,
   },
   components: {
     VJsoneditor,
@@ -111,6 +110,9 @@ export default {
   },
   methods: {
     forbidCertainEditions: function(node) {
+      if (!this.canUpdateSettings) {
+        return false;
+      }
       if (node.field === 'description') {
         return false;
       }
