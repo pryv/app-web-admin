@@ -16,7 +16,7 @@ let inputFields;
 
 let postReqStub;
 
-describe.only('PasswordChangeModal', () => {
+describe('PasswordChangeModal', () => {
   before(function() {
     global.localStorage = new LocalStorageMock();
     global.localStorage.setItem('token', token);
