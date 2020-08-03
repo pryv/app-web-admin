@@ -42,6 +42,7 @@ export default {
           return {
             url: this.updateReport.failures[key].url,
             role: this.updateReport.failures[key].role,
+            error: this.updateReport.failures[key].error,
           };
         }.bind(this)
       );

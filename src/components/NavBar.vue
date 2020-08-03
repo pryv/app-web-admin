@@ -1,14 +1,14 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="light" variant="info" fixed="top">
+    <b-navbar toggleable="md" type="light" variant="info" fixed="top">
       <b-navbar-brand href="https://api.pryv.com">
         <img alt="Logo" src="@/assets/logo.png" />
       </b-navbar-brand>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle v-if="loggedIn" target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse v-if="loggedIn" id="nav-collapse" is-nav>
-        <b-navbar-nav align="left" tag="div">
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav v-if="loggedIn" class="ml-auto" tag="div">
           <b-nav-item
             class="nav-view"
             v-if="canViewPlatformConfig"
@@ -83,10 +83,7 @@ export default {
 
 <style scoped>
 img {
-  display: block;
-  margin-top: -8px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: -0.5rem;
   width: 20%;
 }
 .navbar-brand {

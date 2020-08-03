@@ -24,7 +24,7 @@
             },
             search: false,
             navigationBar: false,
-            mode: 'tree',
+            mode: row.item.property === 'TEMPLATE_VERSION' ? 'view' : 'tree',
             onEditable: forbidCertainEditions,
           }"
         >
