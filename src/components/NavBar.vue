@@ -7,8 +7,8 @@
 
       <b-navbar-toggle v-if="loggedIn" target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav v-if="loggedIn" class="ml-auto" tag="div">
+      <b-collapse v-if="loggedIn" id="nav-collapse" is-nav>
+        <b-navbar-nav class="ml-auto" tag="div">
           <b-nav-item
             class="nav-view"
             v-if="canViewPlatformConfig"

@@ -7,15 +7,15 @@ import { BootstrapVue } from 'bootstrap-vue';
 import linkify from 'vue-linkify';
 import LocalStorageMock from './helpers/localStorage.mock';
 
-let config;
-let wrapper;
-let rows;
-let headerCells;
-let firstRowCells;
-let secondRowCells;
-let configSectionSettingsKeys;
-
 describe('ConfigTable', () => {
+  let config;
+  let wrapper;
+  let rows;
+  let headerCells;
+  let firstRowCells;
+  let secondRowCells;
+  let configSectionSettingsKeys;
+
   before(function() {
     global.localStorage = new LocalStorageMock();
 
