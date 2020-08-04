@@ -13,7 +13,10 @@
             id="serverUrl"
             placeholder="https://lead.platform.com"
             v-model="serverUrl"
-            @input="loginFailed = false"
+            @input="
+              loginFailed = false;
+              loginRequestFailed = false;
+            "
           />
         </b-form-group>
         <b-form-group label-for="username" label="Username">
@@ -24,7 +27,10 @@
             id="username"
             placeholder="Username"
             v-model="username"
-            @input="loginFailed = false"
+            @input="
+              loginFailed = false;
+              loginRequestFailed = false;
+            "
           />
         </b-form-group>
         <b-form-group label-for="password" label="Password">
@@ -35,7 +41,10 @@
             id="password"
             placeholder="Password"
             v-model="password"
-            @input="loginFailed = false"
+            @input="
+              loginFailed = false;
+              loginRequestFailed = false;
+            "
           />
         </b-form-group>
         <b-button variant="success" type="submit">Login</b-button>
@@ -43,7 +52,12 @@
     </b-card>
     <b-card v-if="loginFailed">
       <div class="failure-msg">
-        <p>Incorrect credentials. Please verify your input</p>
+        <p v-if="!loginRequestFailed">
+          Incorrect credentials. Please verify your input
+        </p>
+        <p v-if="loginRequestFailed">
+          Unable to connect to the server. Please try again later
+        </p>
       </div>
     </b-card>
     <loader v-if="loginInProgress" :loading="loginInProgress"></loader>
@@ -65,6 +79,7 @@ export default {
     username: '',
     password: '',
     loginFailed: false,
+    loginRequestFailed: false,
     loginInProgress: false,
   }),
   methods: {
@@ -95,7 +110,17 @@ export default {
           this.$emit('loggedIn');
           this.$router.push('/');
         })
-        .catch(() => {
+        .catch(error => {
+          if (
+            (error &&
+              error.response &&
+              error.response.status &&
+              error.response.status >= 500) ||
+            error.message === 'Network Error'
+          ) {
+            this.loginRequestFailed = true;
+          }
+
           this.loginFailed = true;
         })
         .finally(() => {

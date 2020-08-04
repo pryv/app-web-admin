@@ -5,7 +5,7 @@ import ConfigTable from '@/components/ConfigTable.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue } from 'bootstrap-vue';
 import linkify from 'vue-linkify';
-import LocalStorageMock from './helpers/localStorage.mock';
+import LocalStorageMock from '../helpers/localStorage.mock';
 
 describe('ConfigTable', () => {
   let config;

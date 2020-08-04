@@ -3,11 +3,11 @@ import { mount } from '@vue/test-utils';
 import NavBar from '@/components/NavBar.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
-import LocalStorageMock from './helpers/localStorage.mock';
+import LocalStorageMock from '../helpers/localStorage.mock';
 import sinon from 'sinon';
 const axios = require('axios');
 import { PermissionsService } from '@/services/permissions.service.js';
-import router from './../../src/router';
+import router from '../../../src/router';
 
 let wrapper;
 let localVue;
