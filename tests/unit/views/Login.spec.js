@@ -116,7 +116,7 @@ describe('Login', () => {
       'Unable to connect to the server'
     );
   });
-  it('should display "Unable to connect the server" message when server responded with 5**', async function() {
+  it('should display "Unable to connect to the server" message when server responded with 5**', async function() {
     const postReqStub = sinon.stub(axios, 'post');
     postReqStub.returns(Promise.reject({ message: 'Network Error' }));
 

@@ -138,7 +138,7 @@ export default {
 
 <style scoped>
 .config-table {
-  height: 66rem;
+  height: 45rem;
 }
 .tab-cell {
   white-space: normal;
