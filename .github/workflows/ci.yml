@@ -2,8 +2,6 @@ name: PrYv Admin Panel CI
 
 on:
   pull_request:
-    branches:
-      - master
   push:
     branches:
       - master
