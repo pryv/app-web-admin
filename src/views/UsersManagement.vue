@@ -181,9 +181,6 @@ export default {
       this.showUsersPasswordResetedModal = true;
     },
     onRowSelected: function(items) {
-      if (!items) {
-        console.log('XOXO');
-      }
       if (items && items.length > 0) {
         this.selectedUser = items[0];
         if (this.canChangePermissions) {
