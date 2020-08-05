@@ -229,10 +229,10 @@ hr {
   transition: all 0.3s ease;
 }
 .modal-enter {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-leave-active {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {

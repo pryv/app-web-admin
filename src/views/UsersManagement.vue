@@ -256,13 +256,14 @@ form {
   transition: all 0.3s ease;
 }
 .modal-enter {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-leave-active {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
+  -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
