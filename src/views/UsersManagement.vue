@@ -10,7 +10,7 @@
     <b-table
       striped
       hover
-      sticky-header="49em"
+      sticky-header="43em"
       responsive
       fixed
       selectable

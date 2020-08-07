@@ -3,7 +3,7 @@
     <b-table
       striped
       hover
-      sticky-header="42em"
+      sticky-header="36em"
       responsive
       fixed
       head-variant="light"
@@ -57,17 +57,20 @@ export default {
         {
           key: 'property',
           label: 'Property',
-          thStyle: { 'text-align': 'center' },
+          thStyle: { 'text-align': 'center', 'min-width': '100px' },
+          class: 'tab-cell',
         },
         {
           key: 'value',
           label: 'Value',
-          thStyle: { 'text-align': 'center' },
+          thStyle: { 'text-align': 'center', 'min-width': '100px' },
+          class: 'tab-cell',
         },
         {
           key: 'description',
           label: 'Description',
-          thStyle: { 'text-align': 'center' },
+          thStyle: { 'text-align': 'center', 'min-width': '100px' },
+          class: 'tab-cell',
         },
       ],
     };
@@ -138,11 +141,6 @@ export default {
 
 <style scoped>
 .config-table {
-  height: 41em;
-}
-.tab-cell {
-  white-space: normal;
-  overflow-wrap: break-word;
-  text-align: center;
+  height: 36em;
 }
 </style>

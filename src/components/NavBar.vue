@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="md" type="light" variant="info" fixed="top">
+    <b-navbar type="light" variant="info" fixed="top">
       <b-navbar-brand href="https://api.pryv.com">
         <img alt="Logo" src="@/assets/logo.png" />
       </b-navbar-brand>
@@ -83,11 +83,12 @@ export default {
 
 <style scoped>
 img {
-  margin-top: -0.5rem;
-  width: 20%;
+  text-align: top;
+  height: 120%;
 }
 .navbar-brand {
-  width: 30%;
+  width: 40%;
+  text-align: center;
 }
 .nav-view {
   border-right: 2px solid #45778f;
