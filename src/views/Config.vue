@@ -19,19 +19,34 @@
     </b-card>
     <br />
     <b-card no-body>
-      <b-tabs pills justified card v-if="Object.keys(config).length !== 0">
+      <b-tabs
+        pills
+        justified
+        card
+        v-if="Object.keys(config).length !== 0"
+        v-model="activeTabIndex"
+      >
         <b-tab
           title-link-class="tab-title"
           v-for="(val, prop) in config"
           :key="prop"
           :title="val.name"
         >
-          <ConfigTable :initialConfigSection="prop" />
+          <ConfigTable
+            :initialConfigSection="prop"
+            @invalidJson="inputValid = false"
+            @validJson="inputValid = true"
+          />
         </b-tab>
       </b-tabs>
     </b-card>
     <b-card v-if="Object.keys(config).length !== 0 && canUpdateSettings">
-      <b-button variant="success" v-on:click="updateConfig">Update </b-button>
+      <b-button
+        variant="success"
+        v-on:click="updateConfig"
+        :disabled="!inputValid"
+        >Update</b-button
+      >
     </b-card>
 
     <transition name="modal">
@@ -67,10 +82,15 @@ export default {
     updateConfigReport: {},
     updateInProgress: false,
     loadInProgress: false,
+    inputValid: true,
   }),
   computed: {
     config: () => store.state.config,
     canUpdateSettings: () => PermissionsService.canUpdateSettings(),
+    activeTabIndex: () =>
+      Object.keys(store.state.config).findIndex(
+        key => key === 'SERVICE_INFORMATION_SETTINGS'
+      ),
   },
   methods: {
     getConfig: function() {

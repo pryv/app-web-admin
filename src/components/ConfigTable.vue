@@ -14,21 +14,36 @@
         <div class="tab-cell">{{ row.item.property }}</div>
       </template>
       <template v-slot:cell(value)="row">
+        <b-form-input
+          v-if="typeof row.item.value !== 'object'"
+          v-model="row.item.value"
+          v-on:blur="onValueChanged($event.target.value, row.item.property)"
+          :disabled="
+            !canUpdateSettings || row.item.property === 'TEMPLATE_VERSION'
+          "
+        />
         <VJsoneditor
+          v-if="typeof row.item.value === 'object'"
           class="editor"
           v-model="row.item.value"
           :plus="false"
           :options="{
-            onChangeText: function(json) {
-              onValueChanged(json, row.item.property);
+            onValidationError: function(errors) {
+              onValidationError(errors);
             },
+            onChangeText: function(jsonText) {
+              onChangedJsonText(jsonText, row.item.property);
+            },
+            enableTransform: false,
+            enableSort: false,
+            statusBar: false,
+            mainMenuBar: true,
             search: false,
             navigationBar: false,
-            mode: row.item.property === 'TEMPLATE_VERSION' ? 'view' : 'tree',
+            mode: 'code',
             onEditable: forbidCertainEditions,
           }"
-        >
-        </VJsoneditor>
+        />
       </template>
       <template v-slot:cell(description)="row">
         <div class="tab-cell" v-html="row.item.description" v-linkified></div>
@@ -40,7 +55,7 @@
 <script>
 import store from '@/store/store.js';
 import { PermissionsService } from '@/services/permissions.service.js';
-import VJsoneditor from 'v-jsoneditor/src/index';
+import VJsoneditor from 'v-jsoneditor';
 
 export default {
   name: 'ConfigTable',
@@ -94,17 +109,13 @@ export default {
 
           if (!configValue && typeof configValue !== 'boolean') {
             configValue = '';
-          } else if (typeof configValue === 'object') {
-            configValue = JSON.stringify(configValue);
-          } else if (typeof configValue !== 'string') {
+          } else if (typeof configValue === 'boolean') {
             configValue = String(configValue);
           }
 
           return {
             property: key,
-            value: this.isJSON(configValue)
-              ? JSON.parse(configValue)
-              : configValue,
+            value: configValue,
             description: configDesc,
           };
         }.bind(this)
@@ -125,7 +136,22 @@ export default {
       return true;
     },
     onValueChanged: function(changedText, prop) {
+      if (this.isJSON(changedText)) {
+        changedText = JSON.parse(changedText);
+      }
       this.config[prop].value = changedText;
+    },
+    onChangedJsonText: function(json, prop) {
+      if (this.isJSON(json) || typeof json === 'object') {
+        this.config[prop].value = JSON.parse(json);
+        console.log('validJson');
+        this.$emit('validJson');
+      }
+    },
+    onValidationError: function(errors) {
+      if (errors && errors.length > 0) {
+        this.$emit('invalidJson');
+      }
     },
     isJSON: function(text) {
       try {
