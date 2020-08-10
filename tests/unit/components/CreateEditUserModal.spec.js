@@ -4,13 +4,16 @@ import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import sinon from 'sinon';
-const axios = require('axios');
+import axios from 'axios';
 import { PermissionsService } from '@/services/permissions.service.js';
 import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
+import Chance from 'chance';
 
 describe('CreateEditUserModal', function() {
-  const username = 'some_username';
-  const password = 'some_pass';
+  const chance = new Chance();
+
+  const username = chance.name();
+  const password = chance.word();
   const permissions = {
     users: ['read', 'create'],
     settings: ['read'],

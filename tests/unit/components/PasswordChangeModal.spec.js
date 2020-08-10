@@ -4,12 +4,15 @@ import PasswordChangeModal from '@/components/PasswordChangeModal.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import LocalStorageMock from '../helpers/localStorage.mock';
-const { sign } = require('jsonwebtoken');
+import { sign } from 'jsonwebtoken';
 import sinon from 'sinon';
-const axios = require('axios');
+import axios from 'axios';
+import Chance from 'chance';
 
-const username = 'some_username';
-const token = sign({ username: username }, 'some_key', { expiresIn: '24h' });
+const chance = new Chance();
+
+const username = chance.name();
+const token = sign({ username: username }, chance.word(), { expiresIn: '24h' });
 
 let wrapper;
 let inputFields;

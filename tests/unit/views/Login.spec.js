@@ -5,11 +5,14 @@ import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import LocalStorageMock from '../helpers/localStorage.mock';
 import sinon from 'sinon';
-const axios = require('axios');
+import axios from 'axios';
+import Chance from 'chance';
 
-const username = 'some_username';
-const password = 'some_pass';
-const confLeadAddress = 'http://some.address.com';
+const chance = new Chance();
+
+const username = chance.name();
+const password = chance.word();
+const confLeadAddress = chance.url();
 
 let wrapper;
 

@@ -6,8 +6,10 @@ import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue } from 'bootstrap-vue';
 import linkify from 'vue-linkify';
 import LocalStorageMock from '../helpers/localStorage.mock';
+import Chance from 'chance';
 
 describe('ConfigTable', () => {
+  let chance;
   let config;
   let wrapper;
   let rows;
@@ -15,26 +17,30 @@ describe('ConfigTable', () => {
   let firstRowCells;
   let secondRowCells;
   let configSectionSettingsKeys;
+  let sectionName;
 
   before(function() {
+    chance = new Chance();
+
     global.localStorage = new LocalStorageMock();
 
     const localVue = createLocalVue();
     localVue.use(BootstrapVue);
     localVue.directive('linkified', linkify);
 
-    config = {
-      some_section_name: {
-        name: 'some_section_name',
-        settings: {
-          set1: {
-            value: 'val1',
-            description: 'desc1',
-          },
-          set2: {
-            value: 'val2',
-            description: 'desc2',
-          },
+    sectionName = chance.word();
+
+    config = {};
+    config[sectionName] = {
+      name: sectionName,
+      settings: {
+        set1: {
+          value: chance.word(),
+          description: chance.paragraph(),
+        },
+        set2: {
+          value: chance.word(),
+          description: chance.paragraph(),
         },
       },
     };
@@ -42,7 +48,7 @@ describe('ConfigTable', () => {
 
     wrapper = mount(ConfigTable, {
       localVue,
-      propsData: { initialConfigSection: config.some_section_name.name },
+      propsData: { initialConfigSection: config[sectionName].name },
     });
   });
 
@@ -50,7 +56,7 @@ describe('ConfigTable', () => {
     it('should render all settings from local storage', function() {
       rows = wrapper.findAll('tr');
       expect(rows.length).equal(
-        Object.keys(config.some_section_name.settings).length + 1
+        Object.keys(config[sectionName].settings).length + 1
       );
     });
 
@@ -80,9 +86,7 @@ describe('ConfigTable', () => {
     it('should render property column', function() {
       firstRowCells = rows.at(1).findAll('td');
       secondRowCells = rows.at(2).findAll('td');
-      configSectionSettingsKeys = Object.keys(
-        config.some_section_name.settings
-      );
+      configSectionSettingsKeys = Object.keys(config[sectionName].settings);
 
       expect(
         firstRowCells
@@ -105,8 +109,7 @@ describe('ConfigTable', () => {
           .find('div')
           .text()
       ).equal(
-        config.some_section_name.settings[configSectionSettingsKeys[0]]
-          .description
+        config[sectionName].settings[configSectionSettingsKeys[0]].description
       );
       expect(
         secondRowCells
@@ -114,8 +117,7 @@ describe('ConfigTable', () => {
           .find('div')
           .text()
       ).equal(
-        config.some_section_name.settings[configSectionSettingsKeys[1]]
-          .description
+        config[sectionName].settings[configSectionSettingsKeys[1]].description
       );
     });
   });

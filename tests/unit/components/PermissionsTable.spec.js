@@ -2,10 +2,12 @@ import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
 import { createLocalVue } from '@vue/test-utils';
 import PermissionsTable from '@/components/PermissionsTable.vue';
+import Chance from 'chance';
 
 describe('PermissionsTable', () => {
   let localVue;
-  const username = 'some_username';
+
+  const username = new Chance().name();
   let permissions;
 
   before(function() {

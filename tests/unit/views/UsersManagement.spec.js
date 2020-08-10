@@ -4,25 +4,28 @@ import UsersManagement from '@/views/UsersManagement.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import sinon from 'sinon';
-const axios = require('axios');
+import axios from 'axios';
 import { PermissionsService } from '@/services/permissions.service.js';
 import LocalStorageMock from '../helpers/localStorage.mock';
 import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
+import Chance from 'chance';
 
 describe('UsersManagement', function() {
+  const chance = new Chance();
+
   let wrapper;
   let getReqStub;
 
   const users = [
     {
-      username: 'user1',
+      username: chance.name(),
       permissions: {
         users: ['read'],
         settings: ['read'],
       },
     },
     {
-      username: 'user2',
+      username: chance.name(),
       permissions: {
         users: ['read'],
         settings: ['read'],

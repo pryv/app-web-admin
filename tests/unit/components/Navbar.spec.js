@@ -5,7 +5,7 @@ import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import LocalStorageMock from '../helpers/localStorage.mock';
 import sinon from 'sinon';
-const axios = require('axios');
+import axios from 'axios';
 import { PermissionsService } from '@/services/permissions.service.js';
 import router from '../../../src/router';
 
