@@ -65,8 +65,8 @@
 </template>
 
 <script>
-const jwtDecode = require('jwt-decode');
-const axios = require('axios');
+import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 import Loader from '@/widgets/Loader.vue';
 
 export default {

@@ -98,13 +98,13 @@
 </template>
 
 <script>
-const axios = require('axios');
+import axios from 'axios';
 import Loader from '@/widgets/Loader.vue';
 import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
 import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
 import PermissionsTable from '@/components/PermissionsTable.vue';
 import { PermissionsService } from '@/services/permissions.service.js';
-const { handleHttpErrors } = require('@/utils/errorHandling.js');
+import { handleHttpErrors } from '@/utils/errorHandling.js';
 
 export default {
   name: 'UsersManagement',

@@ -7,7 +7,7 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue';
-const axios = require('axios');
+import axios from 'axios';
 
 export default {
   name: 'App',

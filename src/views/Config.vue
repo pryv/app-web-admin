@@ -45,8 +45,8 @@
 </template>
 
 <script>
-const axios = require('axios');
-const { handleHttpErrors } = require('@/utils/errorHandling.js');
+import axios from 'axios';
+import { handleHttpErrors } from '@/utils/errorHandling.js';
 import ConfigTable from '@/components/ConfigTable.vue';
 import UpdateReportModal from '@/components/UpdateReportModal.vue';
 import Loader from '@/widgets/Loader.vue';

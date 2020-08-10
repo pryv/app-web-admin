@@ -46,7 +46,7 @@
 </template>
 
 <script>
-const axios = require('axios');
+import axios from 'axios';
 import PasswordChangeModal from '@/components/PasswordChangeModal.vue';
 import { PermissionsService } from '@/services/permissions.service.js';
 

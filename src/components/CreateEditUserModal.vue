@@ -90,14 +90,14 @@
 </template>
 
 <script>
-const cryptoRandomString = require('crypto-random-string');
-const axios = require('axios');
+import cryptoRandomString from 'crypto-random-string';
+import axios from 'axios';
 import Modal from '@/widgets/Modal.vue';
 import OperationFailedModal from '@/widgets/OperationFailedModal.vue';
 import PermissionsTable from '@/components/PermissionsTable.vue';
 import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
 import Loader from '@/widgets/Loader.vue';
-const { handleHttpErrors } = require('@/utils/errorHandling.js');
+import { handleHttpErrors } from '@/utils/errorHandling.js';
 import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {

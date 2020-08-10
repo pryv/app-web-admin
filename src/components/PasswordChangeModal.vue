@@ -78,8 +78,8 @@
 </template>
 
 <script>
-const axios = require('axios');
-const jwtDecode = require('jwt-decode');
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import Modal from '@/widgets/Modal.vue';
 import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
 import OperationFailedModal from '@/widgets/OperationFailedModal.vue';
