@@ -87,10 +87,14 @@ export default {
   computed: {
     config: () => store.state.config,
     canUpdateSettings: () => PermissionsService.canUpdateSettings(),
-    activeTabIndex: () =>
-      Object.keys(store.state.config).findIndex(
-        key => key === 'SERVICE_INFORMATION_SETTINGS'
-      ),
+    activeTabIndex: {
+      get: function() {
+        return Object.keys(store.state.config).findIndex(
+          key => key === 'SERVICE_INFORMATION_SETTINGS'
+        );
+      },
+      set: function() {},
+    },
   },
   methods: {
     getConfig: function() {
