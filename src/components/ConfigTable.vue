@@ -111,6 +111,8 @@ export default {
             configValue = '';
           } else if (typeof configValue === 'boolean') {
             configValue = String(configValue);
+          } else if (this.isJSON(configValue)) {
+            configValue = JSON.parse(configValue);
           }
 
           return {
@@ -144,7 +146,6 @@ export default {
     onChangedJsonText: function(json, prop) {
       if (this.isJSON(json) || typeof json === 'object') {
         this.config[prop].value = JSON.parse(json);
-        console.log('validJson');
         this.$emit('validJson');
       }
     },
