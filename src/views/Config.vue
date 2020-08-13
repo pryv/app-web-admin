@@ -19,7 +19,13 @@
     </b-card>
     <br />
     <b-card no-body>
-      <b-tabs pills justified card v-if="Object.keys(config).length !== 0">
+      <b-tabs
+        pills
+        justified
+        card
+        v-if="Object.keys(config).length !== 0"
+        v-model="activeTabIndex"
+      >
         <b-tab
           title-link-class="tab-title"
           v-for="(val, prop) in config"
@@ -28,13 +34,19 @@
         >
           <ConfigTable
             :initialConfigSection="prop"
-            :valuesEditable="canUpdateSettings"
+            @invalidJson="inputValid = false"
+            @validJson="inputValid = true"
           />
         </b-tab>
       </b-tabs>
     </b-card>
     <b-card v-if="Object.keys(config).length !== 0 && canUpdateSettings">
-      <b-button variant="success" v-on:click="updateConfig">Update </b-button>
+      <b-button
+        variant="success"
+        v-on:click="updateConfig"
+        :disabled="!inputValid"
+        >Update</b-button
+      >
     </b-card>
 
     <transition name="modal">
@@ -48,8 +60,8 @@
 </template>
 
 <script>
-const axios = require('axios');
-const { handleHttpErrors } = require('@/utils/errorHandling.js');
+import axios from 'axios';
+import { handleHttpErrors } from '@/utils/errorHandling.js';
 import ConfigTable from '@/components/ConfigTable.vue';
 import UpdateReportModal from '@/components/UpdateReportModal.vue';
 import Loader from '@/widgets/Loader.vue';
@@ -70,10 +82,19 @@ export default {
     updateConfigReport: {},
     updateInProgress: false,
     loadInProgress: false,
+    inputValid: true,
   }),
   computed: {
     config: () => store.state.config,
     canUpdateSettings: () => PermissionsService.canUpdateSettings(),
+    activeTabIndex: {
+      get: function() {
+        return Object.keys(store.state.config).findIndex(
+          key => key === 'SERVICE_INFORMATION_SETTINGS'
+        );
+      },
+      set: function() {},
+    },
   },
   methods: {
     getConfig: function() {
@@ -158,10 +179,10 @@ form {
   transition: all 0.3s ease;
 }
 .modal-enter {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-leave-active {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {

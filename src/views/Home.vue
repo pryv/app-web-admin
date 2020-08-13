@@ -13,7 +13,7 @@ export default {
     } else if (PermissionsService.canReadSettings()) {
       this.$router.push('/platform-config');
     } else if (PermissionsService.canReadUsers()) {
-      this.$router.push('/platform-config');
+      this.$router.push('/users-management');
     }
   },
 };

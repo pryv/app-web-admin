@@ -1,7 +1,13 @@
 <template>
   <div class="permissions-table">
-    <table>
-      <tr class="perms-table-row">
+    <table
+      @click="
+        $emit('permissionsTableClicked', [
+          { username: username, permissions: permissions },
+        ])
+      "
+    >
+      <tr>
         <th colspan="5">USERS</th>
         <th colspan="2">SETTINGS</th>
       </tr>
@@ -39,6 +45,7 @@
 export default {
   name: 'PermissionsTable',
   props: {
+    username: String,
     permissions: {},
     disableCheckBoxes: Boolean,
   },
@@ -64,9 +71,8 @@ tr {
   text-align: justify;
 }
 th {
-  padding-left: 2rem;
-  padding-bottom: 0rem;
   vertical-align: middle;
+  text-align: center;
   border: 0px;
 }
 th:first-child,

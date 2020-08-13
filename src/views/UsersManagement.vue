@@ -10,7 +10,7 @@
     <b-table
       striped
       hover
-      sticky-header="49em"
+      sticky-header="43em"
       responsive
       fixed
       selectable
@@ -26,20 +26,19 @@
       </template>
       <template v-slot:cell(permissions)="row">
         <PermissionsTable
+          :username="row.item.username"
           :permissions="row.item.permissions"
           :disableCheckBoxes="true"
+          @permissionsTableClicked="onRowSelected"
         />
       </template>
     </b-table>
     <b-card>
       <b-button
-        v-if="Object.keys(selectedUser).length > 0"
-        variant="info"
-        @click="showEditUserModal = true"
+        v-if="canCreate"
+        variant="success"
+        @click="showCreateUserModal = true"
       >
-        Edit
-      </b-button>
-      <b-button variant="success" @click="showCreateUserModal = true">
         Create
       </b-button>
     </b-card>
@@ -99,12 +98,13 @@
 </template>
 
 <script>
-const axios = require('axios');
+import axios from 'axios';
 import Loader from '@/widgets/Loader.vue';
 import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
 import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
 import PermissionsTable from '@/components/PermissionsTable.vue';
-const { handleHttpErrors } = require('@/utils/errorHandling.js');
+import { PermissionsService } from '@/services/permissions.service.js';
+import { handleHttpErrors } from '@/utils/errorHandling.js';
 
 export default {
   name: 'UsersManagement',
@@ -123,13 +123,13 @@ export default {
       {
         key: 'users',
         label: 'Username',
-        thStyle: { 'padding-left': '60px' },
+        thStyle: { 'text-align': 'center' },
         class: 'users-management-user-row',
       },
       {
         key: 'permissions',
         label: 'Permissions',
-        thStyle: { 'padding-left': '60px' },
+        thStyle: { 'text-align': 'center' },
       },
     ],
     settingsPermissions: ['read', 'update'],
@@ -155,6 +155,10 @@ export default {
     // eslint-disable-next-line quotes
     usersPermissionsChangedText: "User's permissions updated successfully",
   }),
+  computed: {
+    canChangePermissions: () => PermissionsService.canChangePermissions(),
+    canCreate: () => PermissionsService.canCreateUsers(),
+  },
   methods: {
     onUsersPermissionsChangedModalClose: function() {
       this.showUsersPermissionsChangedModal = false;
@@ -179,6 +183,9 @@ export default {
     onRowSelected: function(items) {
       if (items && items.length > 0) {
         this.selectedUser = items[0];
+        if (this.canChangePermissions) {
+          this.showEditUserModal = true;
+        }
       } else {
         this.selectedUser = '';
       }
@@ -249,13 +256,14 @@ form {
   transition: all 0.3s ease;
 }
 .modal-enter {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-leave-active {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
+  -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }

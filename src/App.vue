@@ -7,7 +7,7 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue';
-const axios = require('axios');
+import axios from 'axios';
 
 export default {
   name: 'App',
@@ -37,6 +37,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  font-size: 1.7vh;
+  min-width: 600px;
 }
 .tab-title {
   color: rgb(76, 136, 136);
@@ -45,9 +47,28 @@ export default {
 .tab-title:hover {
   color: rgb(76, 136, 136);
 }
+.tab-cell {
+  white-space: normal;
+  overflow-wrap: break-word;
+  text-align: center;
+  min-width: 100px;
+}
 .users-management-user-row {
   width: 20%;
   border-right: 2px solid #c8c8c8;
   vertical-align: middle !important;
+}
+.jsoneditor-container {
+  min-width: auto !important;
+}
+.jsoneditor {
+  border: thin solid #c8c8c8 !important;
+}
+.jsoneditor-menu {
+  background-color: #c1d4f2 !important;
+  border-bottom: 1px solid #c1d4f2 !important;
+}
+.table-responsive {
+  overflow-y: auto !important;
 }
 </style>

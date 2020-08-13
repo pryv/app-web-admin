@@ -1,14 +1,14 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="light" variant="info" fixed="top">
+    <b-navbar type="light" variant="info" fixed="top">
       <b-navbar-brand href="https://api.pryv.com">
         <img alt="Logo" src="@/assets/logo.png" />
       </b-navbar-brand>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle v-if="loggedIn" target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse v-if="loggedIn" id="nav-collapse" is-nav>
-        <b-navbar-nav align="left" tag="div">
+        <b-navbar-nav class="ml-auto" tag="div">
           <b-nav-item
             class="nav-view"
             v-if="canViewPlatformConfig"
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-const axios = require('axios');
+import axios from 'axios';
 import PasswordChangeModal from '@/components/PasswordChangeModal.vue';
 import { PermissionsService } from '@/services/permissions.service.js';
 
@@ -69,6 +69,10 @@ export default {
     logout: function() {
       axios.post('/auth/logout', {}).finally(() => {
         localStorage.removeItem('token');
+        localStorage.removeItem('permissions');
+        localStorage.removeItem('username');
+        localStorage.removeItem('serverUrl');
+
         this.$emit('loggedOut');
         this.$router.push('/login');
       });
@@ -79,14 +83,12 @@ export default {
 
 <style scoped>
 img {
-  display: block;
-  margin-top: -8px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 20%;
+  text-align: top;
+  height: 120%;
 }
 .navbar-brand {
-  width: 30%;
+  width: 40%;
+  text-align: center;
 }
 .nav-view {
   border-right: 2px solid #45778f;
@@ -94,15 +96,11 @@ img {
 .modal-enter-active {
   transition: all 0.3s ease;
 }
-.modal-enter {
-  opacity: 0;
-}
-.modal-leave-active {
-  opacity: 0;
-}
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
+  -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+  opacity: 100;
 }
 </style>

@@ -78,8 +78,8 @@
 </template>
 
 <script>
-const axios = require('axios');
-const jwtDecode = require('jwt-decode');
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import Modal from '@/widgets/Modal.vue';
 import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
 import OperationFailedModal from '@/widgets/OperationFailedModal.vue';
@@ -133,10 +133,10 @@ export default {
   transition: all 0.3s ease;
 }
 .modal-enter {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-leave-active {
-  opacity: 0;
+  opacity: 100;
 }
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {

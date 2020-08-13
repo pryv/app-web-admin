@@ -23,6 +23,10 @@ export class PermissionsService {
     return getPermissions('users').includes('read');
   }
 
+  static canCreateUsers() {
+    return getPermissions('users').includes('create');
+  }
+
   static canDeleteUsers() {
     return getPermissions('users').includes('delete');
   }

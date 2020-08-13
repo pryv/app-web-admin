@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import './plugins/bootstrap-vue';
+import './plugins/linkify';
 import App from './App.vue';
 import router from './router';
 
