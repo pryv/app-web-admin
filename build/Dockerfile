@@ -3,6 +3,7 @@ LABEL "Tech@Pryv" <tech@pryv.com>
 WORKDIR /app
 COPY ./package.json ./
 RUN yarn install
+RUN yarn test
 COPY ./ .
 RUN yarn build
 

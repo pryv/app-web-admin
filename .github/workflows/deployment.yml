@@ -1,6 +1,7 @@
 name: PrYv Admin Panel deployment workflow
 
 on:
+  pull_request:
   push:
     tags:
       - '*'
@@ -27,12 +28,6 @@ jobs:
           login-server: ${{ secrets.REGISTRY_PRYV_SERVER }}
           username: ${{ secrets.REGISTRY_PRYV_USERNAME }}
           password: ${{ secrets.REGISTRY_PRYV_PASSWORD }}
-
-      - name: yarn install
-        run: yarn install
-
-      - name: yarn test
-        run: yarn install
 
       - name: Build image and deploy
         run: ./build/build
