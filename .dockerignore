@@ -1,0 +1,7 @@
+node_modules
+flow-typed
+.github
+.vscode
+test
+dist
+vue.config.js

@@ -1,0 +1,38 @@
+name: PrYv Admin Panel deployment workflow
+
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.13]
+
+    steps:
+      - name: Download master branch
+        uses: actions/checkout@v2
+
+      - name: Install Node.js with version ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Login to the docker containers registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_PRYV_SERVER }}
+          username: ${{ secrets.REGISTRY_PRYV_USERNAME }}
+          password: ${{ secrets.REGISTRY_PRYV_PASSWORD }}
+
+      - name: yarn install
+        run: yarn install
+
+      - name: yarn test
+        run: yarn install
+
+      - name: Build image and deploy
+        run: ./build/build
