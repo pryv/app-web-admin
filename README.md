@@ -1,28 +1,24 @@
-# app-web-admin
+# Admin Panel
 
 Wep Application that contains admin panel used for Pryv.io platform configuration.
+Contains also management of users having access to the panel and their permissions.
 
-## Project setup
-```
-yarn install
-```
+_Prerequisites:_
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+- Node v12+
+- Yarn v1+
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## How to?
 
-### Run your unit tests
-```
-yarn test:unit
-```
+| Task                    | Command            |
+| ----------------------- | ------------------ |
+| Install dependencies    | `yarn install`     |
+| Create distribution     | `yarn build`       |
+| Run the app locally     | `yarn start`       |
+| Run tests               | `yarn test`        |
+| Run linter              | `yarn lint`        |
+| Publish to github pages | `yarn run publish` |
 
-### Lints and fixes files
-```
-yarn lint
-```
+## License
+
+[Revised BSD license](https://github.com/pryv/documents/blob/master/license-bsd-revised.md)

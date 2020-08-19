@@ -1,28 +1,20 @@
 <template>
-  <div class="home">
-    <img alt="Logo" src="../assets/logo.png" />
-    <Config />
-  </div>
+  <div class="home"></div>
 </template>
 
 <script>
-// @ is an alias to /src
-import Config from "@/components/Config.vue";
+import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
-  name: "Home",
-  components: {
-    Config
-  }
+  name: 'Home',
+  beforeMount() {
+    if (!localStorage.getItem('token')) {
+      this.$router.push('/login');
+    } else if (PermissionsService.canReadSettings()) {
+      this.$router.push('/platform-config');
+    } else if (PermissionsService.canReadUsers()) {
+      this.$router.push('/users-management');
+    }
+  },
 };
 </script>
-
-<style scoped>
-img {
-  display: block;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 10%;
-}
-</style>
