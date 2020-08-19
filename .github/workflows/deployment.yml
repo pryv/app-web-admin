@@ -30,4 +30,4 @@ jobs:
           password: ${{ secrets.REGISTRY_PRYV_PASSWORD }}
 
       - name: Build image and deploy
-        run: ./build/build
+        run: cd ./build && ./build
