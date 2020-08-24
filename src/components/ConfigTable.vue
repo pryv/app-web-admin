@@ -14,28 +14,14 @@
         <div class="tab-cell">{{ row.item.property }}</div>
       </template>
       <template v-slot:cell(value)="row">
-        <div v-if="typeof row.item.value !== 'object'">
-          <b-form-textarea
-            v-if="('' + row.item.value).length > 70"
-            size="sm"
-            max-rows="6"
-            no-resize
-            v-model="row.item.value"
-            v-on:blur="onValueChanged($event.target.value, row.item.property)"
-            :disabled="
-              !canUpdateSettings || isPropertyReadOnly(row.item.property)
-            "
-          ></b-form-textarea>
-          <b-form-input
-            v-else
-            v-model="row.item.value"
-            v-on:blur="onValueChanged($event.target.value, row.item.property)"
-            :disabled="
-              !canUpdateSettings || isPropertyReadOnly(row.item.property)
-            "
-          >
-          </b-form-input>
-        </div>
+        <b-form-input
+          v-if="typeof row.item.value !== 'object'"
+          v-model="row.item.value"
+          v-on:blur="onValueChanged($event.target.value, row.item.property)"
+          :disabled="
+            !canUpdateSettings || row.item.property === 'TEMPLATE_VERSION'
+          "
+        />
         <VJsoneditor
           v-if="typeof row.item.value === 'object'"
           class="editor"
@@ -139,9 +125,6 @@ export default {
     },
   },
   methods: {
-    isPropertyReadOnly: function(property) {
-      return property === 'TEMPLATE_VERSION';
-    },
     forbidCertainEditions: function(node) {
       if (!this.canUpdateSettings) {
         return false;

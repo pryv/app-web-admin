@@ -1,6 +1,7 @@
 <template>
   <div class="login">
     <h1>Administration Panel</h1>
+     
     <h3>Please log in</h3>
     <b-card>
       <b-form v-on:submit.prevent="login">
@@ -19,6 +20,7 @@
             "
           />
         </b-form-group>
+
         <b-form-group label-for="username" label="Username">
           <b-form-input
             required
