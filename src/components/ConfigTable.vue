@@ -23,7 +23,7 @@
             v-model="row.item.value"
             v-on:blur="onValueChanged($event.target.value, row.item.property)"
             :disabled="
-              !canUpdateSettings || row.item.property === 'TEMPLATE_VERSION'
+              !canUpdateSettings || isPropertyReadOnly(row.item.property)
             "
           ></b-form-textarea>
           <b-form-input
@@ -31,7 +31,7 @@
             v-model="row.item.value"
             v-on:blur="onValueChanged($event.target.value, row.item.property)"
             :disabled="
-              !canUpdateSettings || row.item.property === 'TEMPLATE_VERSION'
+              !canUpdateSettings || isPropertyReadOnly(row.item.property)
             "
           >
           </b-form-input>
@@ -139,6 +139,9 @@ export default {
     },
   },
   methods: {
+    isPropertyReadOnly: function(property) {
+      return property === 'TEMPLATE_VERSION';
+    },
     forbidCertainEditions: function(node) {
       if (!this.canUpdateSettings) {
         return false;
