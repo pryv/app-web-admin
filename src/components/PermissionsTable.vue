@@ -10,12 +10,19 @@
       <tr>
         <th colspan="5">USERS</th>
         <th colspan="2">SETTINGS</th>
+        <th colspan="2">PLATFORM USERS</th>
       </tr>
       <tr>
         <td v-for="el in usersPermissions" :key="`users-perm-${el}`">
           {{ el }}
         </td>
         <td v-for="el in settingsPermissions" :key="`settings-perm-${el}`">
+          {{ el }}
+        </td>
+        <td
+          v-for="el in platformUsersPermissions"
+          :key="`platform-users-perm-${el}`"
+        >
           {{ el }}
         </td>
       </tr>
@@ -34,6 +41,17 @@
             :disabled="disableCheckBoxes"
             :value="el"
             v-model="permissions.settings"
+          />
+        </td>
+        <td
+          v-for="el in platformUsersPermissions"
+          :key="`platform-users-perm-${el}`"
+        >
+          <input
+            type="checkbox"
+            :disabled="disableCheckBoxes"
+            :value="el"
+            v-model="permissions.platformUsers"
           />
         </td>
       </tr>
@@ -58,6 +76,7 @@ export default {
       'resetPassword',
       'changePermissions',
     ],
+    platformUsersPermissions: ['read', 'delete'],
   }),
 };
 </script>
@@ -76,7 +95,9 @@ th {
   border: 0px;
 }
 th:first-child,
-td:nth-last-child(3) {
+th:nth-child(2),
+td:nth-last-child(3),
+td:nth-last-child(5) {
   border-right: 1px solid #c8c8c8;
 }
 td {

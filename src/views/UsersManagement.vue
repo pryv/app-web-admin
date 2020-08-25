@@ -62,7 +62,7 @@
         v-if="showCreateUserModal"
         :create="true"
         @close="showCreateUserModal = false"
-        :permissions="{ users: [], settings: [] }"
+        :permissions="{ users: [], settings: [], platformUsers: [] }"
         @userCreated="onUserCreated($event)"
       />
     </transition>

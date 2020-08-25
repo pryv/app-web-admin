@@ -54,7 +54,7 @@ export default {
   vertical-align: middle;
 }
 .modal-container {
-  max-width: 600px;
+  max-width: 650px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

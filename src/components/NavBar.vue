@@ -21,6 +21,12 @@
             to="/users-management"
             >Users Management</b-nav-item
           >
+          <b-nav-item
+            v-if="canReadPlatformUsers"
+            class="nav-view"
+            to="/platform-users-management"
+            >Platform Users Management</b-nav-item
+          >
         </b-navbar-nav>
 
         <b-navbar-nav align="right" tag="div">
@@ -64,6 +70,7 @@ export default {
   computed: {
     canViewPlatformConfig: () => PermissionsService.canReadSettings(),
     canViewUsersManagement: () => PermissionsService.canReadUsers(),
+    canReadPlatformUsers: () => PermissionsService.canReadPlatformUsers(),
   },
   methods: {
     logout: function() {
@@ -87,7 +94,7 @@ img {
   height: 120%;
 }
 .navbar-brand {
-  width: 40%;
+  width: 10%;
   text-align: center;
 }
 .nav-view {
