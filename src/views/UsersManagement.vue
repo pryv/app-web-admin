@@ -104,7 +104,7 @@ import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
 import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
 import PermissionsTable from '@/components/PermissionsTable.vue';
 import { PermissionsService } from '@/services/permissions.service.js';
-import { handleHttpErrors } from '@/utils/errorHandling.js';
+import { handleInvalidTokenError } from '@/utils/errorHandling.js';
 
 export default {
   name: 'UsersManagement',
@@ -216,7 +216,7 @@ export default {
           this.usersList = response.data;
         })
         .catch(error => {
-          if (!handleHttpErrors(error, this)) {
+          if (!handleInvalidTokenError(error, this)) {
             this.loadFailed = true;
           }
         })

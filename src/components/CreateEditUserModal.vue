@@ -97,7 +97,7 @@ import OperationFailedModal from '@/widgets/OperationFailedModal.vue';
 import PermissionsTable from '@/components/PermissionsTable.vue';
 import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
 import Loader from '@/widgets/Loader.vue';
-import { handleHttpErrors } from '@/utils/errorHandling.js';
+import { handleInvalidTokenError } from '@/utils/errorHandling.js';
 import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
@@ -158,7 +158,7 @@ export default {
           });
         })
         .catch(error => {
-          if (!handleHttpErrors(error, this)) {
+          if (!handleInvalidTokenError(error, this)) {
             this.showFailureModal = true;
           }
         })
@@ -174,7 +174,7 @@ export default {
           this.$emit('permissionsChanged', this.permissions);
         })
         .catch(error => {
-          if (!handleHttpErrors(error, this)) {
+          if (!handleInvalidTokenError(error, this)) {
             this.showFailureModal = true;
           }
         })
@@ -189,7 +189,7 @@ export default {
           this.$emit('passwordResetDone', response.data);
         })
         .catch(error => {
-          if (!handleHttpErrors(error, this)) {
+          if (!handleInvalidTokenError(error, this)) {
             this.showFailureModal = true;
           }
         })
@@ -202,7 +202,7 @@ export default {
       axios
         .delete(`/users/${this.username}`)
         .catch(error => {
-          if (!handleHttpErrors(error, this)) {
+          if (!handleInvalidTokenError(error, this)) {
             this.showFailureModal = true;
           }
         })

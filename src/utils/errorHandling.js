@@ -1,4 +1,4 @@
-export const handleHttpErrors = function(error, vueComponent) {
+export const handleInvalidTokenError = function(error, vueComponent) {
   if (error && error.response) {
     if (
       error.response.status === 401 &&

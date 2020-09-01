@@ -61,7 +61,7 @@
 
 <script>
 import axios from 'axios';
-import { handleHttpErrors } from '@/utils/errorHandling.js';
+import { handleInvalidTokenError } from '@/utils/errorHandling.js';
 import ConfigTable from '@/components/ConfigTable.vue';
 import UpdateReportModal from '@/components/UpdateReportModal.vue';
 import Loader from '@/widgets/Loader.vue';
@@ -109,7 +109,7 @@ export default {
           store.state.config = response.data;
         })
         .catch(error => {
-          if (!handleHttpErrors(error, this)) {
+          if (!handleInvalidTokenError(error, this)) {
             this.loadFailed = true;
           }
         })

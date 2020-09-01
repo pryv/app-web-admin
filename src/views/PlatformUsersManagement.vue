@@ -10,6 +10,7 @@
           id="username"
           placeholder="Username"
           v-model="username"
+          @input="userNotFound = false"
         />
         <b-button variant="success" type="submit">
           Find
@@ -42,6 +43,11 @@
         </b-button>
       </b-form>
     </b-card>
+    <b-card v-if="userNotFound">
+      <div class="failure-msg">
+        User not found
+      </div>
+    </b-card>
     <loader v-if="showLoader" :loading="showLoader"></loader>
     <transition name="modal">
       <ConfirmationModal
@@ -73,7 +79,7 @@ import Loader from '@/widgets/Loader.vue';
 import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
 import OperationFailedModal from '@/widgets/OperationFailedModal.vue';
 import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
-import { handleHttpErrors } from '@/utils/errorHandling.js';
+import { handleInvalidTokenError } from '@/utils/errorHandling.js';
 import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
@@ -93,6 +99,7 @@ export default {
     userDeletedText: 'User deleted successfully',
     showFailureModal: false,
     showLoader: false,
+    userNotFound: false,
   }),
   computed: {
     canDeletePlatformUsers: () => PermissionsService.canDeletePlatformUsers(),
@@ -109,8 +116,8 @@ export default {
           this.user = response.data;
         })
         .catch(error => {
-          if (!handleHttpErrors(error, this)) {
-            this.loadFailed = true;
+          if (!handleInvalidTokenError(error, this)) {
+            this.userNotFound = true;
           }
         })
         .finally(() => {
@@ -127,7 +134,7 @@ export default {
           this.showUserDeletedModal = true;
         })
         .catch(error => {
-          if (!handleHttpErrors(error, this)) {
+          if (!handleInvalidTokenError(error, this)) {
             this.showFailureModal = true;
           }
         })
@@ -185,5 +192,8 @@ form {
 .loader-wrapper {
   display: table-cell;
   vertical-align: middle;
+}
+.failure-msg {
+  color: rgb(189, 16, 38);
 }
 </style>
