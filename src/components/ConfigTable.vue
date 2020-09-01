@@ -14,7 +14,9 @@
         <div class="tab-cell">{{ row.item.property }}</div>
       </template>
       <template v-slot:cell(value)="row">
-        <div v-if="typeof row.item.value !== 'object'">
+        <div
+          v-if="typeof row.item.value !== 'object' || row.item.value === null"
+        >
           <b-form-textarea
             v-if="('' + row.item.value).length > 70"
             size="sm"
@@ -37,7 +39,7 @@
           </b-form-input>
         </div>
         <VJsoneditor
-          v-if="typeof row.item.value === 'object'"
+          v-if="typeof row.item.value === 'object' && row.item.value"
           class="editor"
           v-model="row.item.value"
           :plus="false"
@@ -121,9 +123,7 @@ export default {
             configValue = configValue.value;
           }
 
-          if (!configValue && typeof configValue !== 'boolean') {
-            configValue = '';
-          } else if (typeof configValue === 'boolean') {
+          if (typeof configValue === 'boolean' || configValue === null) {
             configValue = String(configValue);
           } else if (this.isJSON(configValue)) {
             configValue = JSON.parse(configValue);
@@ -157,6 +157,9 @@ export default {
     onValueChanged: function(changedText, prop) {
       if (this.isJSON(changedText)) {
         changedText = JSON.parse(changedText);
+      }
+      if (changedText === 'null') {
+        changedText = null;
       }
       this.config[prop].value = changedText;
     },
