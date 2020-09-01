@@ -10,7 +10,7 @@ import { PermissionsService } from '@/services/permissions.service.js';
 import LocalStorageMock from '../helpers/localStorage.mock';
 import Chance from 'chance';
 
-describe.only('PlatformUsersManagement', function() {
+describe('PlatformUsersManagement', function() {
   const chance = new Chance();
 
   let wrapper;
