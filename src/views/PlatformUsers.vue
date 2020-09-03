@@ -52,7 +52,6 @@
     <transition name="modal">
       <ConfirmationWithInputModal
         v-if="showDeleteConfirmationModal"
-        :text="deleteConfirmationMsg"
         :validConfirmationInput="user.username"
         @close="showDeleteConfirmationModal = false"
         @confirm="deletePlatformUser()"

@@ -4,7 +4,9 @@
       <div class="confirmation-modal-container">
         <div class="confirmation-modal-body">
           <div class="confirmation-close-button" @click="$emit('close')">x</div>
-          <div class="confirmation-text">{{ text }}</div>
+          <div class="confirmation-text">
+            Please type <b>{{ validConfirmationInput }}</b> to confirm.
+          </div>
         </div>
         <b-form>
           <b-form-input
@@ -34,7 +36,6 @@
 export default {
   name: 'ConfirmationWithInputModal',
   props: {
-    text: String,
     validConfirmationInput: String,
   },
   data: () => ({
