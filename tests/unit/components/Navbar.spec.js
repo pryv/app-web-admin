@@ -48,7 +48,7 @@ describe('NavBar', () => {
   });
 
   describe('user logged in', function() {
-    it('should render platform config and no users management navbars when user has those permisions', function() {
+    it('should render platform config and no admin users navbars when user has those permisions', function() {
       sinon.stub(PermissionsService, 'canReadSettings').returns(true);
       sinon.stub(PermissionsService, 'canReadAdminUsers').returns(false);
 
@@ -77,7 +77,7 @@ describe('NavBar', () => {
       ).equal('Profile');
     });
 
-    it('should render users management and no platform config navbars when user has those permisions', function() {
+    it('should render admin users and no platform config navbars when user has those permisions', function() {
       sinon.stub(PermissionsService, 'canReadSettings').returns(false);
       sinon.stub(PermissionsService, 'canReadAdminUsers').returns(true);
 
@@ -97,7 +97,7 @@ describe('NavBar', () => {
           .at(0)
           .find('a')
           .text()
-      ).equal('Users Management');
+      ).equal('Admin Users');
       expect(
         listElements
           .at(1)

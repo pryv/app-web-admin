@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
 import PlatformUsers from '@/views/PlatformUsers.vue';
-import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
+import ConfirmationWithInputModal from '@/widgets/ConfirmationWithInputModal.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import sinon from 'sinon';
@@ -123,7 +123,8 @@ describe('PlatformUsers', function() {
 
     await deleteUserButton.trigger('click');
 
-    expect(wrapper.findComponent(ConfirmationModal).exists()).to.be.true;
+    expect(wrapper.findComponent(ConfirmationWithInputModal).exists()).to.be
+      .true;
   });
   it('should send delete user request after confirmation', async function() {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
@@ -143,7 +144,12 @@ describe('PlatformUsers', function() {
     await deleteUserButton.trigger('click');
 
     await wrapper
-      .findComponent(ConfirmationModal)
+      .findComponent(ConfirmationWithInputModal)
+      .find('input')
+      .setValue(user.username);
+
+    await wrapper
+      .findComponent(ConfirmationWithInputModal)
       .findAll('button')
       .at(1)
       .trigger('click');

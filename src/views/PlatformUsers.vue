@@ -50,9 +50,10 @@
     </b-card>
     <loader v-if="showLoader" :loading="showLoader"></loader>
     <transition name="modal">
-      <ConfirmationModal
+      <ConfirmationWithInputModal
         v-if="showDeleteConfirmationModal"
         :text="deleteConfirmationMsg"
+        :validConfirmationInput="user.username"
         @close="showDeleteConfirmationModal = false"
         @confirm="deletePlatformUser()"
       />
@@ -78,7 +79,7 @@ import axios from 'axios';
 import Loader from '@/widgets/Loader.vue';
 import OperationSuccessfulModal from '@/widgets/OperationSuccessfulModal.vue';
 import OperationFailedModal from '@/widgets/OperationFailedModal.vue';
-import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
+import ConfirmationWithInputModal from '@/widgets/ConfirmationWithInputModal.vue';
 import { handleInvalidTokenError } from '@/utils/errorHandling.js';
 import { PermissionsService } from '@/services/permissions.service.js';
 
@@ -88,13 +89,13 @@ export default {
     Loader,
     OperationSuccessfulModal,
     OperationFailedModal,
-    ConfirmationModal,
+    ConfirmationWithInputModal,
   },
   data: () => ({
     username: '',
     user: {},
     showDeleteConfirmationModal: false,
-    deleteConfirmationMsg: 'Are you sure you want to delete this user?',
+    deleteConfirmationMsg: 'Enter username to confirm',
     showUserDeletedModal: false,
     userDeletedText: 'User deleted successfully',
     showFailureModal: false,
