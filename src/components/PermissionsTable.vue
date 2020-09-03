@@ -8,7 +8,7 @@
       "
     >
       <tr>
-        <th colspan="5">USERS</th>
+        <th colspan="5">ADMIN USERS</th>
         <th colspan="2">SETTINGS</th>
         <th colspan="2">PLATFORM USERS</th>
       </tr>
