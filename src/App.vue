@@ -53,7 +53,7 @@ export default {
   text-align: center;
   min-width: 100px;
 }
-.users-management-user-row {
+.admin-users-user-row {
   width: 20%;
   border-right: 2px solid #c8c8c8;
   vertical-align: middle !important;

@@ -1,6 +1,6 @@
 <template>
-  <div class="platform-users-management">
-    <h2>Platform Users Management</h2>
+  <div class="platform-users">
+    <h2>Platform Users</h2>
     <b-card>
       <b-form v-on:submit.prevent="getPlatformUser">
         <b-form-input
@@ -83,7 +83,7 @@ import { handleInvalidTokenError } from '@/utils/errorHandling.js';
 import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
-  name: 'PlatformUsersManagement',
+  name: 'PlatformUsers',
   components: {
     Loader,
     OperationSuccessfulModal,

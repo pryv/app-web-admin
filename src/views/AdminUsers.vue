@@ -1,6 +1,6 @@
 <template>
-  <div class="users-management">
-    <h2>Users Management</h2>
+  <div class="admin-users">
+    <h2>Admin Users</h2>
     <b-card v-if="loadFailed">
       <div class="failure-msg">
         <p>Unable to retrieve users list from the server.</p>
@@ -107,7 +107,7 @@ import { PermissionsService } from '@/services/permissions.service.js';
 import { handleInvalidTokenError } from '@/utils/errorHandling.js';
 
 export default {
-  name: 'UsersManagement',
+  name: 'AdminUsers',
   components: {
     Loader,
     CreateEditUserModal,
@@ -124,7 +124,7 @@ export default {
         key: 'users',
         label: 'Username',
         thStyle: { 'text-align': 'center' },
-        class: 'users-management-user-row',
+        class: 'admin-users-user-row',
       },
       {
         key: 'permissions',
@@ -157,7 +157,7 @@ export default {
   }),
   computed: {
     canChangePermissions: () => PermissionsService.canChangePermissions(),
-    canCreate: () => PermissionsService.canCreateUsers(),
+    canCreate: () => PermissionsService.canCreateAdminUsers(),
   },
   methods: {
     onUsersPermissionsChangedModalClose: function() {

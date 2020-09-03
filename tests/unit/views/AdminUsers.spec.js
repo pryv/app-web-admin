@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
-import UsersManagement from '@/views/UsersManagement.vue';
+import AdminUsers from '@/views/AdminUsers.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import sinon from 'sinon';
@@ -10,7 +10,7 @@ import LocalStorageMock from '../helpers/localStorage.mock';
 import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
 import Chance from 'chance';
 
-describe('UsersManagement', function() {
+describe('AdminUsers', function() {
   const chance = new Chance();
 
   let wrapper;
@@ -45,7 +45,7 @@ describe('UsersManagement', function() {
     if (document.body) {
       document.body.appendChild(elem);
     }
-    wrapper = mount(UsersManagement, {
+    wrapper = mount(AdminUsers, {
       localVue,
       attachTo: elem,
     });
@@ -72,7 +72,7 @@ describe('UsersManagement', function() {
     expect(usersRows.length).equal(users.length);
   });
   it('should display create button when user has sufficient permissions', async function() {
-    sinon.stub(PermissionsService, 'canCreateUsers').returns(true);
+    sinon.stub(PermissionsService, 'canCreateAdminUsers').returns(true);
     await mountComponent();
 
     const button = wrapper.find('button');
@@ -80,14 +80,14 @@ describe('UsersManagement', function() {
     expect(button.text()).equal('Create');
   });
   it('should hide create button when user has insufficient permissions', async function() {
-    sinon.stub(PermissionsService, 'canCreateUsers').returns(false);
+    sinon.stub(PermissionsService, 'canCreateAdminUsers').returns(false);
     await mountComponent();
 
     const button = wrapper.find('button');
     expect(button.exists()).to.be.false;
   });
   it('should display create user component on create button click', async function() {
-    sinon.stub(PermissionsService, 'canCreateUsers').returns(true);
+    sinon.stub(PermissionsService, 'canCreateAdminUsers').returns(true);
     await mountComponent();
 
     await wrapper.find('button').trigger('click');

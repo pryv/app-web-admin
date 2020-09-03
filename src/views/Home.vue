@@ -12,8 +12,8 @@ export default {
       this.$router.push('/login');
     } else if (PermissionsService.canReadSettings()) {
       this.$router.push('/platform-config');
-    } else if (PermissionsService.canReadUsers()) {
-      this.$router.push('/users-management');
+    } else if (PermissionsService.canReadAdminUsers()) {
+      this.$router.push('/admin-users');
     }
   },
 };

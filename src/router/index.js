@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import UsersManagement from '../views/UsersManagement.vue';
+import AdminUsers from '../views/AdminUsers.vue';
 import Config from '../views/Config.vue';
 import Login from '../views/Login.vue';
-import PlatformUsersManagement from '../views/PlatformUsersManagement.vue';
+import PlatformUsers from '../views/PlatformUsers.vue';
 import { PermissionsService } from '@/services/permissions.service.js';
 
 Vue.use(VueRouter);
@@ -21,20 +21,20 @@ const routes = [
     component: Login,
   },
   {
-    path: '/users-management',
-    name: 'UsersManagement',
-    component: UsersManagement,
+    path: '/admin-users',
+    name: 'AdminUsers',
+    component: AdminUsers,
     beforeEnter: (to, from, next) => {
-      if (!PermissionsService.canReadUsers()) {
+      if (!PermissionsService.canReadAdminUsers()) {
         next(false);
       }
       next();
     },
   },
   {
-    path: '/platform-users-management',
-    name: 'PlatformUsersManagement',
-    component: PlatformUsersManagement,
+    path: '/platform-users',
+    name: 'PlatformUsers',
+    component: PlatformUsers,
     beforeEnter: (to, from, next) => {
       if (!PermissionsService.canReadPlatformUsers()) {
         next(false);

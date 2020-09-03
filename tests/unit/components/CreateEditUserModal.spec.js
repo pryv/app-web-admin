@@ -130,7 +130,7 @@ describe('CreateEditUserModal', function() {
 
       sinon.stub(PermissionsService, 'canChangePermissions').returns(true);
       sinon.stub(PermissionsService, 'canResetPassword').returns(true);
-      sinon.stub(PermissionsService, 'canDeleteUsers').returns(true);
+      sinon.stub(PermissionsService, 'canDeleteAdminUsers').returns(true);
 
       wrapper = mount(CreateEditUserModal, {
         localVue,

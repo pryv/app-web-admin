@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
-import PlatformUsersManagement from '@/views/PlatformUsersManagement.vue';
+import PlatformUsers from '@/views/PlatformUsers.vue';
 import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
@@ -10,7 +10,7 @@ import { PermissionsService } from '@/services/permissions.service.js';
 import LocalStorageMock from '../helpers/localStorage.mock';
 import Chance from 'chance';
 
-describe('PlatformUsersManagement', function() {
+describe('PlatformUsers', function() {
   const chance = new Chance();
 
   let wrapper;
@@ -41,7 +41,7 @@ describe('PlatformUsersManagement', function() {
     if (document.body) {
       document.body.appendChild(elem);
     }
-    wrapper = mount(PlatformUsersManagement, {
+    wrapper = mount(PlatformUsers, {
       localVue,
       attachTo: elem,
     });

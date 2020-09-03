@@ -17,15 +17,15 @@
           >
           <b-nav-item
             class="nav-view"
-            v-if="canViewUsersManagement"
-            to="/users-management"
-            >Users Management</b-nav-item
+            v-if="canViewAdminUsers"
+            to="/admin-users"
+            >Admin Users</b-nav-item
           >
           <b-nav-item
             v-if="canReadPlatformUsers"
             class="nav-view"
-            to="/platform-users-management"
-            >Platform Users Management</b-nav-item
+            to="/platform-users"
+            >Platform Users</b-nav-item
           >
         </b-navbar-nav>
 
@@ -69,7 +69,7 @@ export default {
   }),
   computed: {
     canViewPlatformConfig: () => PermissionsService.canReadSettings(),
-    canViewUsersManagement: () => PermissionsService.canReadUsers(),
+    canViewAdminUsers: () => PermissionsService.canReadAdminUsers(),
     canReadPlatformUsers: () => PermissionsService.canReadPlatformUsers(),
   },
   methods: {

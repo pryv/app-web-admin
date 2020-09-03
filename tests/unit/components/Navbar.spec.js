@@ -50,7 +50,7 @@ describe('NavBar', () => {
   describe('user logged in', function() {
     it('should render platform config and no users management navbars when user has those permisions', function() {
       sinon.stub(PermissionsService, 'canReadSettings').returns(true);
-      sinon.stub(PermissionsService, 'canReadUsers').returns(false);
+      sinon.stub(PermissionsService, 'canReadAdminUsers').returns(false);
 
       wrapper = mount(NavBar, {
         localVue,
@@ -79,7 +79,7 @@ describe('NavBar', () => {
 
     it('should render users management and no platform config navbars when user has those permisions', function() {
       sinon.stub(PermissionsService, 'canReadSettings').returns(false);
-      sinon.stub(PermissionsService, 'canReadUsers').returns(true);
+      sinon.stub(PermissionsService, 'canReadAdminUsers').returns(true);
 
       wrapper = mount(NavBar, {
         localVue,

@@ -133,7 +133,7 @@ export default {
     },
     canChangePermissions: () => PermissionsService.canChangePermissions(),
     canResetPassword: () => PermissionsService.canResetPassword(),
-    canDelete: () => PermissionsService.canDeleteUsers(),
+    canDelete: () => PermissionsService.canDeleteAdminUsers(),
   },
   methods: {
     saveChanges: function() {

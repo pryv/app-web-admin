@@ -17,13 +17,13 @@ export class PermissionsService {
   static canUpdateSettings() {
     return getPermissions('settings').includes('update');
   }
-  static canReadUsers() {
+  static canReadAdminUsers() {
     return getPermissions('users').includes('read');
   }
-  static canCreateUsers() {
+  static canCreateAdminUsers() {
     return getPermissions('users').includes('create');
   }
-  static canDeleteUsers() {
+  static canDeleteAdminUsers() {
     return getPermissions('users').includes('delete');
   }
   static canResetPassword() {
