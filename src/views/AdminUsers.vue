@@ -185,6 +185,10 @@ export default {
         this.selectedUser = items[0];
         if (this.canChangePermissions) {
           this.showEditUserModal = true;
+          // apend default platformUsers permissions if they  don't exist
+          if (typeof this.selectedUser.permissions.platformUsers !== 'object') {
+            this.selectedUser.permissions.platformUsers = [];
+          }
         }
       } else {
         this.selectedUser = '';

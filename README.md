@@ -14,7 +14,7 @@ _Prerequisites:_
 | ----------------------- | ------------------ |
 | Install dependencies    | `yarn install`     |
 | Create distribution     | `yarn build`       |
-| Run the app locally     | `yarn start`       |
+| Run the app locally     | `yarn serve`       |
 | Run tests               | `yarn test`        |
 | Run linter              | `yarn lint`        |
 | Publish to github pages | `yarn run publish` |
