@@ -214,6 +214,17 @@ export default {
             throw new Error();
           }
           this.usersList = response.data;
+          this.usersList.forEach(user => {
+            for (let permissionsGroup of [
+              'users',
+              'platformUsers',
+              'settings',
+            ]) {
+              if (!user.permissions[permissionsGroup]) {
+                user.permissions[permissionsGroup] = [];
+              }
+            }
+          });
         })
         .catch(error => {
           if (!handleInvalidTokenError(error, this)) {
