@@ -140,9 +140,7 @@ export default {
   },
   methods: {
     isPropertyReadOnly: function(property) {
-      return (
-        property === 'TEMPLATE_VERSION' || property === 'REGISTER_ADMIN_KEY'
-      );
+      return ['TEMPLATE_VERSION', 'REGISTER_ADMIN_KEY'].includes(property);
     },
     forbidCertainEditions: function(node) {
       if (!this.canUpdateSettings) {
