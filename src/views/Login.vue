@@ -68,6 +68,7 @@
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import Loader from '@/widgets/Loader.vue';
+import store from '@/store/store.js';
 
 export default {
   name: 'Login',
@@ -104,6 +105,9 @@ export default {
           localStorage.setItem('permissions', JSON.stringify(user.permissions));
           localStorage.setItem('username', user.username);
 
+          store.state.currentUser = {
+            permissions: user.permissions
+          };
           axios.defaults.baseURL = this.serverUrl;
           axios.defaults.headers.common['authorization'] = response.data.token;
 

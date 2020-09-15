@@ -105,6 +105,7 @@ import CreateEditUserModal from '@/components/CreateEditUserModal.vue';
 import PermissionsTable from '@/components/PermissionsTable.vue';
 import { PermissionsService } from '@/services/permissions.service.js';
 import { handleInvalidTokenError } from '@/utils/errorHandling.js';
+import store from '@/store/store.js';
 
 export default {
   name: 'AdminUsers',
@@ -204,6 +205,13 @@ export default {
       this.usersList.find(
         e => e.username === username
       ).permissions = permissions;
+
+      // if the user that was updated is the same user that is logged in, update local storage
+      if (username === localStorage.getItem('username')) {
+        localStorage.setItem('permissions', JSON.stringify(permissions));
+
+        store.state.currentUser.permissions = permissions;
+      }
     },
     getUsersList: function() {
       this.loadInProgress = true;
