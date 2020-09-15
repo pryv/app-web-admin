@@ -1,5 +1,7 @@
+import store from '@/store/store.js';
+
 const getPermissions = function(permissionsGroup) {
-  const permissions = JSON.parse(localStorage.getItem('permissions'));
+  const permissions = store.state.currentUser.permissions;
   if (
     !permissions ||
     !permissions[permissionsGroup] ||

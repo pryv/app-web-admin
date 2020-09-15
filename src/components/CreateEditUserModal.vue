@@ -27,6 +27,13 @@
           </b-form-group>
           <b-form-group label="Permissions">
             <br />
+            <b-alert
+              v-if="!atLeastOnePermissionSelected"
+              show
+              variant="warning"
+            >
+              Please select at least one permission
+            </b-alert>
             <PermissionsTable
               :permissions="permissions"
               :disableCheckBoxes="edit && !canChangePermissions"
@@ -125,6 +132,7 @@ export default {
       deleteConfirmationMsg: 'Are you sure you want to delete this user?',
       showLoader: false,
       showFailureModal: false,
+      atLeastOnePermissionSelected: true,
     };
   },
   computed: {
@@ -143,7 +151,24 @@ export default {
         this.changePermissions();
       }
     },
+    isSelectedPermissionsValid() {
+      // throw an error if user has no permissions selected
+      if (
+        this.permissions.users.length === 0 &&
+        this.permissions.settings.length === 0 &&
+        this.permissions.platformUsers.length === 0
+      ) {
+        this.showFailureModal = false;
+        this.atLeastOnePermissionSelected = false;
+        return false;
+      }
+      this.atLeastOnePermissionSelected = true;
+      return true;
+    },
     createUser() {
+      if (!this.isSelectedPermissionsValid()) {
+        return;
+      }
       this.showLoader = true;
       axios
         .post('/users', {
