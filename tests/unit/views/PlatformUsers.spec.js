@@ -7,7 +7,6 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import sinon from 'sinon';
 import axios from 'axios';
 import { PermissionsService } from '@/services/permissions.service.js';
-import LocalStorageMock from '../helpers/localStorage.mock';
 import Chance from 'chance';
 
 describe('PlatformUsers', function() {
@@ -48,10 +47,6 @@ describe('PlatformUsers', function() {
 
     await wrapper.vm.$forceUpdate();
   }
-
-  before(function() {
-    global.localStorage = new LocalStorageMock();
-  });
 
   afterEach(function() {
     wrapper.destroy();

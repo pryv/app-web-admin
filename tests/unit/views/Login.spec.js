@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils';
 import Login from '@/views/Login.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
-import LocalStorageMock from '../helpers/localStorage.mock';
 import sinon from 'sinon';
 import axios from 'axios';
 import Chance from 'chance';
@@ -19,10 +18,6 @@ let wrapper;
 let submitButton;
 
 describe('Login', () => {
-  before(function() {
-    global.localStorage = new LocalStorageMock();
-  });
-
   beforeEach(function() {
     const localVue = createLocalVue();
     localVue.use(BootstrapVue);

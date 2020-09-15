@@ -5,7 +5,6 @@ import ConfigTable from '@/components/ConfigTable.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue } from 'bootstrap-vue';
 import linkify from 'vue-linkify';
-import LocalStorageMock from '../helpers/localStorage.mock';
 import Chance from 'chance';
 
 describe('ConfigTable', () => {
@@ -21,8 +20,6 @@ describe('ConfigTable', () => {
 
   before(function() {
     chance = new Chance();
-
-    global.localStorage = new LocalStorageMock();
 
     const localVue = createLocalVue();
     localVue.use(BootstrapVue);

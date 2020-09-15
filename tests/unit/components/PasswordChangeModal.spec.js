@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils';
 import PasswordChangeModal from '@/components/PasswordChangeModal.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
-import LocalStorageMock from '../helpers/localStorage.mock';
 import { sign } from 'jsonwebtoken';
 import sinon from 'sinon';
 import axios from 'axios';
@@ -21,7 +20,6 @@ let postReqStub;
 
 describe('PasswordChangeModal', () => {
   before(function() {
-    global.localStorage = new LocalStorageMock();
     global.localStorage.setItem('token', token);
 
     const localVue = createLocalVue();

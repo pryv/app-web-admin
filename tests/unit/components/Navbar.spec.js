@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils';
 import NavBar from '@/components/NavBar.vue';
 import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
-import LocalStorageMock from '../helpers/localStorage.mock';
 import sinon from 'sinon';
 import axios from 'axios';
 import { PermissionsService } from '@/services/permissions.service.js';
@@ -14,8 +13,6 @@ let localVue;
 
 describe('NavBar', () => {
   before(function() {
-    global.localStorage = new LocalStorageMock();
-
     localVue = createLocalVue();
     localVue.use(BootstrapVue);
     localVue.use(BootstrapVueIcons);

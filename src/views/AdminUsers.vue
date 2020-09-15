@@ -206,6 +206,9 @@ export default {
         e => e.username === username
       ).permissions = permissions;
 
+      this.updateCurrentUserIfNeeded(username, permissions);
+    },
+    updateCurrentUserIfNeeded(username, permissions) {
       // if the user that was updated is the same user that is logged in, update local storage
       if (username === localStorage.getItem('username')) {
         localStorage.setItem('permissions', JSON.stringify(permissions));
