@@ -38,10 +38,10 @@
             />
           </b-form-group>
           <div class="modal-footer">
-            <b-button variant="success" type="submit">
+            <b-button variant="primary" type="submit">
               Save
             </b-button>
-            <b-button variant="secondary" @click="$emit('close')">
+            <b-button variant="primary" @click="$emit('close')">
               Cancel
             </b-button>
           </div>

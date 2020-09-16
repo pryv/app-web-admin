@@ -1,76 +1,84 @@
 <template>
-  <div class="platform-users">
-    <h2>Platform Users</h2>
-    <b-card>
-      <b-form v-on:submit.prevent="getPlatformUser">
-        <b-form-input
-          required
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Username"
-          v-model="username"
-          @input="userNotFound = false"
-        />
-        <b-button variant="success" type="submit">
-          Find
-        </b-button>
-      </b-form>
-    </b-card>
-    <b-card v-if="Object.keys(user).length > 0">
-      <b-form v-on:submit.prevent="showDeleteConfirmationModal = true">
-        <b-form-group
-          v-for="prop in Object.keys(user)"
-          :key="prop"
-          :label-for="`${prop}`"
-          :label="`${prop}:`"
-          label-cols="4"
-          label-cols-lg="2"
-          label-size="md"
-          label-class="font-weight-normal"
-          label-align="right"
-        >
-          <b-form-input
-            type="text"
-            :name="`${prop}`"
-            :id="`${prop}`"
-            v-model="user[prop]"
-            disabled
+  <b-row align-h="center">
+    <b-col cols="9" md="5" sm="9" lg="5">
+      <div class="platform-users">
+        <h2>Platform Users</h2>
+        <b-card>
+          <b-form v-on:submit.prevent="getPlatformUser">
+            <b-form-input
+              required
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Username"
+              v-model="username"
+              @input="userNotFound = false"
+            />
+            <b-button variant="primary" type="submit">
+              Find
+            </b-button>
+          </b-form>
+        </b-card>
+        <b-card v-if="Object.keys(user).length > 0">
+          <b-form v-on:submit.prevent="showDeleteConfirmationModal = true">
+            <b-form-group
+              v-for="prop in Object.keys(user)"
+              :key="prop"
+              :label-for="`${prop}`"
+              :label="`${prop}:`"
+              label-cols="4"
+              label-cols-lg="2"
+              label-size="md"
+              label-class="font-weight-normal"
+              label-align="right"
+            >
+              <b-form-input
+                type="text"
+                :name="`${prop}`"
+                :id="`${prop}`"
+                v-model="user[prop]"
+                disabled
+              />
+            </b-form-group>
+            <b-button
+              v-if="canDeletePlatformUsers"
+              variant="primary"
+              type="submit"
+            >
+              Delete
+            </b-button>
+          </b-form>
+        </b-card>
+        <b-card v-if="userNotFound">
+          <div class="failure-msg">
+            User not found
+          </div>
+        </b-card>
+        <loader v-if="showLoader" :loading="showLoader"></loader>
+        <transition name="modal">
+          <ConfirmationWithInputModal
+            v-if="showDeleteConfirmationModal"
+            :validConfirmationInput="user.username"
+            @close="showDeleteConfirmationModal = false"
+            @confirm="deletePlatformUser()"
           />
-        </b-form-group>
-        <b-button v-if="canDeletePlatformUsers" variant="warning" type="submit">
-          Delete
-        </b-button>
-      </b-form>
-    </b-card>
-    <b-card v-if="userNotFound">
-      <div class="failure-msg">
-        User not found
+        </transition>
+        <transition name="modal">
+          <OperationSuccessfulModal
+            v-if="showUserDeletedModal"
+            :text="userDeletedText"
+            @close="showUserDeletedModal = false"
+          />
+        </transition>
+        <transition name="modal">
+          <OperationFailedModal
+            v-if="showFailureModal"
+            @close="showFailureModal = false"
+          />
+        </transition>
       </div>
-    </b-card>
-    <loader v-if="showLoader" :loading="showLoader"></loader>
-    <transition name="modal">
-      <ConfirmationWithInputModal
-        v-if="showDeleteConfirmationModal"
-        :validConfirmationInput="user.username"
-        @close="showDeleteConfirmationModal = false"
-        @confirm="deletePlatformUser()"
-      />
-    </transition>
-    <transition name="modal">
-      <OperationSuccessfulModal
-        v-if="showUserDeletedModal"
-        :text="userDeletedText"
-        @close="showUserDeletedModal = false"
-      />
-    </transition>
-    <transition name="modal">
-      <OperationFailedModal
-        v-if="showFailureModal"
-        @close="showFailureModal = false"
-      />
-    </transition>
-  </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -159,7 +167,6 @@ button:active {
   border: 0;
 }
 form {
-  background-color: #ecf5f3;
   padding: 20px;
 }
 .modal-enter-active {

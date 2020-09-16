@@ -36,7 +36,7 @@
     <b-card>
       <b-button
         v-if="canCreate"
-        variant="success"
+        variant="primary"
         @click="showCreateUserModal = true"
       >
         Create

@@ -18,9 +18,11 @@
           />
         </b-form>
         <div class="confirmation-modal-footer">
-          <b-button variant="danger" @click="$emit('close')">Cancel</b-button>
+          <b-button variant="outline-primary" @click="$emit('close')">
+            Cancel
+          </b-button>
           <b-button
-            variant="success"
+            variant="primary"
             @click="$emit('confirm')"
             :disabled="validConfirmationInput !== confirmationInput"
             >Confirm</b-button

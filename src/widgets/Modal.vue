@@ -13,11 +13,12 @@
           <slot name="footer">
             <b-button
               variant="danger"
+              class="btn-outline-primary"
               v-if="showCancelButton"
               @click="$emit('close')"
               >Cancel</b-button
             >
-            <b-button variant="success" @click="$emit('close')">OK</b-button>
+            <b-button variant="primary" @click="$emit('close')">OK</b-button>
             <br />
           </slot>
         </div>

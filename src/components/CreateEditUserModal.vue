@@ -40,10 +40,10 @@
             />
           </b-form-group>
           <div class="modal-footer">
-            <b-button variant="success" type="submit">
+            <b-button variant="primary" type="submit">
               Save
             </b-button>
-            <b-button variant="secondary" @click="$emit('close')">
+            <b-button variant="outline-primary" @click="$emit('close')">
               Cancel
             </b-button>
           </div>
@@ -52,16 +52,16 @@
           <hr />
           <b-button
             v-if="canResetPassword"
-            variant="dark"
-            class="btn-sm black-button"
+            variant="outline-secondary"
+            class="btn-sm"
             @click="showResetPasswordConfirmationModal = true"
           >
             Reset password
           </b-button>
           <b-button
             v-if="canDelete"
-            variant="dark"
-            class="btn-sm black-button"
+            variant="outline-primary"
+            class="btn-sm"
             @click="showDeleteConfirmationModal = true"
           >
             Delete

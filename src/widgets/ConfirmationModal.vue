@@ -7,8 +7,10 @@
           <div class="confirmation-text">{{ text }}</div>
         </div>
         <div class="confirmation-modal-footer">
-          <b-button variant="danger" @click="$emit('close')">Cancel</b-button>
-          <b-button variant="success" @click="$emit('confirm')">Yes</b-button>
+          <b-button variant="outline-primary" @click="$emit('close')">
+            Cancel
+          </b-button>
+          <b-button variant="primary" @click="$emit('confirm')">Yes</b-button>
           <br />
         </div>
       </div>

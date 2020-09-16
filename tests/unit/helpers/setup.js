@@ -1,6 +1,8 @@
 class LocalStorageMock {
   constructor() {
-    this.store = {};
+    this.store = {
+      username: 'testuser',
+    };
   }
 
   clear() {

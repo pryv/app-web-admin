@@ -42,7 +42,7 @@
     </b-card>
     <b-card v-if="Object.keys(config).length !== 0 && canUpdateSettings">
       <b-button
-        variant="success"
+        variant="primary"
         v-on:click="updateConfig"
         :disabled="!inputValid"
         >Update</b-button

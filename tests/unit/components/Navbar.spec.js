@@ -71,7 +71,7 @@ describe('NavBar', () => {
           .at(1)
           .find('a')
           .text()
-      ).equal('Profile');
+      ).equal('testuser');
     });
 
     it('should render admin users and no platform config navbars when user has those permisions', function() {
@@ -100,7 +100,7 @@ describe('NavBar', () => {
           .at(1)
           .find('a')
           .text()
-      ).equal('Profile');
+      ).equal('testuser');
     });
 
     it('should render profile dropdown', function() {

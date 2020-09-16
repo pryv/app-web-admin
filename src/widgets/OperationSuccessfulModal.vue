@@ -4,11 +4,11 @@
       <div class="operation-successful-modal-container">
         <div class="operation-successful-modal-body">
           <b-iconstack font-scale="10">
-            <b-icon stacked icon="circle" variant="success"></b-icon>
-            <b-icon stacked icon="check" variant="success"></b-icon>
+            <b-icon stacked icon="circle" variant="secondary"></b-icon>
+            <b-icon stacked icon="check" variant="secondary"></b-icon>
           </b-iconstack>
           <div class="operation-successful-modal-message">{{ text }}</div>
-          <b-button variant="secondary" @click="$emit('close')">
+          <b-button variant="outline-secondary" @click="$emit('close')">
             Close
           </b-button>
         </div>
