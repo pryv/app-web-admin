@@ -79,9 +79,6 @@ export default {
       'changePermissions',
     ],
     platformUsersPermissions: ['read', 'delete'],
-    id1: Math.random()
-      .toString(36)
-      .substring(7),
   }),
 };
 </script>

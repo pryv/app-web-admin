@@ -4,7 +4,7 @@
       class="custom-control-input"
       type="checkbox"
       v-bind:id="id"
-      :disabled="disabledData"
+      :disabled="disabled"
       :value="val"
       v-model="checked"
       @change="onChange"
@@ -27,7 +27,6 @@ export default {
       id: Math.random()
         .toString(36)
         .substring(7),
-      disabledData: this.disabled,
       checkedProxy: false,
     };
   },
