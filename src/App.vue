@@ -1,7 +1,16 @@
 <template>
   <div id="app">
     <NavBar :loggedIn="loggedIn" @loggedOut="loggedIn = false" />
-    <router-view @loggedIn="loggedIn = true" @loggedOut="loggedIn = false" />
+    <b-container fluid>
+      <b-row align-h="center">
+        <b-col>
+          <router-view
+            @loggedIn="loggedIn = true"
+            @loggedOut="loggedIn = false"
+          />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -31,13 +40,12 @@ export default {
 </script>
 
 <style>
-@import 'https://api.pryv.com/style/pryv.min.css';
+@import 'https://api.pryv.com/style/pryv2.min.css';
 
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  font-size: 1.7vh;
   min-width: 600px;
 }
 .tab-title {
@@ -70,5 +78,8 @@ export default {
 }
 .table-responsive {
   overflow-y: auto !important;
+}
+.container-fluid {
+  margin-top: 80px;
 }
 </style>

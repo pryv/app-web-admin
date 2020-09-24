@@ -28,18 +28,16 @@
       </tr>
       <tr>
         <td v-for="el in usersPermissions" :key="`users-perm-${el}`">
-          <input
-            type="checkbox"
+          <Checkbox
             :disabled="disableCheckBoxes"
-            :value="el"
+            :val="el"
             v-model="permissions.users"
           />
         </td>
-        <td v-for="el in settingsPermissions" :key="`setttings-perm-${el}`">
-          <input
-            type="checkbox"
+        <td v-for="el in settingsPermissions" :key="`settings-perm-${el}`">
+          <Checkbox
             :disabled="disableCheckBoxes"
-            :value="el"
+            :val="el"
             v-model="permissions.settings"
           />
         </td>
@@ -47,10 +45,9 @@
           v-for="el in platformUsersPermissions"
           :key="`platform-users-perm-${el}`"
         >
-          <input
-            type="checkbox"
+          <Checkbox
             :disabled="disableCheckBoxes"
-            :value="el"
+            :val="el"
             v-model="permissions.platformUsers"
           />
         </td>
@@ -60,12 +57,17 @@
 </template>
 
 <script>
+import Checkbox from '@/components/ui/Checkbox.vue';
+
 export default {
   name: 'PermissionsTable',
   props: {
     username: String,
     permissions: {},
     disableCheckBoxes: Boolean,
+  },
+  components: {
+    Checkbox,
   },
   data: () => ({
     settingsPermissions: ['read', 'update'],

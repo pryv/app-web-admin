@@ -1,8 +1,13 @@
 <template>
   <div>
-    <b-navbar type="light" variant="info" fixed="top">
+    <b-navbar class="navbar-expand-lg, navbar-light, bg-light" fixed="top">
       <b-navbar-brand href="https://api.pryv.com">
-        <img alt="Logo" src="@/assets/logo.png" />
+        <img
+          alt="Logo"
+          src="@/assets/logo.png"
+          class="d-inline-block align-top"
+          width="100px"
+        />
       </b-navbar-brand>
 
       <b-navbar-toggle v-if="loggedIn" target="nav-collapse"></b-navbar-toggle>
@@ -32,7 +37,7 @@
         <b-navbar-nav align="right" tag="div">
           <b-nav-item-dropdown right>
             <template v-slot:button-content>
-              <em>Profile</em>
+              <em>{{ username }}</em>
             </template>
             <b-dropdown-item @click="displayChangePasswordModal = true"
               >Change Password</b-dropdown-item
@@ -55,6 +60,7 @@
 import axios from 'axios';
 import PasswordChangeModal from '@/components/PasswordChangeModal.vue';
 import { PermissionsService } from '@/services/permissions.service.js';
+import store from '@/store/store.js';
 
 export default {
   name: 'NavBar',
@@ -66,6 +72,7 @@ export default {
   },
   data: () => ({
     displayChangePasswordModal: false,
+    username: store.state.currentUser.username,
   }),
   computed: {
     canViewPlatformConfig: () => PermissionsService.canReadSettings(),

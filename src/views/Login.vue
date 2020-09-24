@@ -1,67 +1,71 @@
 <template>
-  <div class="login">
-    <h1>Administration Panel</h1>
-    <h3>Please log in</h3>
-    <b-card>
-      <b-form v-on:submit.prevent="login">
-        <b-form-group label-for="serverUrl" label="Config leader address">
-          <b-form-input
-            required
-            pattern="https?://\S+"
-            type="text"
-            name="serverUrl"
-            id="serverUrl"
-            placeholder="https://lead.platform.com"
-            v-model="serverUrl"
-            @input="
-              loginFailed = false;
-              loginRequestFailed = false;
-            "
-          />
-        </b-form-group>
-        <b-form-group label-for="username" label="Username">
-          <b-form-input
-            required
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Username"
-            v-model="username"
-            @input="
-              loginFailed = false;
-              loginRequestFailed = false;
-            "
-          />
-        </b-form-group>
-        <b-form-group label-for="password" label="Password">
-          <b-form-input
-            required
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            v-model="password"
-            @input="
-              loginFailed = false;
-              loginRequestFailed = false;
-            "
-          />
-        </b-form-group>
-        <b-button variant="success" type="submit">Login</b-button>
-      </b-form>
-    </b-card>
-    <b-card v-if="loginFailed">
-      <div class="failure-msg">
-        <p v-if="!loginRequestFailed">
-          Incorrect credentials. Please verify your input
-        </p>
-        <p v-if="loginRequestFailed">
-          Unable to connect to the server. Please try again later
-        </p>
+  <b-row align-h="center">
+    <b-col cols="9" md="5" sm="9" lg="5">
+      <div class="login">
+        <h1>Administration Panel</h1>
+        <h3>Please log in</h3>
+        <b-card>
+          <b-form v-on:submit.prevent="login">
+            <b-form-group label-for="serverUrl" label="Config leader address">
+              <b-form-input
+                required
+                pattern="https?://\S+"
+                type="text"
+                name="serverUrl"
+                id="serverUrl"
+                placeholder="https://lead.platform.com"
+                v-model="serverUrl"
+                @input="
+                  loginFailed = false;
+                  loginRequestFailed = false;
+                "
+              />
+            </b-form-group>
+            <b-form-group label-for="username" label="Username">
+              <b-form-input
+                required
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Username"
+                v-model="username"
+                @input="
+                  loginFailed = false;
+                  loginRequestFailed = false;
+                "
+              />
+            </b-form-group>
+            <b-form-group label-for="password" label="Password">
+              <b-form-input
+                required
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+                v-model="password"
+                @input="
+                  loginFailed = false;
+                  loginRequestFailed = false;
+                "
+              />
+            </b-form-group>
+            <b-button variant="primary" type="submit">Login</b-button>
+          </b-form>
+        </b-card>
+        <b-card v-if="loginFailed">
+          <div class="failure-msg">
+            <p v-if="!loginRequestFailed">
+              Incorrect credentials. Please verify your input
+            </p>
+            <p v-if="loginRequestFailed">
+              Unable to connect to the server. Please try again later
+            </p>
+          </div>
+        </b-card>
+        <loader v-if="loginInProgress" :loading="loginInProgress"></loader>
       </div>
-    </b-card>
-    <loader v-if="loginInProgress" :loading="loginInProgress"></loader>
-  </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -106,7 +110,8 @@ export default {
           localStorage.setItem('username', user.username);
 
           store.state.currentUser = {
-            permissions: user.permissions
+            username: user.username,
+            permissions: user.permissions,
           };
           axios.defaults.baseURL = this.serverUrl;
           axios.defaults.headers.common['authorization'] = response.data.token;
@@ -150,7 +155,6 @@ button:active {
   border: 0;
 }
 form {
-  background-color: #ecf5f3;
   padding: 20px;
 }
 .failure-msg {
