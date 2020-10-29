@@ -32,8 +32,8 @@ jobs:
 
       - name: Download base image and change the tag
         run: |
-          docker pull ${{ secrets.REGISTRY_PRYV_SERVER }}/pryv/base:1.5.1
-          docker tag "${{ secrets.REGISTRY_PRYV_SERVER }}/pryv/base:1.5.1" "pryv/base:1.5.1"
+          docker pull ${{ secrets.REGISTRY_PRYV_SERVER }}/pryvio/base:1.5.1
+          docker tag "${{ secrets.REGISTRY_PRYV_SERVER }}/pryvio/base:1.5.1" "pryvio/base:1.5.1"
 
       - name: Get latest git tag
         uses: 'WyriHaximus/github-action-get-previous-tag@master'
@@ -46,7 +46,7 @@ jobs:
         run: yarn test
 
       - name: Build image
-        run: cd ./build && docker build --rm -f Dockerfile -t ${{ secrets.REGISTRY_PRYV_SERVER }}/pryv/app-web-admin:${{ steps.get-latest-tag.outputs.tag }} ./..
+        run: cd ./build && docker build --rm -f Dockerfile -t ${{ secrets.REGISTRY_PRYV_SERVER }}/pryvio/app-web-admin:${{ steps.get-latest-tag.outputs.tag }} ./..
 
       - name: Upload new image to docker hub
-        run: docker images && docker push ${{ secrets.REGISTRY_PRYV_SERVER }}/pryv/app-web-admin:${{ steps.get-latest-tag.outputs.tag }}
+        run: docker images && docker push ${{ secrets.REGISTRY_PRYV_SERVER }}/pryvio/app-web-admin:${{ steps.get-latest-tag.outputs.tag }}
