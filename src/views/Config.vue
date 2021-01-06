@@ -129,8 +129,8 @@ export default {
           if (
             !response.data ||
             !(
-              Object.hasOwnProperty.call(response.data, 'successes') &&
-              Object.hasOwnProperty.call(response.data, 'failures')
+              (response.data.successes == null) &&
+              (response.data.failures == null)
             )
           ) {
             throw new Error();
