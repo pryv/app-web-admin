@@ -27,25 +27,10 @@ export default {
   },
   computed: {
     successes: function() {
-      return Object.keys(this.updateReport.successes).map(
-        function(key) {
-          return {
-            url: this.updateReport.successes[key].url,
-            role: this.updateReport.successes[key].role,
-          };
-        }.bind(this)
-      );
+      return this.updateReport.successes;
     },
     failures: function() {
-      return Object.keys(this.updateReport.failures).map(
-        function(key) {
-          return {
-            url: this.updateReport.failures[key].url,
-            role: this.updateReport.failures[key].role,
-            error: this.updateReport.failures[key].error,
-          };
-        }.bind(this)
-      );
+      return this.updateReport.failures;
     },
   },
 };
