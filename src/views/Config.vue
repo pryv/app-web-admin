@@ -103,10 +103,12 @@ export default {
       axios
         .get('/admin/settings')
         .then(response => {
-          if (!response.data || Object.keys(response.data).length === 0) {
+          if (!response.data || 
+              !response.data.settings == null ||
+              Object.keys(response.data.settings).length === 0) {
             throw new Error();
           }
-          store.state.config = response.data;
+          store.state.config = response.data.settings;
         })
         .catch(error => {
           if (!handleInvalidTokenError(error, this)) {
