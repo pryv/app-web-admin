@@ -121,7 +121,7 @@ export default {
           if (!response.data || Object.keys(response.data).length === 0) {
             throw new Error();
           }
-          this.user = response.data;
+          this.user = response.data.user;
         })
         .catch(error => {
           if (!handleInvalidTokenError(error, this)) {

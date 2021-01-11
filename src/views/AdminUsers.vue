@@ -221,10 +221,11 @@ export default {
       axios
         .get('/users')
         .then(response => {
-          if (!response.data || Object.keys(response.data).length === 0) {
-            throw new Error();
+          if (response.data == null || 
+              response.data.users == null) {
+            throw new Error('Missing users property');
           }
-          this.usersList = response.data;
+          this.usersList = response.data.users;
           this.usersList.forEach(user => {
             for (let permissionsGroup of [
               'users',
