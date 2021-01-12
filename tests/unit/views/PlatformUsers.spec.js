@@ -32,9 +32,21 @@ describe('PlatformUsers', function() {
     localVue.use(BootstrapVueIcons);
 
     getReqStub = sinon.stub(axios, 'get');
-    getReqStub.returns(Promise.resolve({ data: user }));
+    getReqStub.returns(
+      Promise.resolve({
+        data: {
+          user: user,
+        },
+      })
+    );
     deleteReqStub = sinon.stub(axios, 'delete');
-    deleteReqStub.returns(Promise.resolve({ data: user }));
+    deleteReqStub.returns(
+      Promise.resolve({
+        data: {
+          user: user,
+        },
+      })
+    );
 
     const elem = document.createElement('div');
     if (document.body) {
