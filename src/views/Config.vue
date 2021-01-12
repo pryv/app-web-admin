@@ -127,9 +127,9 @@ export default {
         .then(() => axios.post('/admin/notify', {}))
         .then(response => {
           if (
-            !response.data ||
-            !(
-              (response.data.successes == null) &&
+            (response.data == null) ||
+            (
+              (response.data.successes == null) ||
               (response.data.failures == null)
             )
           ) {
