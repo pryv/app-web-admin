@@ -30,7 +30,7 @@
               :label-for="`${prop}`"
               :label="`${prop}:`"
               label-cols="4"
-              label-cols-lg="2"
+              label-cols-lg="4"
               label-size="md"
               label-class="font-weight-normal"
               label-align="right"
