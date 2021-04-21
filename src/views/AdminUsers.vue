@@ -221,8 +221,7 @@ export default {
       axios
         .get('/users')
         .then(response => {
-          if (response.data == null || 
-              response.data.users == null) {
+          if (response.data == null || response.data.users == null) {
             throw new Error('Missing users property');
           }
           this.usersList = response.data.users;

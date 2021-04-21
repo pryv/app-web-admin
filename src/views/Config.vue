@@ -103,9 +103,11 @@ export default {
       axios
         .get('/admin/settings')
         .then(response => {
-          if (!response.data || 
-              !response.data.settings == null ||
-              Object.keys(response.data.settings).length === 0) {
+          if (
+            !response.data ||
+            !response.data.settings == null ||
+            Object.keys(response.data.settings).length === 0
+          ) {
             throw new Error();
           }
           store.state.config = response.data.settings;
@@ -127,11 +129,9 @@ export default {
         .then(() => axios.post('/admin/notify', {}))
         .then(response => {
           if (
-            (response.data == null) ||
-            (
-              (response.data.successes == null) ||
-              (response.data.failures == null)
-            )
+            response.data == null ||
+            response.data.successes == null ||
+            response.data.failures == null
           ) {
             throw new Error();
           }

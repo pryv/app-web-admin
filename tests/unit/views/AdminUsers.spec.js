@@ -38,11 +38,13 @@ describe('AdminUsers', function() {
     localVue.use(BootstrapVueIcons);
 
     getReqStub = sinon.stub(axios, 'get');
-    getReqStub.returns(Promise.resolve({
-      data: {
-        users: users
-      }
-    }));
+    getReqStub.returns(
+      Promise.resolve({
+        data: {
+          users: users,
+        },
+      })
+    );
 
     const elem = document.createElement('div');
     if (document.body) {
