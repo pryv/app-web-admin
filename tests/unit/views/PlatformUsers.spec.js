@@ -88,45 +88,6 @@ describe('PlatformUsers', function() {
     await wrapper.vm.$forceUpdate();
 
     const inputFields = wrapper.findAll('input');
-    assert.equal(inputFields.length, 1 + Object.keys(user).length);
-
-    for (let i = 1; i < inputFields.length; i++) {
-      assert.equal(inputFields.at(i).element.id, Object.keys(user)[i - 1]);
-      assert.equal(inputFields.at(i).element.name, Object.keys(user)[i - 1]);
-      assert.isTrue(inputFields.at(i).element.disabled);
-      assert.equal(
-        inputFields.at(i).element._value,
-        user[Object.keys(user)[i - 1]]
-      );
-    }
-  });
-  it('must send get user request on form button click', async function() {
-    await mountComponent();
-
-    const inputField = wrapper.find('input');
-    const findUserButton = wrapper.find('[type="submit"]');
-
-    inputField.setValue(user.username);
-    await findUserButton.trigger('click');
-
-    sinon.assert.calledOnce(getReqStub);
-    sinon.assert.calledWith(getReqStub, `/platform-users/${user.username}`);
-  });
-  it('must display user retrieved from request', async function() {
-    await mountComponent();
-
-    const inputField = wrapper.find('input');
-    const findUserButton = wrapper.find('[type="submit"]');
-
-    inputField.setValue(user.username);
-    await findUserButton.trigger('click');
-
-    sinon.assert.calledOnce(getReqStub);
-    sinon.assert.calledWith(getReqStub, `/platform-users/${user.username}`);
-
-    await wrapper.vm.$forceUpdate();
-
-    const inputFields = wrapper.findAll('input');
     assert.equal(inputFields.length, Object.keys(user).length + 1);
 
     for (let i = 1; i < inputFields.length; i++) {
