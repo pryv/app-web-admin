@@ -132,6 +132,7 @@ describe('PlatformUsers', function() {
 
     const buttons = wrapper.findAll('[type="submit"]');
     assert.equal(buttons.length, 1);
+    assert.equal(buttons.at(0).text(), 'Find');
   });
   it('must display confirmation modal on delete button click', async function() {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
