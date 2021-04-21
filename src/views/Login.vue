@@ -58,6 +58,7 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import Loader from '@/widgets/Loader.vue';
 import store from '@/store/store.js';
+import url from 'url';
 
 export default {
   name: 'Login',
@@ -94,7 +95,7 @@ export default {
     login: function() {
       this.loginInProgress = true;
       axios
-        .post(`${this.serverUrl}/auth/login`, {
+        .post(url.resolve(this.serverUrl, '/auth/login'), {
           username: this.username,
           password: this.password,
         })
