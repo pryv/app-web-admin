@@ -26,19 +26,18 @@ describe('PlatformUsers', function() {
     languageCode: chance.locale(),
   };
 
-  async function mountComponent() {
+  async function mountComponent(userExists = true) {
     const localVue = createLocalVue();
     localVue.use(BootstrapVue);
     localVue.use(BootstrapVueIcons);
 
     getReqStub = sinon.stub(axios, 'get');
-    getReqStub.returns(
-      Promise.resolve({
-        data: {
-          user: user,
-        },
-      })
-    );
+    if (userExists) {
+      getReqStub.returns(Promise.resolve({ data: { user: user } }));
+    } else {
+      getReqStub.returns(Promise.reject({ response: { status: 404 } }));
+    }
+
     deleteReqStub = sinon.stub(axios, 'delete');
     deleteReqStub.returns(
       Promise.resolve({
@@ -65,7 +64,7 @@ describe('PlatformUsers', function() {
     sinon.restore();
   });
 
-  it('should render input field and submit button', async function() {
+  it('must render input field and submit button', async function() {
     await mountComponent();
 
     const inputField = wrapper.find('input');
@@ -74,19 +73,7 @@ describe('PlatformUsers', function() {
     const findUserButton = wrapper.find('[type="submit"]');
     assert.isTrue(findUserButton.exists());
   });
-  it('should send get user request on form button click', async function() {
-    await mountComponent();
-
-    const inputField = wrapper.find('input');
-    const findUserButton = wrapper.find('[type="submit"]');
-
-    inputField.setValue(user.username);
-    await findUserButton.trigger('click');
-
-    sinon.assert.calledOnce(getReqStub);
-    sinon.assert.calledWith(getReqStub, `/platform-users/${user.username}`);
-  });
-  it('should display user retrieved from request', async function() {
+  it('must display user retrieved from request', async function() {
     await mountComponent();
 
     const inputField = wrapper.find('input');
@@ -107,12 +94,67 @@ describe('PlatformUsers', function() {
       assert.equal(inputFields.at(i).element.id, Object.keys(user)[i - 1]);
       assert.equal(inputFields.at(i).element.name, Object.keys(user)[i - 1]);
       assert.isTrue(inputFields.at(i).element.disabled);
-      assert.equal(inputFields.at(i).element._value,
+      assert.equal(
+        inputFields.at(i).element._value,
         user[Object.keys(user)[i - 1]]
       );
     }
   });
-  it('should not display the delete button if not allowed', async () => {
+  it('must send get user request on form button click', async function() {
+    await mountComponent();
+
+    const inputField = wrapper.find('input');
+    const findUserButton = wrapper.find('[type="submit"]');
+
+    inputField.setValue(user.username);
+    await findUserButton.trigger('click');
+
+    sinon.assert.calledOnce(getReqStub);
+    sinon.assert.calledWith(getReqStub, `/platform-users/${user.username}`);
+  });
+  it('must display user retrieved from request', async function() {
+    await mountComponent();
+
+    const inputField = wrapper.find('input');
+    const findUserButton = wrapper.find('[type="submit"]');
+
+    inputField.setValue(user.username);
+    await findUserButton.trigger('click');
+
+    sinon.assert.calledOnce(getReqStub);
+    sinon.assert.calledWith(getReqStub, `/platform-users/${user.username}`);
+
+    await wrapper.vm.$forceUpdate();
+
+    const inputFields = wrapper.findAll('input');
+    assert.equal(inputFields.length, Object.keys(user).length + 1);
+
+    for (let i = 1; i < inputFields.length; i++) {
+      assert.equal(inputFields.at(i).element.id, Object.keys(user)[i - 1]);
+      assert.equal(inputFields.at(i).element.name, Object.keys(user)[i - 1]);
+      assert.isTrue(inputFields.at(i).element.disabled);
+      assert.equal(
+        inputFields.at(i).element._value,
+        user[Object.keys(user)[i - 1]]
+      );
+    }
+  });
+  it('must display an error when the user does not exist', async () => {
+    await mountComponent(false);
+
+    const inputField = wrapper.find('input');
+    const findUserButton = wrapper.find('[type="submit"]');
+    inputField.setValue(user.username);
+    await findUserButton.trigger('click');
+    sinon.assert.calledOnce(getReqStub);
+    sinon.assert.calledWith(getReqStub, `/platform-users/${user.username}`);
+    await wrapper.vm.$forceUpdate();
+
+    const cards = wrapper.findAll('[class="failure-msg"]');
+    assert.equal(cards.length, 1);
+    assert.equal(cards.at(0).text(), 'User not found');
+  });
+  it('must not display the delete button if not allowed', async () => {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(false);
     await mountComponent();
 
@@ -130,7 +172,7 @@ describe('PlatformUsers', function() {
     const buttons = wrapper.findAll('[type="submit"]');
     assert.equal(buttons.length, 1);
   });
-  it('should display confirmation modal on delete button click', async function() {
+  it('must display confirmation modal on delete button click', async function() {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
 
     await mountComponent();
@@ -152,7 +194,7 @@ describe('PlatformUsers', function() {
 
     assert.isTrue(wrapper.findComponent(ConfirmationWithInputModal).exists());
   });
-  it('should send delete user request after confirmation', async function() {
+  it('must send delete user request after confirmation', async function() {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
 
     await mountComponent();
