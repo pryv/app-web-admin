@@ -11,13 +11,33 @@ const chance = new Chance();
 
 const username = chance.name();
 const password = chance.word();
-const confLeadAddress = chance.url();
+const confLeadAddress = 'https://lead.pryv.li';
 
 let wrapper;
 
 let submitButton;
 
+const url = 'https://adm.pryv.li';
+
 describe('Login', () => {
+  let href;
+  beforeEach(() => {
+    href = window.location.href;
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: url,
+      },
+      writable: true,
+    });
+  });
+  afterEach(() => {
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: href,
+      },
+      writable: true,
+    });
+  });
   beforeEach(function() {
     const localVue = createLocalVue();
     localVue.use(BootstrapVue);
@@ -40,18 +60,14 @@ describe('Login', () => {
     sinon.restore();
   });
 
-  it('should send login request with data from inputs on login button click', function() {
+  it('must send login request to server from URL domain on login button click', function() {
     const postReqStub = sinon.stub(axios, 'post');
-    postReqStub.returns(Promise.resolve(true));
+    postReqStub.returns(Promise.resolve({ data: {} }));
 
     const inputFields = wrapper.findAll('input');
-
-    expect(inputFields.length).equal(3);
-
-    inputFields.at(0).setValue(confLeadAddress);
-    inputFields.at(1).setValue(username);
-    inputFields.at(2).setValue(password);
-
+    expect(inputFields.length).equal(2);
+    inputFields.at(0).setValue(username);
+    inputFields.at(1).setValue(password);
     submitButton.trigger('click');
 
     sinon.assert.calledOnce(postReqStub);
@@ -60,18 +76,36 @@ describe('Login', () => {
       password: password,
     });
   });
-  it('should display "Incorrect credentials" message when server responded with 4**', async function() {
+  it.skip('must send login request to server from query parameter on login button click', function() {
+    // can't manage to change it in the test, but works
+    const customLeaderUrl = 'https://otherleader.com';
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: url + '?pryvLeaderUrl=' + customLeaderUrl,
+      },
+      writable: true,
+    });
+    const postReqStub = sinon.stub(axios, 'post');
+    postReqStub.returns(Promise.resolve(true));
+
+    const inputFields = wrapper.findAll('input');
+    inputFields.at(0).setValue(username);
+    inputFields.at(1).setValue(password);
+    submitButton.trigger('click');
+
+    sinon.assert.calledOnce(postReqStub);
+    sinon.assert.calledWith(postReqStub, `${customLeaderUrl}/auth/login`, {
+      username: username,
+      password: password,
+    });
+  });
+  it('must display "Incorrect credentials" message when server responded with 4**', async function() {
     const postReqStub = sinon.stub(axios, 'post');
     postReqStub.returns(Promise.reject({ response: { status: 401 } }));
 
     const inputFields = wrapper.findAll('input');
-
-    expect(inputFields.length).equal(3);
-
-    inputFields.at(0).setValue(confLeadAddress);
-    inputFields.at(1).setValue(username);
-    inputFields.at(2).setValue(password);
-
+    inputFields.at(0).setValue(username);
+    inputFields.at(1).setValue(password);
     await submitButton.trigger('click');
 
     sinon.assert.calledOnce(postReqStub);
@@ -87,18 +121,13 @@ describe('Login', () => {
       'Incorrect credentials'
     );
   });
-  it('should display "Unable to connect to the server" message on network error', async function() {
+  it('must display "Unable to connect to the server" message on network error', async function() {
     const postReqStub = sinon.stub(axios, 'post');
     postReqStub.returns(Promise.reject({ response: { status: 500 } }));
 
     const inputFields = wrapper.findAll('input');
-
-    expect(inputFields.length).equal(3);
-
-    inputFields.at(0).setValue(confLeadAddress);
-    inputFields.at(1).setValue(username);
-    inputFields.at(2).setValue(password);
-
+    inputFields.at(0).setValue(username);
+    inputFields.at(1).setValue(password);
     await submitButton.trigger('click');
 
     sinon.assert.calledOnce(postReqStub);
@@ -114,18 +143,13 @@ describe('Login', () => {
       'Unable to connect to the server'
     );
   });
-  it('should display "Unable to connect to the server" message when server responded with 5**', async function() {
+  it('must display "Unable to connect to the server" message when server responded with 5**', async function() {
     const postReqStub = sinon.stub(axios, 'post');
     postReqStub.returns(Promise.reject({ message: 'Network Error' }));
 
     const inputFields = wrapper.findAll('input');
-
-    expect(inputFields.length).equal(3);
-
-    inputFields.at(0).setValue(confLeadAddress);
-    inputFields.at(1).setValue(username);
-    inputFields.at(2).setValue(password);
-
+    inputFields.at(0).setValue(username);
+    inputFields.at(1).setValue(password);
     await submitButton.trigger('click');
 
     sinon.assert.calledOnce(postReqStub);
