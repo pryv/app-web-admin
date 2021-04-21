@@ -19,7 +19,7 @@
             </b-button>
           </b-form>
         </b-card>
-        <b-card v-if="Object.keys(user).length > 0">
+        <b-card v-if="hasUser">
           <b-form v-on:submit.prevent="showDeleteConfirmationModal = true">
             <b-form-group
               v-for="prop in Object.keys(user)"
@@ -40,6 +40,13 @@
                 disabled
               />
             </b-form-group>
+            <b-button
+              v-if="canModifyPlatformUsers"
+              variant="primary"
+              type="submit"
+            >
+              Deactivate MFA
+            </b-button>
             <b-button
               v-if="canDeletePlatformUsers"
               variant="primary"
@@ -110,7 +117,11 @@ export default {
     userNotFound: false,
   }),
   computed: {
+    canModifyPlatformUsers: () => PermissionsService.canModifyPlatformUsers(),
     canDeletePlatformUsers: () => PermissionsService.canDeletePlatformUsers(),
+    hasUser: function() {
+      return Object.keys(this.user).length > 0;
+    },
   },
   methods: {
     getPlatformUser: function() {
