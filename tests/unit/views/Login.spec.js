@@ -22,6 +22,7 @@ const url = 'https://adm.pryv.li';
 describe('Login', () => {
   let href;
   beforeEach(() => {
+    // hack from https://stackoverflow.com/a/54034379/3967660
     href = window.location.href;
     Object.defineProperty(window, 'location', {
       value: {
