@@ -124,16 +124,21 @@ describe('PlatformUsers', function() {
     assert.equal(buttons.length, 1);
     assert.equal(buttons.at(0).text(), 'Find');
   });
+  it('must not display the delete-mfa button if not allowed', async () => {
+    sinon.stub(PermissionsService, 'canModifyPlatformUsers').returns(false);
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
-
     await mountComponent();
-
     const inputField = wrapper.find('input');
     const findUserButton = wrapper.find('[type="submit"]');
-
     inputField.setValue(user.username);
     await findUserButton.trigger('click');
+    await wrapper.vm.$forceUpdate();
 
+    const buttons = wrapper.findAll('[type="submit"]');
+    assert.equal(buttons.length, 2);
+    assert.equal(buttons.at(0).text(), 'Find');
+    assert.equal(buttons.at(1).text(), 'Delete');
+  });
   it('must display confirmation modal on delete button click', async function() {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
     await mountComponent();
