@@ -45,7 +45,7 @@
             </b-form-group>
             <b-button
               v-if="canModifyPlatformUsers"
-              variant="primary"
+              variant="secondary"
               type="reset"
             >
               Deactivate MFA
