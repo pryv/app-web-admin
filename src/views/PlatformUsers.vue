@@ -20,7 +20,10 @@
           </b-form>
         </b-card>
         <b-card v-if="hasUser">
-          <b-form v-on:submit.prevent="showDeleteConfirmationModal = true">
+          <b-form
+            v-on:submit.prevent="showDeleteConfirmationModal = true"
+            v-on:reset.prevent="showModifyConfirmationModal = true"
+          >
             <b-form-group
               v-for="prop in Object.keys(user)"
               :key="prop"
@@ -43,7 +46,7 @@
             <b-button
               v-if="canModifyPlatformUsers"
               variant="primary"
-              type="submit"
+              type="reset"
             >
               Deactivate MFA
             </b-button>
@@ -71,10 +74,25 @@
           />
         </transition>
         <transition name="modal">
+          <ConfirmationWithInputModal
+            v-if="showModifyConfirmationModal"
+            :validConfirmationInput="user.username"
+            @close="showModifyConfirmationModal = false"
+            @confirm="deleteMfaPlatformUser()"
+          />
+        </transition>
+        <transition name="modal">
           <OperationSuccessfulModal
             v-if="showUserDeletedModal"
             :text="userDeletedText"
             @close="showUserDeletedModal = false"
+          />
+        </transition>
+        <transition name="modal">
+          <OperationSuccessfulModal
+            v-if="showMfaDeletedModal"
+            :text="mfaDeletedText"
+            @close="showMfaDeletedModal = false"
           />
         </transition>
         <transition name="modal">
@@ -109,9 +127,12 @@ export default {
     username: '',
     user: {},
     showDeleteConfirmationModal: false,
+    showModifyConfirmationModal: false,
     deleteConfirmationMsg: 'Enter username to confirm',
     showUserDeletedModal: false,
+    showMfaDeletedModal: false,
     userDeletedText: 'User deleted successfully',
+    mfaDeletedText: 'User MFA deactivated successfully',
     showFailureModal: false,
     showLoader: false,
     userNotFound: false,
@@ -151,6 +172,21 @@ export default {
         .then(() => {
           this.user = {};
           this.showUserDeletedModal = true;
+        })
+        .catch(error => {
+          if (!handleInvalidTokenError(error, this)) {
+            this.showFailureModal = true;
+          }
+        })
+        .finally(() => (this.showLoader = false));
+    },
+    deleteMfaPlatformUser() {
+      this.showModifyConfirmationModal = false;
+      this.showLoader = true;
+      axios
+        .delete(`/platform-users/${this.username}/mfa`)
+        .then(() => {
+          this.showMfaDeletedModal = true;
         })
         .catch(error => {
           if (!handleInvalidTokenError(error, this)) {
