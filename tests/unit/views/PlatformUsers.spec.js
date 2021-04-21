@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
 import PlatformUsers from '@/views/PlatformUsers.vue';
 import ConfirmationWithInputModal from '@/widgets/ConfirmationWithInputModal.vue';
@@ -69,10 +69,10 @@ describe('PlatformUsers', function() {
     await mountComponent();
 
     const inputField = wrapper.find('input');
-    expect(inputField.exists()).to.be.true;
+    assert.isTrue(inputField.exists());
 
     const findUserButton = wrapper.find('[type="submit"]');
-    expect(findUserButton.exists()).to.be.true;
+    assert.isTrue(findUserButton.exists());
   });
   it('should send get user request on form button click', async function() {
     await mountComponent();
@@ -101,16 +101,34 @@ describe('PlatformUsers', function() {
     await wrapper.vm.$forceUpdate();
 
     const inputFields = wrapper.findAll('input');
-    expect(inputFields.length).equal(1 + Object.keys(user).length);
+    assert.equal(inputFields.length, 1 + Object.keys(user).length);
 
     for (let i = 1; i < inputFields.length; i++) {
-      expect(inputFields.at(i).element.id).equal(Object.keys(user)[i - 1]);
-      expect(inputFields.at(i).element.name).equal(Object.keys(user)[i - 1]);
-      expect(inputFields.at(i).element.disabled).to.be.true;
-      expect(inputFields.at(i).element._value).equal(
+      assert.equal(inputFields.at(i).element.id, Object.keys(user)[i - 1]);
+      assert.equal(inputFields.at(i).element.name, Object.keys(user)[i - 1]);
+      assert.isTrue(inputFields.at(i).element.disabled);
+      assert.equal(inputFields.at(i).element._value,
         user[Object.keys(user)[i - 1]]
       );
     }
+  });
+  it('should not display the delete button if not allowed', async () => {
+    sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(false);
+    await mountComponent();
+
+    const inputField = wrapper.find('input');
+    const findUserButton = wrapper.find('[type="submit"]');
+
+    inputField.setValue(user.username);
+    await findUserButton.trigger('click');
+
+    sinon.assert.calledOnce(getReqStub);
+    sinon.assert.calledWith(getReqStub, `/platform-users/${user.username}`);
+
+    await wrapper.vm.$forceUpdate();
+
+    const buttons = wrapper.findAll('[type="submit"]');
+    assert.equal(buttons.length, 1);
   });
   it('should display confirmation modal on delete button click', async function() {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
@@ -125,13 +143,14 @@ describe('PlatformUsers', function() {
 
     await wrapper.vm.$forceUpdate();
 
-    const deleteUserButton = wrapper.findAll('[type="submit"]').at(1);
-    expect(deleteUserButton.exists()).to.be.true;
+    const buttons = wrapper.findAll('[type="submit"]');
+    assert.equal(buttons.length, 2);
+    const deleteUserButton = buttons.at(1);
+    assert.isTrue(deleteUserButton.exists());
 
     await deleteUserButton.trigger('click');
 
-    expect(wrapper.findComponent(ConfirmationWithInputModal).exists()).to.be
-      .true;
+    assert.isTrue(wrapper.findComponent(ConfirmationWithInputModal).exists());
   });
   it('should send delete user request after confirmation', async function() {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
