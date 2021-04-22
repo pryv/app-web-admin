@@ -76,7 +76,7 @@ export default {
       'resetPassword',
       'changePermissions',
     ],
-    platformUsersPermissions: ['read', 'delete'],
+    platformUsersPermissions: ['read', 'delete', 'modify'],
   }),
 };
 </script>
