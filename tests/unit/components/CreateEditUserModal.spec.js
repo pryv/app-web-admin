@@ -65,7 +65,7 @@ describe('CreateEditUserModal', function() {
     });
     it('should render editable table with permissions', function() {
       const checkBoxes = wrapper.findAll('[type="checkbox"]');
-      expect(checkBoxes).length(9);
+      expect(checkBoxes).length(10);
       for (let i = 0; i < checkBoxes.length; i++) {
         expect(checkBoxes.at(i).element.disabled).to.be.false;
       }
@@ -159,7 +159,7 @@ describe('CreateEditUserModal', function() {
     });
     it('should render editable table with permissions', function() {
       const checkBoxes = wrapper.findAll('[type="checkbox"]');
-      expect(checkBoxes).length(9);
+      expect(checkBoxes).length(10);
       for (let i = 0; i < checkBoxes.length; i++) {
         expect(checkBoxes.at(i).element.disabled).to.be.false;
       }

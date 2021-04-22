@@ -30,7 +30,7 @@ describe('PermissionsTable', () => {
     });
 
     const checkBoxes = wrapper.findAll('[type="checkbox"]');
-    expect(checkBoxes).length(9);
+    expect(checkBoxes).length(10);
 
     const readUsersCheckbox = wrapper.findAll('[value="read"]').at(0);
     expect(readUsersCheckbox).not.to.be.undefined;
@@ -66,7 +66,7 @@ describe('PermissionsTable', () => {
     });
 
     const checkBoxes = wrapper.findAll('[type="checkbox"]');
-    expect(checkBoxes).length(9);
+    expect(checkBoxes).length(10);
 
     for (let i = 0; i < checkBoxes.length; i++) {
       expect(checkBoxes.at(i).element.disabled).to.be.true;
