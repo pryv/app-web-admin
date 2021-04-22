@@ -6,21 +6,6 @@
         <h3>Please log in</h3>
         <b-card>
           <b-form v-on:submit.prevent="login">
-            <b-form-group label-for="serverUrl" label="Config leader address">
-              <b-form-input
-                required
-                pattern="https?://\S+"
-                type="text"
-                name="serverUrl"
-                id="serverUrl"
-                placeholder="https://lead.platform.com"
-                v-model="serverUrl"
-                @input="
-                  loginFailed = false;
-                  loginRequestFailed = false;
-                "
-              />
-            </b-form-group>
             <b-form-group label-for="username" label="Username">
               <b-form-input
                 required
@@ -73,6 +58,7 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import Loader from '@/widgets/Loader.vue';
 import store from '@/store/store.js';
+import url from 'url';
 
 export default {
   name: 'Login',
@@ -80,18 +66,36 @@ export default {
     Loader,
   },
   data: () => ({
-    serverUrl: '',
     username: '',
     password: '',
     loginFailed: false,
     loginRequestFailed: false,
     loginInProgress: false,
+    serverUrl: '',
   }),
+  created() {
+    const serverUrlFromQueryParams = this.getDomainFromQueryParams();
+    if (serverUrlFromQueryParams != null) {
+      this.serverUrl = serverUrlFromQueryParams;
+    } else {
+      this.serverUrl = `https://lead.${this.getDomainFromUrl()}`;
+    }
+  },
   methods: {
+    getDomainFromQueryParams() {
+      const url = new URL(window.location.href);
+      return url.searchParams.get('pryvLeaderUrl');
+    },
+    getDomainFromUrl() {
+      const url = new URL(window.location.href);
+      // assert that URL is in the form: https://adm.DOMAIN
+      const hostname = url.hostname;
+      return hostname.substring(hostname.indexOf('.') + 1);
+    },
     login: function() {
       this.loginInProgress = true;
       axios
-        .post(`${this.serverUrl}/auth/login`, {
+        .post(url.resolve(this.serverUrl, '/auth/login'), {
           username: this.username,
           password: this.password,
         })

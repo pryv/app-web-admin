@@ -37,6 +37,9 @@ export class PermissionsService {
   static canReadPlatformUsers() {
     return getPermissions('platformUsers').includes('read');
   }
+  static canModifyPlatformUsers() {
+    return getPermissions('platformUsers').includes('modify');
+  }
   static canDeletePlatformUsers() {
     return getPermissions('platformUsers').includes('delete');
   }
