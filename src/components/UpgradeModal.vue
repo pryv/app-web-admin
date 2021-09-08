@@ -14,7 +14,7 @@
         </div>
         <div v-if="!hasMigrations()">
           <h4>No available upgrade</h4>
-          There are no available upgrade from your version to the template one
+          There are no available upgrades.
         </div>
         <div v-if="error != null">
           <h4>Error while fetching upgrades</h4>
@@ -73,6 +73,9 @@ export default {
       num: 12,
     };
   },
+  computed: {
+
+  },
   async created() {
     await this.getAvailableUpgrades();
   },
@@ -95,7 +98,7 @@ export default {
       }
     },
     upgradeConfirmationMsg: function() {
-      return `Are you sure you want to upgrade the platform configuration to ${this.lastMigration()}`;
+      return `Are you sure you want to upgrade the platform configuration file to version: ${this.lastMigration()}?`;
     },
     getAvailableUpgrades: async function() {
       this.showLoader = true;
@@ -126,6 +129,8 @@ export default {
         const res = await axios.post('/admin/migrations/apply');
         this.migrations = res.data.migrations;
         this.error = null;
+        this.showApplyUpgradeConfirmationModal = false;
+        await this.getAvailableUpgrades();
       } catch (error) {
         if (
           error &&
