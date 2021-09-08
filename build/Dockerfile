@@ -1,4 +1,4 @@
-FROM pryvio/base:1.5.1 as build-stage
+FROM pryvio/base:1.7.0 as build-stage
 LABEL "Tech@Pryv" <tech@pryv.com>
 WORKDIR /app
 COPY ./package.json ./

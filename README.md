@@ -14,7 +14,8 @@ _Prerequisites:_
 | ----------------------- | ------------------ |
 | Install dependencies    | `yarn install`     |
 | Create distribution     | `yarn build`       |
-| Run the app locally on [https://l.rec.la:8080](https://l.rec.la:8080)   | `yarn start`                   |
+| Run the app locally on [https://l.rec.la:8080?pryvLeaderUrl=https://lead.pryv.li](https://l.rec.la:8080?pryvLeaderUrl=https://lead.pryv.li)   | `yarn start`                   |
+| Open it with a local service-config-leader: [https://l.rec.la:8080?pryvLeaderUrl=http://localhost:7000](https://l.rec.la:8080?pryvLeaderUrl=http://localhost:7000) | |
 | Run tests               | `yarn test`        |
 | Run linter              | `yarn lint`        |
 | Publish to github pages | `yarn run publish` |
