@@ -1,7 +1,7 @@
 <template>
   <div class="migration-platform-modal">
     <Modal @close="$emit('migrationModalClosed')">
-      <h3 slot="header">Migration platform</h3>
+      <h3 slot="header">Migrate platform</h3>
       <div slot="body">
         <div v-if="hasMigrations()">
           <h4>Available migrations</h4>
@@ -12,9 +12,10 @@
             :items="migrations"
           ></b-table>
         </div>
-        <div v-if="!hasMigrations()">
+        <div v-if="!hasMigrations() && error == null">
           <h4>No available migration</h4>
-          There are no available migrations.
+          There are no available migrations.<br>
+          If you have just performed a migration, close this window and click on "Update", at the bottom right of the "Platform configuration" tab to apply the migration to Pryv.io services.
         </div>
         <div v-if="error != null">
           <h4>Error while fetching migrations</h4>
@@ -24,7 +25,7 @@
           <b-button variant="primary" @click="$emit('migrationModalClosed')">
             Close
           </b-button>
-          <div v-if="hasMigrations">
+          <div v-if="hasMigrations()">
             <b-button
               variant="secondary"
               @click="showApplyMigrationConfirmationModal = true"
