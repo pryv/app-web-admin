@@ -1,6 +1,10 @@
 
 ## 1.1
 
+### 1.1.5
+
+- add Migrations apply function
+
 ### 1.1.3-4
 
 - add button for MFA deactivation
