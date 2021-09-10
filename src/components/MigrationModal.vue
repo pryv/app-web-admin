@@ -1,10 +1,10 @@
 <template>
-  <div class="upgrade-platform-modal">
-    <Modal @close="$emit('upgradeModalClosed')">
-      <h3 slot="header">Upgrade platform</h3>
+  <div class="migration-platform-modal">
+    <Modal @close="$emit('migrationModalClosed')">
+      <h3 slot="header">Migration platform</h3>
       <div slot="body">
         <div v-if="hasMigrations()">
-          <h4>Available upgrades</h4>
+          <h4>Available migrations</h4>
           <b-table
             hover
             fixed
@@ -13,23 +13,23 @@
           ></b-table>
         </div>
         <div v-if="!hasMigrations()">
-          <h4>No available upgrade</h4>
-          There are no available upgrades.
+          <h4>No available migration</h4>
+          There are no available migrations.
         </div>
         <div v-if="error != null">
-          <h4>Error while fetching upgrades</h4>
+          <h4>Error while fetching migrations</h4>
           {{ error.message }}
         </div>
         <div class="modal-footer">
-          <b-button variant="primary" @click="$emit('upgradeModalClosed')">
+          <b-button variant="primary" @click="$emit('migrationModalClosed')">
             Close
           </b-button>
           <div v-if="hasMigrations">
             <b-button
               variant="secondary"
-              @click="showApplyUpgradeConfirmationModal = true"
+              @click="showApplyMigrationConfirmationModal = true"
             >
-              Apply upgrades
+              Apply migrations
             </b-button>
           </div>
         </div>
@@ -39,10 +39,10 @@
     <loader v-if="showLoader" :loading="showLoader"></loader>
     <transition name="modal">
       <ConfirmationModal
-        v-if="showApplyUpgradeConfirmationModal"
-        :text="upgradeConfirmationMsg()"
-        @close="showApplyUpgradeConfirmationModal = false"
-        @confirm="applyUpgrades()"
+        v-if="showApplyMigrationConfirmationModal"
+        :text="migrationConfirmationMsg()"
+        @close="showApplyMigrationConfirmationModal = false"
+        @confirm="applyMigrations()"
       />
     </transition>
   </div>
@@ -55,7 +55,7 @@ import Loader from '@/widgets/Loader.vue';
 import ConfirmationModal from '@/widgets/ConfirmationModal.vue';
 
 export default {
-  name: 'UpgradeModal',
+  name: 'MigrationModal',
   components: {
     Modal,
     Loader,
@@ -69,15 +69,12 @@ export default {
       migrations: [],
       error: null,
       showLoader: false,
-      showApplyUpgradeConfirmationModal: false,
+      showApplyMigrationConfirmationModal: false,
       num: 12,
     };
   },
-  computed: {
-
-  },
   async created() {
-    await this.getAvailableUpgrades();
+    await this.getAvailableMigrations();
   },
   methods: {
     hasMigrations: function() {
@@ -97,10 +94,10 @@ export default {
         return '<issue fetching migrations>';
       }
     },
-    upgradeConfirmationMsg: function() {
-      return `Are you sure you want to upgrade the platform configuration file to version: ${this.lastMigration()}?`;
+    migrationConfirmationMsg: function() {
+      return `Are you sure you want to migration the platform configuration file to version: ${this.lastMigration()}?`;
     },
-    getAvailableUpgrades: async function() {
+    getAvailableMigrations: async function() {
       this.showLoader = true;
       try {
         const res = await axios.get('/admin/migrations');
@@ -123,14 +120,14 @@ export default {
         this.showLoader = false;
       }
     },
-    applyUpgrades: async function() {
+    applyMigrations: async function() {
       this.showLoader = true;
       try {
         const res = await axios.post('/admin/migrations/apply');
         this.migrations = res.data.migrations;
         this.error = null;
-        this.showApplyUpgradeConfirmationModal = false;
-        await this.getAvailableUpgrades();
+        this.showApplyMigrationConfirmationModal = false;
+        await this.getAvailableMigrations();
       } catch (error) {
         if (
           error &&

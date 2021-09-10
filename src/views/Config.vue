@@ -43,9 +43,9 @@
     <b-card v-if="Object.keys(config).length !== 0 && canUpdateSettings">
       <b-button
         variant="primary"
-        @click="showUpgradeModal = true"
+        @click="showMigrationModal = true"
         :disabled="!inputValid"
-        >Find upgrades</b-button
+        >Find migrations</b-button
       >
       <b-button
         variant="primary"
@@ -63,10 +63,10 @@
       />
     </transition>
     <transition name="modal">
-      <UpgradeModal
-        v-if="showUpgradeModal"
-        @upgradeModalClosed="
-          showUpgradeModal = false;
+      <MigrationModal
+        v-if="showMigrationModal"
+        @migrationModalClosed="
+          showMigrationModal = false;
           getConfig();
         "
       />
@@ -79,7 +79,7 @@ import axios from 'axios';
 import { handleInvalidTokenError } from '@/utils/errorHandling.js';
 import ConfigTable from '@/components/ConfigTable.vue';
 import UpdateReportModal from '@/components/UpdateReportModal.vue';
-import UpgradeModal from '@/components/UpgradeModal.vue';
+import MigrationModal from '@/components/MigrationModal.vue';
 import Loader from '@/widgets/Loader.vue';
 import store from '@/store/store.js';
 import { PermissionsService } from '@/services/permissions.service.js';
@@ -89,14 +89,14 @@ export default {
   components: {
     ConfigTable,
     UpdateReportModal,
-    UpgradeModal,
+    MigrationModal,
     Loader,
   },
   data: () => ({
     loadFailed: false,
     updateFailed: false,
     showModal: false,
-    showUpgradeModal: false,
+    showMigrationModal: false,
     updateConfigReport: {},
     updateInProgress: false,
     loadInProgress: false,
