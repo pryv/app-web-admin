@@ -43,5 +43,5 @@ jobs:
       - name: Build image
         run: cd ./build && docker build --rm -f Dockerfile -t ${{ secrets.REGISTRY_PRYV_SERVER }}/pryvio/app-web-admin:${{ steps.get-latest-tag.outputs.tag }} ./..
 
-      - name: Upload new image to docker hub
+      - name: Upload new image to private docker repository
         run: docker images && docker push ${{ secrets.REGISTRY_PRYV_SERVER }}/pryvio/app-web-admin:${{ steps.get-latest-tag.outputs.tag }}
