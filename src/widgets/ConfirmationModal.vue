@@ -22,8 +22,8 @@
 export default {
   name: 'ConfirmationModal',
   props: {
-    text: String,
-  },
+    text: String
+  }
 };
 </script>
 

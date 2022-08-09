@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+# no need to manage dir path: Git sets working dir to repo root already
+just lint
+just license

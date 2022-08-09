@@ -58,12 +58,11 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import Loader from '@/widgets/Loader.vue';
 import store from '@/store/store.js';
-import url from 'url';
 
 export default {
   name: 'Login',
   components: {
-    Loader,
+    Loader
   },
   data: () => ({
     username: '',
@@ -71,9 +70,9 @@ export default {
     loginFailed: false,
     loginRequestFailed: false,
     loginInProgress: false,
-    serverUrl: '',
+    serverUrl: ''
   }),
-  created() {
+  created () {
     const serverUrlFromQueryParams = this.getDomainFromQueryParams();
     if (serverUrlFromQueryParams != null) {
       this.serverUrl = serverUrlFromQueryParams;
@@ -82,22 +81,22 @@ export default {
     }
   },
   methods: {
-    getDomainFromQueryParams() {
+    getDomainFromQueryParams () {
       const url = new URL(window.location.href);
       return url.searchParams.get('pryvLeaderUrl');
     },
-    getDomainFromUrl() {
+    getDomainFromUrl () {
       const url = new URL(window.location.href);
       // assert that URL is in the form: https://adm.DOMAIN
       const hostname = url.hostname;
       return hostname.substring(hostname.indexOf('.') + 1);
     },
-    login: function() {
+    login: function () {
       this.loginInProgress = true;
       axios
-        .post(url.resolve(this.serverUrl, '/auth/login'), {
+        .post(new URL('/auth/login', this.serverUrl).href, {
           username: this.username,
-          password: this.password,
+          password: this.password
         })
         .then(response => {
           if (
@@ -115,10 +114,10 @@ export default {
 
           store.state.currentUser = {
             username: user.username,
-            permissions: user.permissions,
+            permissions: user.permissions
           };
           axios.defaults.baseURL = this.serverUrl;
-          axios.defaults.headers.common['authorization'] = response.data.token;
+          axios.defaults.headers.common.authorization = response.data.token;
 
           this.$emit('loggedIn');
           this.$router.push('/');
@@ -139,8 +138,8 @@ export default {
         .finally(() => {
           this.loginInProgress = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

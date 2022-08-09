@@ -1,4 +1,4 @@
-name: PrYv Admin Panel deployment workflow
+name: Admin panel deploy release
 
 on:
   push:
@@ -13,6 +13,9 @@ jobs:
         node-version: [16.4.1]
 
     steps:
+      - name: Install `just`
+        uses: extractions/setup-just@v1
+
       - name: Download master branch
         uses: actions/checkout@v2
         with:
@@ -34,11 +37,11 @@ jobs:
         uses: 'WyriHaximus/github-action-get-previous-tag@master'
         id: get-latest-tag
 
-      - name: Npm packages installation
-        run: yarn install --frozen-lockfile # equivalent to "npm ci"
+      - name: Install node modules
+        run: npm ci
 
-      - name: Tests
-        run: yarn test
+      - name: Run tests
+        run: just test
 
       - name: Build image
         run: cd ./build && docker build --rm -f Dockerfile -t ${{ secrets.REGISTRY_PRYV_SERVER }}/pryvio/app-web-admin:${{ steps.get-latest-tag.outputs.tag }} ./..

@@ -65,22 +65,22 @@ import store from '@/store/store.js';
 export default {
   name: 'NavBar',
   components: {
-    PasswordChangeModal,
+    PasswordChangeModal
   },
   props: {
-    loggedIn: Boolean,
+    loggedIn: Boolean
   },
   data: () => ({
     displayChangePasswordModal: false,
-    username: store.state.currentUser.username,
+    username: store.state.currentUser.username
   }),
   computed: {
     canViewPlatformConfig: () => PermissionsService.canReadSettings(),
     canViewAdminUsers: () => PermissionsService.canReadAdminUsers(),
-    canReadPlatformUsers: () => PermissionsService.canReadPlatformUsers(),
+    canReadPlatformUsers: () => PermissionsService.canReadPlatformUsers()
   },
   methods: {
-    logout: function() {
+    logout: function () {
       axios.post('/auth/logout', {}).finally(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('permissions');
@@ -90,8 +90,8 @@ export default {
         this.$emit('loggedOut');
         this.$router.push('/login');
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

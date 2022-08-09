@@ -1,3 +1,7 @@
+/**
+ * @license
+ * [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+ */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
@@ -13,12 +17,12 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: Home
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: Login
   },
   {
     path: '/admin-users',
@@ -29,7 +33,7 @@ const routes = [
         next(false);
       }
       next();
-    },
+    }
   },
   {
     path: '/platform-users',
@@ -40,7 +44,7 @@ const routes = [
         next(false);
       }
       next();
-    },
+    }
   },
   {
     path: '/platform-config',
@@ -51,12 +55,12 @@ const routes = [
         next(false);
       }
       next();
-    },
-  },
+    }
+  }
 ];
 
 const router = new VueRouter({
-  routes,
+  routes
 });
 
 export default router;

@@ -1,6 +1,10 @@
+/**
+ * @license
+ * [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+ */
 import store from '@/store/store.js';
 
-const getPermissions = function(permissionsGroup) {
+const getPermissions = function (permissionsGroup) {
   const permissions = store.state.currentUser.permissions;
   if (
     !permissions ||
@@ -13,34 +17,43 @@ const getPermissions = function(permissionsGroup) {
 };
 
 export class PermissionsService {
-  static canReadSettings() {
+  static canReadSettings () {
     return getPermissions('settings').includes('read');
   }
-  static canUpdateSettings() {
+
+  static canUpdateSettings () {
     return getPermissions('settings').includes('update');
   }
-  static canReadAdminUsers() {
+
+  static canReadAdminUsers () {
     return getPermissions('users').includes('read');
   }
-  static canCreateAdminUsers() {
+
+  static canCreateAdminUsers () {
     return getPermissions('users').includes('create');
   }
-  static canDeleteAdminUsers() {
+
+  static canDeleteAdminUsers () {
     return getPermissions('users').includes('delete');
   }
-  static canResetPassword() {
+
+  static canResetPassword () {
     return getPermissions('users').includes('resetPassword');
   }
-  static canChangePermissions() {
+
+  static canChangePermissions () {
     return getPermissions('users').includes('changePermissions');
   }
-  static canReadPlatformUsers() {
+
+  static canReadPlatformUsers () {
     return getPermissions('platformUsers').includes('read');
   }
-  static canModifyPlatformUsers() {
+
+  static canModifyPlatformUsers () {
     return getPermissions('platformUsers').includes('modify');
   }
-  static canDeletePlatformUsers() {
+
+  static canDeletePlatformUsers () {
     return getPermissions('platformUsers').includes('delete');
   }
 }

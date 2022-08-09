@@ -1,3 +1,7 @@
+/**
+ * @license
+ * [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+ */
 import Vue from 'vue';
 import './plugins/bootstrap-vue';
 import './plugins/linkify';
@@ -8,5 +12,5 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app');

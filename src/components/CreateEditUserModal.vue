@@ -113,16 +113,16 @@ export default {
     edit: Boolean,
     create: Boolean,
     username: String,
-    permissions: {},
+    permissions: {}
   },
   components: {
     Modal,
     PermissionsTable,
     ConfirmationModal,
     Loader,
-    OperationFailedModal,
+    OperationFailedModal
   },
-  data: function() {
+  data: function () {
     return {
       password: '',
       showResetPasswordConfirmationModal: false,
@@ -132,26 +132,26 @@ export default {
       deleteConfirmationMsg: 'Are you sure you want to delete this user?',
       showLoader: false,
       showFailureModal: false,
-      atLeastOnePermissionSelected: true,
+      atLeastOnePermissionSelected: true
     };
   },
   computed: {
-    headerStart: function() {
+    headerStart: function () {
       return this.edit ? 'Edit' : 'Create';
     },
     canChangePermissions: () => PermissionsService.canChangePermissions(),
     canResetPassword: () => PermissionsService.canResetPassword(),
-    canDelete: () => PermissionsService.canDeleteAdminUsers(),
+    canDelete: () => PermissionsService.canDeleteAdminUsers()
   },
   methods: {
-    saveChanges: function() {
+    saveChanges: function () {
       if (this.create) {
         this.createUser();
       } else if (this.edit) {
         this.changePermissions();
       }
     },
-    isSelectedPermissionsValid() {
+    isSelectedPermissionsValid () {
       // throw an error if user has no permissions selected
       if (
         this.permissions.users.length === 0 &&
@@ -165,7 +165,7 @@ export default {
       this.atLeastOnePermissionSelected = true;
       return true;
     },
-    createUser() {
+    createUser () {
       if (!this.isSelectedPermissionsValid()) {
         return;
       }
@@ -174,12 +174,12 @@ export default {
         .post('/users', {
           username: this.username,
           password: this.password,
-          permissions: this.permissions,
+          permissions: this.permissions
         })
         .then(() => {
           this.$emit('userCreated', {
             username: this.username,
-            password: this.password,
+            password: this.password
           });
         })
         .catch(error => {
@@ -189,11 +189,11 @@ export default {
         })
         .finally(() => (this.showLoader = false));
     },
-    changePermissions() {
+    changePermissions () {
       this.showLoader = true;
       axios
         .put(`/users/${this.username}/permissions`, {
-          permissions: this.permissions,
+          permissions: this.permissions
         })
         .then(() => {
           this.$emit('permissionsChanged', this.permissions);
@@ -205,7 +205,7 @@ export default {
         })
         .finally(() => (this.showLoader = false));
     },
-    resetPassword() {
+    resetPassword () {
       this.showResetPasswordConfirmationModal = false;
       this.showLoader = true;
       axios
@@ -220,7 +220,7 @@ export default {
         })
         .finally(() => (this.showLoader = false));
     },
-    deleteUser() {
+    deleteUser () {
       this.showDeleteConfirmationModal = false;
       this.showLoader = true;
 
@@ -235,11 +235,11 @@ export default {
           this.$emit('userDeleted');
         })
         .finally(() => (this.showLoader = false));
-    },
+    }
   },
-  beforeMount() {
+  beforeMount () {
     this.password = cryptoRandomString({ length: 10, type: 'url-safe' });
-  },
+  }
 };
 </script>
 

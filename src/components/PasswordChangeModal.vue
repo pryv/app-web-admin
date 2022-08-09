@@ -91,7 +91,7 @@ export default {
     Modal,
     OperationSuccessfulModal,
     OperationFailedModal,
-    Loader,
+    Loader
   },
   data: () => ({
     oldPassword: '',
@@ -103,10 +103,10 @@ export default {
     passwordChangedText: 'Password changed successfully',
     showPasswordChangedModal: false,
     showFailureModal: false,
-    showLoader: false,
+    showLoader: false
   }),
   methods: {
-    requestPasswordChange: function() {
+    requestPasswordChange: function () {
       this.showLoader = true;
       const token = localStorage.getItem('token');
       const username = jwtDecode(token).username;
@@ -114,7 +114,7 @@ export default {
         .post(`/users/${username}/change-password`, {
           oldPassword: this.oldPassword,
           newPassword: this.newPassword,
-          newPasswordCheck: this.newPasswordCheck,
+          newPasswordCheck: this.newPasswordCheck
         })
         .then(() => {
           this.showPasswordChangedModal = true;
@@ -123,8 +123,8 @@ export default {
           this.showFailureModal = true;
         })
         .finally(() => (this.showLoader = false));
-    },
-  },
+    }
+  }
 };
 </script>
 

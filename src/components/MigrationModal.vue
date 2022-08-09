@@ -14,8 +14,10 @@
         </div>
         <div v-if="!hasMigrations() && error == null">
           <h4>No available migration</h4>
-          There are no available migrations.<br>
-          If you have just performed a migration, close this window and click on "Update", at the bottom right of the "Platform configuration" tab to apply the migration to Pryv.io services.
+          There are no available migrations.<br />
+          If you have just performed a migration, close this window and click on
+          "Update", at the bottom right of the "Platform configuration" tab to
+          apply the migration to Pryv.io services.
         </div>
         <div v-if="error != null">
           <h4>Error while fetching migrations</h4>
@@ -60,32 +62,32 @@ export default {
   components: {
     Modal,
     Loader,
-    ConfirmationModal,
+    ConfirmationModal
   },
   props: {
-    user: {},
+    user: {}
   },
-  data: function() {
+  data: function () {
     return {
       migrations: [],
       error: null,
       showLoader: false,
       showApplyMigrationConfirmationModal: false,
-      num: 12,
+      num: 12
     };
   },
-  async created() {
+  async created () {
     await this.getAvailableMigrations();
   },
   methods: {
-    hasMigrations: function() {
+    hasMigrations: function () {
       console.log(
         'running hasMig',
         this.migrations != null && this.migrations.length > 0
       );
       return this.migrations != null && this.migrations.length > 0;
     },
-    lastMigration: function() {
+    lastMigration: function () {
       console.log('runnin lastMig');
       if (this.hasMigrations()) {
         console.log('lookin for last mig', this.migrations);
@@ -95,10 +97,10 @@ export default {
         return '<issue fetching migrations>';
       }
     },
-    migrationConfirmationMsg: function() {
+    migrationConfirmationMsg: function () {
       return `Are you sure you want to migration the platform configuration file to version: ${this.lastMigration()}?`;
     },
-    getAvailableMigrations: async function() {
+    getAvailableMigrations: async function () {
       this.showLoader = true;
       try {
         const res = await axios.get('/admin/migrations');
@@ -121,7 +123,7 @@ export default {
         this.showLoader = false;
       }
     },
-    applyMigrations: async function() {
+    applyMigrations: async function () {
       this.showLoader = true;
       try {
         const res = await axios.post('/admin/migrations/apply');
@@ -144,8 +146,8 @@ export default {
       } finally {
         this.showLoader = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -1,8 +1,13 @@
+/**
+ * @license
+ * [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+ */
 import { expect } from 'chai';
-import { mount } from '@vue/test-utils';
-import { createLocalVue } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
 import PermissionsTable from '@/components/PermissionsTable.vue';
 import Chance from 'chance';
+
+/* eslint-disable no-unused-expressions */
 
 describe('PermissionsTable', () => {
   let localVue;
@@ -10,23 +15,23 @@ describe('PermissionsTable', () => {
   const username = new Chance().name();
   let permissions;
 
-  before(function() {
+  before(function () {
     localVue = createLocalVue();
 
     permissions = {
       users: ['read', 'create'],
-      settings: ['read'],
+      settings: ['read']
     };
   });
 
-  it('should check checkboxes depending on permissions states', function() {
+  it('should check checkboxes depending on permissions states', function () {
     const wrapper = mount(PermissionsTable, {
       localVue,
       propsData: {
-        username: username,
-        permissions: permissions,
-        disableCheckBoxes: false,
-      },
+        username,
+        permissions,
+        disableCheckBoxes: false
+      }
     });
 
     const checkBoxes = wrapper.findAll('[type="checkbox"]');
@@ -55,14 +60,14 @@ describe('PermissionsTable', () => {
       }
     }
   });
-  it('should disable all checkboxes when defined so by property', function() {
+  it('should disable all checkboxes when defined so by property', function () {
     const wrapper = mount(PermissionsTable, {
       localVue,
       propsData: {
-        username: username,
-        permissions: permissions,
-        disableCheckBoxes: true,
-      },
+        username,
+        permissions,
+        disableCheckBoxes: true
+      }
     });
 
     const checkBoxes = wrapper.findAll('[type="checkbox"]');
@@ -72,14 +77,14 @@ describe('PermissionsTable', () => {
       expect(checkBoxes.at(i).element.disabled).to.be.true;
     }
   });
-  it('should send event on table click with username and permissions', function() {
+  it('should send event on table click with username and permissions', function () {
     const wrapper = mount(PermissionsTable, {
       localVue,
       propsData: {
-        username: username,
-        permissions: permissions,
-        disableCheckBoxes: true,
-      },
+        username,
+        permissions,
+        disableCheckBoxes: true
+      }
     });
 
     wrapper.find('table').trigger('click');

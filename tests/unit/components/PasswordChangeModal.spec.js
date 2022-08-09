@@ -1,17 +1,22 @@
+/**
+ * @license
+ * [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+ */
 import { expect } from 'chai';
-import { mount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
 import PasswordChangeModal from '@/components/PasswordChangeModal.vue';
-import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import { sign } from 'jsonwebtoken';
 import sinon from 'sinon';
 import axios from 'axios';
 import Chance from 'chance';
 
+/* eslint-disable no-unused-expressions */
+
 const chance = new Chance();
 
 const username = chance.name();
-const token = sign({ username: username }, chance.word(), { expiresIn: '24h' });
+const token = sign({ username }, chance.word(), { expiresIn: '24h' });
 
 let wrapper;
 let inputFields;
@@ -19,7 +24,7 @@ let inputFields;
 let postReqStub;
 
 describe('PasswordChangeModal', () => {
-  before(function() {
+  before(function () {
     global.localStorage.setItem('token', token);
 
     const localVue = createLocalVue();
@@ -32,25 +37,25 @@ describe('PasswordChangeModal', () => {
     }
     wrapper = mount(PasswordChangeModal, {
       localVue,
-      attachTo: elem,
+      attachTo: elem
     });
 
     postReqStub = sinon.stub(axios, 'post');
   });
 
-  after(function() {
+  after(function () {
     postReqStub.restore();
     wrapper.destroy();
   });
 
-  it('should render password change fields', function() {
+  it('should render password change fields', function () {
     inputFields = wrapper.findAll('input');
 
     expect(inputFields.length).equal(3);
   });
 
-  it('should send change password request with data from form on save button click', function() {
-    postReqStub.returns(Promise.resolve(true));
+  it('should send change password request with data from form on save button click', function () {
+    postReqStub.resolves(true);
 
     const oldPass = 'old_pass';
     const newPass = 'new_pass';
@@ -65,11 +70,11 @@ describe('PasswordChangeModal', () => {
     sinon.assert.calledWith(postReqStub, `/users/${username}/change-password`, {
       oldPassword: oldPass,
       newPassword: newPass,
-      newPasswordCheck: newPass,
+      newPasswordCheck: newPass
     });
   });
 
-  it('should emit close event on cancel button click', function() {
+  it('should emit close event on cancel button click', function () {
     wrapper.find('[type="button"]').trigger('click');
 
     expect(wrapper.emitted().close).to.be.ok;

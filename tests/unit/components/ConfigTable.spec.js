@@ -1,8 +1,11 @@
+/**
+ * @license
+ * [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+ */
 import { expect } from 'chai';
-import { mount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
 import store from '@/store/store.js';
 import ConfigTable from '@/components/ConfigTable.vue';
-import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue } from 'bootstrap-vue';
 import linkify from 'vue-linkify';
 import Chance from 'chance';
@@ -18,7 +21,7 @@ describe('ConfigTable', () => {
   let configSectionSettingsKeys;
   let sectionName;
 
-  before(function() {
+  before(function () {
     chance = new Chance();
 
     const localVue = createLocalVue();
@@ -33,31 +36,31 @@ describe('ConfigTable', () => {
       settings: {
         set1: {
           value: chance.word(),
-          description: chance.paragraph(),
+          description: chance.paragraph()
         },
         set2: {
           value: chance.word(),
-          description: chance.paragraph(),
-        },
-      },
+          description: chance.paragraph()
+        }
+      }
     };
     store.state.config = config;
 
     wrapper = mount(ConfigTable, {
       localVue,
-      propsData: { initialConfigSection: config[sectionName].name },
+      propsData: { initialConfigSection: config[sectionName].name }
     });
   });
 
   describe('should render table with configuration', () => {
-    it('should render all settings from local storage', function() {
+    it('should render all settings from local storage', function () {
       rows = wrapper.findAll('tr');
       expect(rows.length).equal(
         Object.keys(config[sectionName].settings).length + 1
       );
     });
 
-    it('should render header row', function() {
+    it('should render header row', function () {
       headerCells = rows.at(0).findAll('th');
 
       expect(
@@ -80,7 +83,7 @@ describe('ConfigTable', () => {
       ).equal('Description');
     });
 
-    it('should render property column', function() {
+    it('should render property column', function () {
       firstRowCells = rows.at(1).findAll('td');
       secondRowCells = rows.at(2).findAll('td');
       configSectionSettingsKeys = Object.keys(config[sectionName].settings);
@@ -99,7 +102,7 @@ describe('ConfigTable', () => {
       ).equal(configSectionSettingsKeys[1]);
     });
 
-    it('should render description column', function() {
+    it('should render description column', function () {
       expect(
         firstRowCells
           .at(2)

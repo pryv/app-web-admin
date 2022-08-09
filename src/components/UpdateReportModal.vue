@@ -20,19 +20,19 @@ import Modal from '@/widgets/Modal.vue';
 export default {
   name: 'UpdateReportModal',
   components: {
-    Modal,
+    Modal
   },
   props: {
-    updateReport: {},
+    updateReport: {}
   },
   computed: {
-    successes: function() {
+    successes: function () {
       return this.updateReport.successes;
     },
-    failures: function() {
+    failures: function () {
       return this.updateReport.failures;
-    },
-  },
+    }
+  }
 };
 </script>
 

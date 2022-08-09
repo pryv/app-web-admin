@@ -1,11 +1,16 @@
+/**
+ * @license
+ * [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+ */
 import { expect } from 'chai';
-import { mount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
 import Login from '@/views/Login.vue';
-import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import sinon from 'sinon';
 import axios from 'axios';
 import Chance from 'chance';
+
+/* eslint-disable no-unused-expressions */
 
 const chance = new Chance();
 
@@ -26,20 +31,20 @@ describe('Login', () => {
     href = window.location.href;
     Object.defineProperty(window, 'location', {
       value: {
-        href: url,
+        href: url
       },
-      writable: true,
+      writable: true
     });
   });
   afterEach(() => {
     Object.defineProperty(window, 'location', {
       value: {
-        href: href,
+        href
       },
-      writable: true,
+      writable: true
     });
   });
-  beforeEach(function() {
+  beforeEach(function () {
     const localVue = createLocalVue();
     localVue.use(BootstrapVue);
     localVue.use(BootstrapVueIcons);
@@ -50,20 +55,20 @@ describe('Login', () => {
     }
     wrapper = mount(Login, {
       localVue,
-      attachTo: elem,
+      attachTo: elem
     });
 
     submitButton = wrapper.find('[type="submit"]');
   });
 
-  afterEach(function() {
+  afterEach(function () {
     wrapper.destroy();
     sinon.restore();
   });
 
-  it('must send login request to server from URL domain on login button click', function() {
+  it('must send login request to server from URL domain on login button click', function () {
     const postReqStub = sinon.stub(axios, 'post');
-    postReqStub.returns(Promise.resolve({ data: {} }));
+    postReqStub.resolves({ data: {} });
 
     const inputFields = wrapper.findAll('input');
     expect(inputFields.length).equal(2);
@@ -73,21 +78,21 @@ describe('Login', () => {
 
     sinon.assert.calledOnce(postReqStub);
     sinon.assert.calledWith(postReqStub, `${confLeadAddress}/auth/login`, {
-      username: username,
-      password: password,
+      username,
+      password
     });
   });
-  it.skip('must send login request to server from query parameter on login button click', function() {
+  it.skip('must send login request to server from query parameter on login button click', function () {
     // can't manage to change it in the test, but works
     const customLeaderUrl = 'https://otherleader.com';
     Object.defineProperty(window, 'location', {
       value: {
-        href: url + '?pryvLeaderUrl=' + customLeaderUrl,
+        href: url + '?pryvLeaderUrl=' + customLeaderUrl
       },
-      writable: true,
+      writable: true
     });
     const postReqStub = sinon.stub(axios, 'post');
-    postReqStub.returns(Promise.resolve(true));
+    postReqStub.resolves(true);
 
     const inputFields = wrapper.findAll('input');
     inputFields.at(0).setValue(username);
@@ -96,13 +101,13 @@ describe('Login', () => {
 
     sinon.assert.calledOnce(postReqStub);
     sinon.assert.calledWith(postReqStub, `${customLeaderUrl}/auth/login`, {
-      username: username,
-      password: password,
+      username,
+      password
     });
   });
-  it('must display "Incorrect credentials" message when server responded with 4**', async function() {
+  it('must display "Incorrect credentials" message when server responded with 4**', async function () {
     const postReqStub = sinon.stub(axios, 'post');
-    postReqStub.returns(Promise.reject({ response: { status: 401 } }));
+    postReqStub.rejects({ response: { status: 401 } });
 
     const inputFields = wrapper.findAll('input');
     inputFields.at(0).setValue(username);
@@ -111,8 +116,8 @@ describe('Login', () => {
 
     sinon.assert.calledOnce(postReqStub);
     sinon.assert.calledWith(postReqStub, `${confLeadAddress}/auth/login`, {
-      username: username,
-      password: password,
+      username,
+      password
     });
 
     await wrapper.vm.$forceUpdate();
@@ -122,9 +127,9 @@ describe('Login', () => {
       'Incorrect credentials'
     );
   });
-  it('must display "Unable to connect to the server" message on network error', async function() {
+  it('must display "Unable to connect to the server" message on network error', async function () {
     const postReqStub = sinon.stub(axios, 'post');
-    postReqStub.returns(Promise.reject({ response: { status: 500 } }));
+    postReqStub.rejects({ response: { status: 500 } });
 
     const inputFields = wrapper.findAll('input');
     inputFields.at(0).setValue(username);
@@ -133,8 +138,8 @@ describe('Login', () => {
 
     sinon.assert.calledOnce(postReqStub);
     sinon.assert.calledWith(postReqStub, `${confLeadAddress}/auth/login`, {
-      username: username,
-      password: password,
+      username,
+      password
     });
 
     await wrapper.vm.$forceUpdate();
@@ -144,9 +149,9 @@ describe('Login', () => {
       'Unable to connect to the server'
     );
   });
-  it('must display "Unable to connect to the server" message when server responded with 5**', async function() {
+  it('must display "Unable to connect to the server" message when server responded with 5**', async function () {
     const postReqStub = sinon.stub(axios, 'post');
-    postReqStub.returns(Promise.reject({ message: 'Network Error' }));
+    postReqStub.rejects({ message: 'Network Error' });
 
     const inputFields = wrapper.findAll('input');
     inputFields.at(0).setValue(username);
@@ -155,8 +160,8 @@ describe('Login', () => {
 
     sinon.assert.calledOnce(postReqStub);
     sinon.assert.calledWith(postReqStub, `${confLeadAddress}/auth/login`, {
-      username: username,
-      password: password,
+      username,
+      password
     });
 
     await wrapper.vm.$forceUpdate();

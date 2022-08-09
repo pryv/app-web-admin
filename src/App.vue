@@ -21,21 +21,21 @@ import axios from 'axios';
 export default {
   name: 'App',
   components: {
-    NavBar,
+    NavBar
   },
   data: () => ({
-    loggedIn: false,
+    loggedIn: false
   }),
-  beforeMount() {
+  beforeMount () {
     this.loggedIn = !!localStorage.getItem('token');
 
     if (this.loggedIn) {
       axios.defaults.baseURL = localStorage.getItem('serverUrl');
-      axios.defaults.headers.common['authorization'] = localStorage.getItem(
+      axios.defaults.headers.common.authorization = localStorage.getItem(
         'token'
       );
     }
-  },
+  }
 };
 </script>
 

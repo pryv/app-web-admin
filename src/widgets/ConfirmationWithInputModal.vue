@@ -38,11 +38,11 @@
 export default {
   name: 'ConfirmationWithInputModal',
   props: {
-    validConfirmationInput: String,
+    validConfirmationInput: String
   },
   data: () => ({
-    confirmationInput: '',
-  }),
+    confirmationInput: ''
+  })
 };
 </script>
 
