@@ -1,3 +1,7 @@
+/**
+ * @license
+ * [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+ */
 import { expect } from 'chai';
 import { mount, createLocalVue } from '@vue/test-utils';
 import NavBar from '@/components/NavBar.vue';

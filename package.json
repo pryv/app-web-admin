@@ -2,6 +2,8 @@
   "name": "app-web-admin",
   "version": "0.3.0",
   "private": true,
+  "license": "BSD-3-Clause",
+  "author": "Pryv S.A. <info@pryv.com> (https://pryv.com)",
   "scripts": {
     "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"
   },
@@ -42,6 +44,7 @@
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
     "sinon": "^9.0.2",
+    "source-licenser": "^2.0.5",
     "vue-cli-plugin-bootstrap-vue": "^0.8.2",
     "vue-template-compiler": "^2.6.11"
   }

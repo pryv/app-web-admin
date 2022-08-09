@@ -44,4 +44,4 @@ just publish
 
 ## License
 
-[Revised BSD license](https://github.com/pryv/documents/blob/master/license-bsd-revised.md)
+[BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
