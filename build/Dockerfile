@@ -2,6 +2,7 @@ FROM eu.gcr.io/pryvio/base:1.7.0 as build-stage
 LABEL "Tech@Pryv" <tech@pryv.com>
 WORKDIR /app
 COPY ./package.json ./
+COPY ./package-lock.json ./
 RUN npm ci
 COPY ./ .
 RUN just build
