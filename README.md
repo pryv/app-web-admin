@@ -1,7 +1,7 @@
 # Admin Panel
 
-Wep Application that contains admin panel used for Pryv.io platform configuration.
-Contains also management of users having access to the panel and their permissions.
+Web app for Pryv.io platform configuration.
+Also includes management of admin panel users and their permissions.
 
 ## Contributing
 
