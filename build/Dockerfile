@@ -5,7 +5,7 @@ COPY ./package.json ./
 COPY ./package-lock.json ./
 RUN npm ci
 COPY ./ .
-RUN just build
+RUN npx vue-cli-service build
 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
