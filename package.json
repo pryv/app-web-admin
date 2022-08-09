@@ -3,11 +3,7 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test": "vue-cli-service test:unit --require tests/unit/helpers/setup.js",
-    "lint": "vue-cli-service lint",
-    "publish": "node ./scripts/publish.js"
+    "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"
   },
   "dependencies": {
     "axios": "^0.21.2",
@@ -41,7 +37,7 @@
     "popper.js": "^1.16.0",
     "portal-vue": "^2.1.6",
     "prettier": "^1.19.1",
-    "rec-la": "^0.1.19",
+    "rec.la": "^0.3.2",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
     "sinon": "^9.0.2",

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# working dir fix
+scriptsFolder=$(cd $(dirname "$0"); pwd)
+cd $scriptsFolder/..
+
+# setup git pre-commit hook if appropriate ($CI is "true" in GitHub workflows)
+PRE_COMMIT="scripts/pre-commit"
+if [[ -d .git && "$CI" != "true" ]]; then
+  cp $PRE_COMMIT .git/hooks/
+  echo ""
+  echo "Git pre-commit hook setup from '$PRE_COMMIT'"
+  echo ""
+fi
+
+echo "
+
+OK!
+"
