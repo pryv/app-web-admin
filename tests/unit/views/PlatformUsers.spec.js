@@ -1,15 +1,14 @@
 import { assert } from 'chai';
-import { mount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
 import PlatformUsers from '@/views/PlatformUsers.vue';
 import ConfirmationWithInputModal from '@/widgets/ConfirmationWithInputModal.vue';
-import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import sinon from 'sinon';
 import axios from 'axios';
 import { PermissionsService } from '@/services/permissions.service.js';
 import Chance from 'chance';
 
-describe('PlatformUsers', function() {
+describe('PlatformUsers', function () {
   const chance = new Chance();
 
   let wrapper;
@@ -23,27 +22,27 @@ describe('PlatformUsers', function() {
     appId: chance.fbid(),
     invitationToken: chance.word(),
     referer: chance.last(),
-    languageCode: chance.locale(),
+    languageCode: chance.locale()
   };
 
-  async function mountComponent(userExists = true) {
+  async function mountComponent (userExists = true) {
     const localVue = createLocalVue();
     localVue.use(BootstrapVue);
     localVue.use(BootstrapVueIcons);
 
     getReqStub = sinon.stub(axios, 'get');
     if (userExists) {
-      getReqStub.returns(Promise.resolve({ data: { user: user } }));
+      getReqStub.resolves({ data: { user } });
     } else {
-      getReqStub.returns(Promise.reject({ response: { status: 404 } }));
+      getReqStub.rejects({ response: { status: 404 } });
     }
 
     deleteReqStub = sinon.stub(axios, 'delete');
     deleteReqStub.returns(
       Promise.resolve({
         data: {
-          user: user,
-        },
+          user
+        }
       })
     );
 
@@ -53,18 +52,18 @@ describe('PlatformUsers', function() {
     }
     wrapper = mount(PlatformUsers, {
       localVue,
-      attachTo: elem,
+      attachTo: elem
     });
 
     await wrapper.vm.$forceUpdate();
   }
 
-  afterEach(function() {
+  afterEach(function () {
     wrapper.destroy();
     sinon.restore();
   });
 
-  it('must render input field and submit button', async function() {
+  it('must render input field and submit button', async function () {
     await mountComponent();
 
     const inputField = wrapper.find('input');
@@ -73,7 +72,7 @@ describe('PlatformUsers', function() {
     const findUserButton = wrapper.find('[type="submit"]');
     assert.isTrue(findUserButton.exists());
   });
-  it('must display user retrieved from request', async function() {
+  it('must display user retrieved from request', async function () {
     await mountComponent();
     const inputField = wrapper.find('input');
     const findUserButton = wrapper.find('[type="submit"]');
@@ -139,7 +138,7 @@ describe('PlatformUsers', function() {
     assert.equal(buttons.at(0).text(), 'Find');
     assert.equal(buttons.at(1).text(), 'Delete');
   });
-  it('must display confirmation modal on delete button click', async function() {
+  it('must display confirmation modal on delete button click', async function () {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
     await mountComponent();
     const inputField = wrapper.find('input');
@@ -157,7 +156,7 @@ describe('PlatformUsers', function() {
 
     assert.isTrue(wrapper.findComponent(ConfirmationWithInputModal).exists());
   });
-  it('must send delete user request after confirmation', async function() {
+  it('must send delete user request after confirmation', async function () {
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
     await mountComponent();
     const inputField = wrapper.find('input');
@@ -184,7 +183,7 @@ describe('PlatformUsers', function() {
     sinon.assert.calledOnce(deleteReqStub);
     sinon.assert.calledWith(deleteReqStub, `/platform-users/${user.username}`);
   });
-  it('must display confirmation modal on delete-mfa button click', async function() {
+  it('must display confirmation modal on delete-mfa button click', async function () {
     sinon.stub(PermissionsService, 'canModifyPlatformUsers').returns(true);
     sinon.stub(PermissionsService, 'canDeletePlatformUsers').returns(true);
     await mountComponent();
@@ -202,7 +201,7 @@ describe('PlatformUsers', function() {
 
     assert.isTrue(wrapper.findComponent(ConfirmationWithInputModal).exists());
   });
-  it('must send delete user request after confirmation', async function() {
+  it('must send delete user request after confirmation', async function () {
     sinon.stub(PermissionsService, 'canModifyPlatformUsers').returns(true);
     await mountComponent();
     const inputField = wrapper.find('input');

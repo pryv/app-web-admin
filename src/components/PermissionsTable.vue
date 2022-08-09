@@ -65,7 +65,7 @@ export default {
   props: {
     username: String,
     permissions: {},
-    disableCheckBoxes: Boolean,
+    disableCheckBoxes: Boolean
   },
   data: () => ({
     settingsPermissions: ['read', 'update'],
@@ -74,10 +74,10 @@ export default {
       'create',
       'delete',
       'resetPassword',
-      'changePermissions',
+      'changePermissions'
     ],
-    platformUsersPermissions: ['read', 'delete', 'modify'],
-  }),
+    platformUsersPermissions: ['read', 'delete', 'modify']
+  })
 };
 </script>
 

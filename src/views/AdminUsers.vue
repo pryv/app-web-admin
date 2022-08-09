@@ -113,7 +113,7 @@ export default {
     Loader,
     CreateEditUserModal,
     PermissionsTable,
-    OperationSuccessfulModal,
+    OperationSuccessfulModal
   },
   data: () => ({
     usersList: [],
@@ -125,13 +125,13 @@ export default {
         key: 'users',
         label: 'Username',
         thStyle: { 'text-align': 'center' },
-        class: 'admin-users-user-row',
+        class: 'admin-users-user-row'
       },
       {
         key: 'permissions',
         label: 'Permissions',
-        thStyle: { 'text-align': 'center' },
-      },
+        thStyle: { 'text-align': 'center' }
+      }
     ],
     settingsPermissions: ['read', 'update'],
     usersPermissions: [
@@ -139,7 +139,7 @@ export default {
       'create',
       'delete',
       'resetPassword',
-      'changePermissions',
+      'changePermissions'
     ],
     showCreateUserModal: false,
     showEditUserModal: false,
@@ -154,34 +154,34 @@ export default {
     usersPasswordResetedText: '',
     showUsersPermissionsChangedModal: false,
     // eslint-disable-next-line quotes
-    usersPermissionsChangedText: "User's permissions updated successfully",
+    usersPermissionsChangedText: "User's permissions updated successfully"
   }),
   computed: {
     canChangePermissions: () => PermissionsService.canChangePermissions(),
-    canCreate: () => PermissionsService.canCreateAdminUsers(),
+    canCreate: () => PermissionsService.canCreateAdminUsers()
   },
   methods: {
-    onUsersPermissionsChangedModalClose: function() {
+    onUsersPermissionsChangedModalClose: function () {
       this.showUsersPermissionsChangedModal = false;
       this.showEditUserModal = false;
     },
-    onUsersPasswordResetedModalClose: function() {
+    onUsersPasswordResetedModalClose: function () {
       this.showUsersPasswordResetedModal = false;
       this.showEditUserModal = false;
     },
-    onUserDeletedModalClose: function() {
+    onUserDeletedModalClose: function () {
       this.showUserDeletedModal = false;
       this.showEditUserModal = false;
     },
-    onUserCreatedModalClose: function() {
+    onUserCreatedModalClose: function () {
       this.showUserCreatedModal = false;
       this.showCreateUserModal = false;
     },
-    onPasswordResetDone: function($event) {
+    onPasswordResetDone: function ($event) {
       this.usersPasswordResetedText = `${this.usersPasswordResetedInitialText} New password: ${$event.password}`;
       this.showUsersPasswordResetedModal = true;
     },
-    onRowSelected: function(items) {
+    onRowSelected: function (items) {
       if (items && items.length > 0) {
         this.selectedUser = items[0];
         if (this.canChangePermissions) {
@@ -191,16 +191,16 @@ export default {
         this.selectedUser = '';
       }
     },
-    onUserCreated: function($event) {
+    onUserCreated: function ($event) {
       this.userCreatedText = `${this.userCreatedInitialText} username: ${$event.username} \n password: ${$event.password}`;
       this.showUserCreatedModal = true;
       this.getUsersList();
     },
-    onUserDeleted: function() {
+    onUserDeleted: function () {
       this.showUserDeletedModal = true;
       this.getUsersList();
     },
-    onPermissionsChanged: function(permissions, username) {
+    onPermissionsChanged: function (permissions, username) {
       this.showUsersPermissionsChangedModal = true;
       this.usersList.find(
         e => e.username === username
@@ -208,7 +208,7 @@ export default {
 
       this.updateCurrentUserIfNeeded(username, permissions);
     },
-    updateCurrentUserIfNeeded(username, permissions) {
+    updateCurrentUserIfNeeded (username, permissions) {
       // if the user that was updated is the same user that is logged in, update local storage
       if (username === localStorage.getItem('username')) {
         localStorage.setItem('permissions', JSON.stringify(permissions));
@@ -216,7 +216,7 @@ export default {
         store.state.currentUser.permissions = permissions;
       }
     },
-    getUsersList: function() {
+    getUsersList: function () {
       this.loadInProgress = true;
       axios
         .get('/users')
@@ -226,10 +226,10 @@ export default {
           }
           this.usersList = response.data.users;
           this.usersList.forEach(user => {
-            for (let permissionsGroup of [
+            for (const permissionsGroup of [
               'users',
               'platformUsers',
-              'settings',
+              'settings'
             ]) {
               if (!user.permissions[permissionsGroup]) {
                 user.permissions[permissionsGroup] = [];
@@ -245,11 +245,11 @@ export default {
         .finally(() => {
           this.loadInProgress = false;
         });
-    },
+    }
   },
-  beforeMount() {
+  beforeMount () {
     this.getUsersList();
-  },
+  }
 };
 </script>
 

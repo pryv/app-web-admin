@@ -1,42 +1,43 @@
 import { expect } from 'chai';
-import { mount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
 import NavBar from '@/components/NavBar.vue';
-import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import sinon from 'sinon';
 import axios from 'axios';
 import { PermissionsService } from '@/services/permissions.service.js';
 import router from '../../../src/router';
 
+/* eslint-disable no-unused-expressions */
+
 let wrapper;
 let localVue;
 
 describe('NavBar', () => {
-  before(function() {
+  before(function () {
     localVue = createLocalVue();
     localVue.use(BootstrapVue);
     localVue.use(BootstrapVueIcons);
   });
 
-  after(function() {
+  after(function () {
     wrapper.destroy();
   });
 
-  afterEach(function() {
+  afterEach(function () {
     sinon.restore();
   });
 
-  describe('user not logged in', function() {
-    before(function() {
+  describe('user not logged in', function () {
+    before(function () {
       wrapper = mount(NavBar, {
         localVue,
         propsData: {
-          loggedIn: false,
-        },
+          loggedIn: false
+        }
       });
     });
 
-    it('should not display any navigation options', function() {
+    it('should not display any navigation options', function () {
       const listElements = wrapper.findAll('a');
 
       expect(listElements.length).equal(1);
@@ -44,16 +45,16 @@ describe('NavBar', () => {
     });
   });
 
-  describe('user logged in', function() {
-    it('should render platform config and no admin users navbars when user has those permisions', function() {
+  describe('user logged in', function () {
+    it('should render platform config and no admin users navbars when user has those permisions', function () {
       sinon.stub(PermissionsService, 'canReadSettings').returns(true);
       sinon.stub(PermissionsService, 'canReadAdminUsers').returns(false);
 
       wrapper = mount(NavBar, {
         localVue,
         propsData: {
-          loggedIn: true,
-        },
+          loggedIn: true
+        }
       });
 
       const listElements = wrapper.findAll('li');
@@ -74,15 +75,15 @@ describe('NavBar', () => {
       ).equal('testuser');
     });
 
-    it('should render admin users and no platform config navbars when user has those permisions', function() {
+    it('should render admin users and no platform config navbars when user has those permisions', function () {
       sinon.stub(PermissionsService, 'canReadSettings').returns(false);
       sinon.stub(PermissionsService, 'canReadAdminUsers').returns(true);
 
       wrapper = mount(NavBar, {
         localVue,
         propsData: {
-          loggedIn: true,
-        },
+          loggedIn: true
+        }
       });
 
       const listElements = wrapper.findAll('li');
@@ -103,12 +104,12 @@ describe('NavBar', () => {
       ).equal('testuser');
     });
 
-    it('should render profile dropdown', function() {
+    it('should render profile dropdown', function () {
       wrapper = mount(NavBar, {
         localVue,
         propsData: {
-          loggedIn: true,
-        },
+          loggedIn: true
+        }
       });
 
       const dropdown = wrapper.find('ul.dropdown-menu');
@@ -119,16 +120,16 @@ describe('NavBar', () => {
       expect(dropdownItems.at(1).text()).equal('Sign Out');
     });
 
-    it('should send logout request when logout in profile clicked', function() {
+    it('should send logout request when logout in profile clicked', function () {
       const logoutReqStub = sinon.stub(axios, 'post');
-      logoutReqStub.returns(Promise.resolve(true));
+      logoutReqStub.resolves(true);
 
       wrapper = mount(NavBar, {
         localVue,
-        router: router,
+        router,
         propsData: {
-          loggedIn: true,
-        },
+          loggedIn: true
+        }
       });
 
       wrapper

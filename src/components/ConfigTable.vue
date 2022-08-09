@@ -10,7 +10,7 @@
       :items="displayConfig"
       :fields="tableHeaders"
     >
-      <template primary-key v-slot:cell(property)="row">
+      <template v-slot:cell(property)="row">
         <div class="tab-cell">{{ row.item.property }}</div>
       </template>
       <template v-slot:cell(value)="row">
@@ -76,12 +76,12 @@ import VJsoneditor from 'v-jsoneditor';
 export default {
   name: 'ConfigTable',
   props: {
-    initialConfigSection: String,
+    initialConfigSection: String
   },
   components: {
-    VJsoneditor,
+    VJsoneditor
   },
-  data: function() {
+  data: function () {
     return {
       configSection: this.initialConfigSection,
       tableHeaders: [
@@ -89,31 +89,31 @@ export default {
           key: 'property',
           label: 'Property',
           thStyle: { 'text-align': 'center', 'min-width': '100px' },
-          class: 'tab-cell',
+          class: 'tab-cell'
         },
         {
           key: 'value',
           label: 'Value',
           thStyle: { 'text-align': 'center', 'min-width': '100px' },
-          class: 'tab-cell',
+          class: 'tab-cell'
         },
         {
           key: 'description',
           label: 'Description',
           thStyle: { 'text-align': 'center', 'min-width': '100px' },
-          class: 'tab-cell',
-        },
-      ],
+          class: 'tab-cell'
+        }
+      ]
     };
   },
   computed: {
     canUpdateSettings: () => PermissionsService.canUpdateSettings(),
-    config: function() {
+    config: function () {
       return store.state.config[this.configSection].settings;
     },
-    displayConfig: function() {
+    displayConfig: function () {
       return Object.keys(this.config).map(
-        function(key) {
+        function (key) {
           const configDesc = this.config[key].description
             ? this.config[key].description
             : null;
@@ -132,17 +132,17 @@ export default {
           return {
             property: key,
             value: configValue,
-            description: configDesc,
+            description: configDesc
           };
         }.bind(this)
       );
-    },
+    }
   },
   methods: {
-    isPropertyReadOnly: function(property) {
+    isPropertyReadOnly: function (property) {
       return ['TEMPLATE_VERSION', 'REGISTER_ADMIN_KEY'].includes(property);
     },
-    forbidCertainEditions: function(node) {
+    forbidCertainEditions: function (node) {
       if (!this.canUpdateSettings) {
         return false;
       }
@@ -154,7 +154,7 @@ export default {
       }
       return true;
     },
-    onValueChanged: function(changedText, prop) {
+    onValueChanged: function (changedText, prop) {
       if (this.isJSON(changedText)) {
         changedText = JSON.parse(changedText);
       }
@@ -163,26 +163,26 @@ export default {
       }
       this.config[prop].value = changedText;
     },
-    onChangedJsonText: function(json, prop) {
+    onChangedJsonText: function (json, prop) {
       if (this.isJSON(json) || typeof json === 'object') {
         this.config[prop].value = JSON.parse(json);
         this.$emit('validJson');
       }
     },
-    onValidationError: function(errors) {
+    onValidationError: function (errors) {
       if (errors && errors.length > 0) {
         this.$emit('invalidJson');
       }
     },
-    isJSON: function(text) {
+    isJSON: function (text) {
       try {
         JSON.parse(text);
       } catch (e) {
         return false;
       }
       return true;
-    },
-  },
+    }
+  }
 };
 </script>
 

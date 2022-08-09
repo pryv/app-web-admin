@@ -5,7 +5,7 @@ export default Vue.observable({
     config: {},
     currentUser: {
       username: localStorage.getItem('username') || '',
-      permissions: JSON.parse(localStorage.getItem('permissions')) || [],
-    },
-  },
+      permissions: JSON.parse(localStorage.getItem('permissions')) || []
+    }
+  }
 });

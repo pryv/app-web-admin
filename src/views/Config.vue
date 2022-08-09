@@ -90,7 +90,7 @@ export default {
     ConfigTable,
     UpdateReportModal,
     MigrationModal,
-    Loader,
+    Loader
   },
   data: () => ({
     loadFailed: false,
@@ -100,22 +100,22 @@ export default {
     updateConfigReport: {},
     updateInProgress: false,
     loadInProgress: false,
-    inputValid: true,
+    inputValid: true
   }),
   computed: {
     config: () => store.state.config,
     canUpdateSettings: () => PermissionsService.canUpdateSettings(),
     activeTabIndex: {
-      get: function() {
+      get: function () {
         return Object.keys(store.state.config).findIndex(
           key => key === 'SERVICE_INFORMATION_SETTINGS'
         );
       },
-      set: function() {},
-    },
+      set: function () {}
+    }
   },
   methods: {
-    getConfig: function() {
+    getConfig: function () {
       store.state.config = {};
       this.loadInProgress = true;
       axios
@@ -139,7 +139,7 @@ export default {
           this.loadInProgress = false;
         });
     },
-    updateConfig: function() {
+    updateConfig: function () {
       this.updateInProgress = true;
       this.updateFailed = false;
       axios
@@ -163,14 +163,14 @@ export default {
           this.updateInProgress = false;
         });
     },
-    resetFailureIndicators: function() {
+    resetFailureIndicators: function () {
       this.loadFailed = false;
       this.updateFailed = false;
-    },
+    }
   },
-  beforeMount() {
+  beforeMount () {
     this.getConfig();
-  },
+  }
 };
 </script>
 

@@ -121,7 +121,7 @@ export default {
     Loader,
     OperationSuccessfulModal,
     OperationFailedModal,
-    ConfirmationWithInputModal,
+    ConfirmationWithInputModal
   },
   data: () => ({
     username: '',
@@ -135,17 +135,17 @@ export default {
     mfaDeletedText: 'User MFA deactivated successfully',
     showFailureModal: false,
     showLoader: false,
-    userNotFound: false,
+    userNotFound: false
   }),
   computed: {
     canModifyPlatformUsers: () => PermissionsService.canModifyPlatformUsers(),
     canDeletePlatformUsers: () => PermissionsService.canDeletePlatformUsers(),
-    hasUser: function() {
+    hasUser: function () {
       return Object.keys(this.user).length > 0;
-    },
+    }
   },
   methods: {
-    getPlatformUser: function() {
+    getPlatformUser: function () {
       this.showLoader = true;
       axios
         .get(`/platform-users/${this.username}`)
@@ -164,7 +164,7 @@ export default {
           this.showLoader = false;
         });
     },
-    deletePlatformUser() {
+    deletePlatformUser () {
       this.showDeleteConfirmationModal = false;
       this.showLoader = true;
       axios
@@ -180,7 +180,7 @@ export default {
         })
         .finally(() => (this.showLoader = false));
     },
-    deleteMfaPlatformUser() {
+    deleteMfaPlatformUser () {
       this.showModifyConfirmationModal = false;
       this.showLoader = true;
       axios
@@ -194,8 +194,8 @@ export default {
           }
         })
         .finally(() => (this.showLoader = false));
-    },
-  },
+    }
+  }
 };
 </script>
 

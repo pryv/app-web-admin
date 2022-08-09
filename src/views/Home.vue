@@ -7,7 +7,7 @@ import { PermissionsService } from '@/services/permissions.service.js';
 
 export default {
   name: 'Home',
-  beforeMount() {
+  beforeMount () {
     if (!localStorage.getItem('token')) {
       this.$router.push('/login');
     } else if (PermissionsService.canReadSettings()) {
@@ -15,6 +15,6 @@ export default {
     } else if (PermissionsService.canReadAdminUsers()) {
       this.$router.push('/admin-users');
     }
-  },
+  }
 };
 </script>

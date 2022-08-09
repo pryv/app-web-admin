@@ -21,8 +21,8 @@
 export default {
   name: 'OperationSuccessfulModal',
   props: {
-    text: String,
-  },
+    text: String
+  }
 };
 </script>
 
