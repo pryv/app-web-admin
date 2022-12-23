@@ -37,7 +37,7 @@
     "eslint-config-semistandard": "^17.0.0",
     "eslint-plugin-vue": "^9.3.0",
     "gh-pages": "^4.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "popper.js": "^1.16.0",
     "portal-vue": "^2.1.6",
     "rec.la": "^0.3.2",
