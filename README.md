@@ -45,3 +45,8 @@ just publish
 ## License
 
 [BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+
+
+# License
+
+[UNLICENSED](LICENSE)

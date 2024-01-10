@@ -2,7 +2,9 @@
   "name": "app-web-admin",
   "version": "1.2.1",
   "private": true,
-  "license": "BSD-3-Clause",
+  "description": "This package is part of Pryv.io, a Pryv S.A. software",
+  "homepage": "https://pryv.com",
+  "license": "UNLICENSED",
   "author": "Pryv S.A. <info@pryv.com> (https://pryv.com)",
   "scripts": {
     "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"
