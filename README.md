@@ -41,10 +41,14 @@ Then open it specifying the config leader service with `https://l.backloop.dev:8
 just publish
 ```
 
+### Publishing DOcker
+check version in build script
 
-## License
+`./build/build`
 
-[BSD-3-Clause](https://github.com/pryv/app-web-admin/blob/master/LICENSE)
+### Todo 
+- review docker building process
+- realease github workflow has been archived in `archives` it needs to rewritten to publish on dockerHub
 
 
 # License
