@@ -37,7 +37,7 @@ test *params:
 test-debug *params:
     NODE_ENV=test vue-cli-service test:unit --require tests/unit/helpers/setup.js --timeout 3600000 --inspect-brk=40000 {{params}}
 
-# Start a `rec.la` web server on `dist/`
+# Start a `backloop.dev` web server on `dist/`
 serve *params:
     vue-cli-service serve {{params}}
 

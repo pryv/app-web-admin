@@ -33,7 +33,7 @@ just test [...params]
 ```
 just serve [...params]
 ```
-Then open it specifying the config leader service with `https://l.rec.la:8080?pryvLeaderUrl={LEADER_URL}` (with `LEADER_URL` set for example to `https://lead.pryv.li`, or `http://localhost:7000` for a locally running service)
+Then open it specifying the config leader service with `https://l.backloop.dev:8080?pryvLeaderUrl={LEADER_URL}` (with `LEADER_URL` set for example to `https://lead.pryv.li`, or `http://localhost:7000` for a locally running service)
 
 ### Publishing to GitHub pages
 
@@ -49,4 +49,4 @@ just publish
 
 # License
 
-[UNLICENSED](LICENSE)
+[BSD-Clause-3](LICENSE)
