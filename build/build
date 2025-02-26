@@ -2,10 +2,10 @@
 
 set -e
 
-version=1.0.4
+version=1.2.1
 host='docker.io'
 
 echo "---------------------------- building mfa --------------------------------"
-echo $host/pryvio/app-web-auth3:$version
-docker build --build-arg COMPONENT_NAME=app-web-auth3 -f build/Dockerfile -t $host/pryvio/app-web-auth3:$version .
-docker push $host/pryvio/app-web-auth3:$version
+echo $host/pryvio/app-web-admin:$version
+docker build --build-arg COMPONENT_NAME=app-web-admin -f build/Dockerfile -t $host/pryvio/app-web-admin:$version .
+docker push $host/pryvio/app-web-admin:$version
